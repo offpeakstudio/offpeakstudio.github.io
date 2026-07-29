@@ -4,7 +4,7 @@
 
 const pages = {
 
-  "1984": "music.html",
+  "1996": "karaspad.html",
 
   "1999": "radio.html",
 
