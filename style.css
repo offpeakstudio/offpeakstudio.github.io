@@ -309,113 +309,54 @@ body {
   }
 
 }
-
-
 /* ========================================
    MOBILE
 ======================================== */
 
-@media screen and (max-width: 600px) {
-
-  body {
-
-    min-height: 100svh;
-
-  }
-
+@media screen and (max-width: 800px) {
 
   .container {
-
+    width: 100%;
     min-height: 100svh;
 
-    padding:
-      5vh 7vw;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8vh;
-
-  }
-
-
-  .site-title {
-
-    margin-top: 2vh;
-
-  }
-
-
-  .title-line {
-
-    font-size:
-      clamp(
-        3rem,
-        15vw,
-        5rem
-      );
-
-    text-shadow:
-      7px 7px 0 #000000;
-
-  }
-
-
-  .menu {
-
-    margin-top: 10vh;
-
-    gap: 1.5rem;
-
-  }
-
-
-  .menu-item {
-
-    font-size:
-      clamp(
-        1.2rem,
-        6vw,
-        2rem
-      );
-
-  }
-
-
-  .right-area {
+    padding: 5vh 5vw;
 
     display: grid;
 
     grid-template-columns:
-      1fr 1fr;
+      1fr
+      0.42fr;
 
-    align-items: start;
-
-    gap: 5vw;
-
+    gap: 4vw;
   }
 
+  .title-line {
+    font-size: 11vw;
+  }
+
+  .menu {
+    margin-top: 12vh;
+    gap: 1.8rem;
+  }
+
+  .menu-item {
+    font-size: 4.5vw;
+  }
+
+  .right-area {
+    min-height: 85vh;
+  }
 
   .image-panel {
-
-    height: 45vh;
-
-    min-height: 300px;
-
+    height: 60vh;
+    min-height: 350px;
   }
 
-
   .logo-circle {
-
-    width: 100%;
-
-    max-width: 150px;
-
-    margin-top: auto;
-
-    border-width: 7px;
-
+    width: 80%;
+    margin-top: 5vh;
+    border-width: 6px;
   }
 
 }
+
