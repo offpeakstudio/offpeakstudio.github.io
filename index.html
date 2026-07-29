@@ -6,6 +6,15 @@
 
   <title>offpeak studio</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,11 +22,21 @@
 
   <main class="terminal">
 
+    <!-- HEADER -->
     <div class="terminal-header">
-      <span>OFFPEAK STUDIO</span>
-      <span>ACCESS TERMINAL</span>
+
+      <span class="logo">
+        OFFPEAK STUDIO
+      </span>
+
+      <span class="terminal-title">
+        ACCESS TERMINAL
+      </span>
+
     </div>
 
+
+    <!-- DISPLAY -->
     <div class="display">
 
       <div class="display-label">
@@ -25,10 +44,12 @@
       </div>
 
       <div id="codeDisplay" class="code-display">
+
         <span>_</span>
         <span>_</span>
         <span>_</span>
         <span>_</span>
+
       </div>
 
       <div id="status" class="status">
@@ -38,6 +59,7 @@
     </div>
 
 
+    <!-- KEYPAD -->
     <div class="keypad">
 
       <button class="key" data-number="1">1</button>
@@ -53,12 +75,17 @@
       <button class="key" data-number="9">9</button>
 
       <button class="key key-clear">C</button>
+
       <button class="key" data-number="0">0</button>
-      <button class="key key-enter">ENTER</button>
+
+      <button class="key key-enter">
+        ENTER
+      </button>
 
     </div>
 
 
+    <!-- FOOTER -->
     <div class="terminal-footer">
       OFFPEAK STUDIO / SYSTEM 01
     </div>
