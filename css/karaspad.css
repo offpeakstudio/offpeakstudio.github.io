@@ -21,16 +21,26 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-
-/* --- アプリ筐体：半透明ダークパープル + 極太ピンクフレーム + ネオン発光 --- */
 .app-container {
   width: 100%;
   max-width: 420px;
   height: auto;
   max-height: 90vh;
-  background: rgba(12, 6, 26, 0.90);
+  border-radius: 0; 
+
+  /* --- メタリックラメ入り黒背景 --- */
+  background-color: #0b0914;
+  background-image: 
+    /* ラメのキラキラ微粒子 */
+    radial-gradient(circle, rgba(0, 240, 255, 0.35) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 0, 127, 0.35) 1px, transparent 1px),
+    /* メタリックな光沢感（金属風縦ライン） */
+    linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.05) 100%);
+  background-size: 8px 8px, 6px 6px, 100% 100%;
+  background-position: 0 0, 4px 4px, 0 0;
+
+  /* ネオン風ボーダー＆影 */
   border: 3px solid #ff007f;
-  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
