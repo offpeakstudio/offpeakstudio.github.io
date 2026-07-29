@@ -26,8 +26,8 @@ html, body {
 .app-container {
   width: 100%;
   max-width: 420px;
-  height: 100%;
-  max-height: 100%;
+  height: auto;
+  max-height: 90vh;
   background: rgba(12, 6, 26, 0.90);
   border: 3px solid #ff007f;
   border-radius: 16px;
