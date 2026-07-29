@@ -4,69 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>OFFPEAK STUDIO</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap" rel="stylesheet">
+  <title>offpeak studio</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <main class="container">
+  <main class="terminal">
 
-    <!-- =========================
-         LEFT : TITLE / MENU
-    ========================== -->
+    <div class="terminal-header">
+      <span>OFFPEAK STUDIO</span>
+      <span>ACCESS TERMINAL</span>
+    </div>
 
-    <section class="left-area">
+    <div class="display">
 
-      <header class="site-title">
-        <div class="title-line">OFF-PEAK</div>
-        <div class="title-line">STUDIO</div>
-      </header>
-
-      <nav class="menu">
-
-        <a href="#" class="menu-item">
-          <span class="bullet">—</span>
-          <span>TEXT A</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <span class="bullet">—</span>
-          <span>TEXT B</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <span class="bullet">—</span>
-          <span>TEXT C</span>
-        </a>
-
-      </nav>
-
-    </section>
-
-
-    <!-- =========================
-         RIGHT : IMAGE PANEL
-    ========================== -->
-
-    <section class="right-area">
-
-      <div class="image-panel">
-        <img src="images/logo.png" alt="Image">
+      <div class="display-label">
+        ENTER ACCESS CODE
       </div>
 
-      <div class="logo-circle">
-        <img src="images/opslogo.png" alt="OFF-PEAK STUDIO Logo">
+      <div id="codeDisplay" class="code-display">
+        <span>_</span>
+        <span>_</span>
+        <span>_</span>
+        <span>_</span>
       </div>
 
-    </section>
+      <div id="status" class="status">
+        READY
+      </div>
+
+    </div>
+
+
+    <div class="keypad">
+
+      <button class="key" data-number="1">1</button>
+      <button class="key" data-number="2">2</button>
+      <button class="key" data-number="3">3</button>
+
+      <button class="key" data-number="4">4</button>
+      <button class="key" data-number="5">5</button>
+      <button class="key" data-number="6">6</button>
+
+      <button class="key" data-number="7">7</button>
+      <button class="key" data-number="8">8</button>
+      <button class="key" data-number="9">9</button>
+
+      <button class="key key-clear">C</button>
+      <button class="key" data-number="0">0</button>
+      <button class="key key-enter">ENTER</button>
+
+    </div>
+
+
+    <div class="terminal-footer">
+      OFFPEAK STUDIO / SYSTEM 01
+    </div>
 
   </main>
+
+
+  <script src="script.js"></script>
 
 </body>
 </html>
