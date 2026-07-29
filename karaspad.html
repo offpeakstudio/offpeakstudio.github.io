@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Karas Pad kp-1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="outer-wrapper">
+    <div class="app-container">
+      
+      <!-- ヘッダーブランドロゴ部分 -->
+      <div class="header-branding">
+        <div class="brand-top-row">
+          <span class="model-name">KP-1</span>
+          <span class="tagline">DON'T THINK / MOVE YOUR FINGER</span>
+        </div>
+        <div class="brand-divider"></div>
+        <div class="brand-main-logo">KARAS PAD</div>
+      </div>
+
+      <div class="top-controls">
+        <input type="file" id="audioFile" accept=".mp3,.wav,.m4a,audio/*">
+        <button id="playBtn">PLAY</button>
+      </div>
+
+      <div id="pad">
+        <div id="pointer"></div>
+      </div>
+
+      <div class="bottom-controls">
+        <label for="speed">SPEED / PITCH: <span id="speedVal">1.00</span>x</label>
+        <div class="speed-wrapper">
+          <button id="resetSpeedBtn" title="1.0に戻す">1.0</button>
+          <input type="range" id="speed" min="0.2" max="2.0" step="0.01" value="1.0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
