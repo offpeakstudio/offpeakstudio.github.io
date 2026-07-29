@@ -1,296 +1,283 @@
-/* ========================================
-   RESET
-======================================== */
-
 * {
   box-sizing: border-box;
 }
 
-html,
 body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-}
 
-
-/* ========================================
-   BODY
-======================================== */
-
-body {
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff 0%,
-      #eeeeee 35%,
-      #777777 65%,
-      #000000 100%
-    );
-
-  color: #000000;
-  font-family: 
-     "Fascinate Inline",
-     serif;
-    overflow-x: hidden;
-}
-
-
-/* ========================================
-   MAIN CONTAINER
-======================================== */
-
-.container {
-  width: 100%;
-  max-width: 1200px;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 6vh 5vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #111;
+
+  color: #b7ff00;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  user-select: none;
+}
+
+
+/* =================================
+   TERMINAL
+================================= */
+
+.terminal {
+
+  width: 90%;
+  max-width: 420px;
+
+  padding: 20px;
+
+  border: 2px solid #555;
+
+  background: #1b1b1b;
+
+  box-shadow:
+    0 0 0 5px #080808,
+    0 0 30px rgba(180, 255, 0, 0.08);
+
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.terminal-header {
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 11px;
+
+  color: #777;
+
+  margin-bottom: 20px;
+}
+
+
+/* =================================
+   DISPLAY
+================================= */
+
+.display {
+
+  padding: 25px 15px;
+
+  background: #050505;
+
+  border: 2px solid #333;
+
+  text-align: center;
+
+  margin-bottom: 20px;
+
+}
+
+
+.display-label {
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  color: #777;
+
+  margin-bottom: 20px;
+}
+
+
+.code-display {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  font-size: 36px;
+
+  line-height: 1;
+
+  letter-spacing: 5px;
+
+  min-height: 40px;
+}
+
+
+.code-display span {
+
+  display: block;
+
+  width: 30px;
+
+  color: #b7ff00;
+
+}
+
+
+/* =================================
+   STATUS
+================================= */
+
+.status {
+
+  margin-top: 20px;
+
+  height: 20px;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  color: #777;
+}
+
+
+.status.error {
+
+  color: #ff3333;
+
+}
+
+
+.status.success {
+
+  color: #b7ff00;
+
+}
+
+
+/* =================================
+   KEYPAD
+================================= */
+
+.keypad {
+
   display: grid;
+
   grid-template-columns:
-    1fr
-    0.42fr;
-  gap: 5vw;
+    repeat(3, 1fr);
+
+  gap: 8px;
 }
 
 
-/* ========================================
-   LEFT AREA
-======================================== */
+.key {
 
-.left-area {
-  position: relative;
-}
+  height: 55px;
 
+  border: 1px solid #555;
 
-/* ========================================
-   TITLE
-======================================== */
+  background: #292929;
 
-.site-title {
-  transform: rotate(-8deg);
-  transform-origin:
-  left top;
-  margin-top: 4vh;
-  margin-left: 1vw;
-  display: inline-block;
-}
+  color: #aaa;
 
+  font-family: inherit;
 
-.title-line {
-  position: relative;
-  font-size: clamp(
-    3.5rem,
-    8vw,
-    8rem
-  );
+  font-size: 18px;
 
-  font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: 0.05em;
-  color: #ffffff;
+  cursor: pointer;
 
-  /* 黒い文字を下に重ねる */
-  text-shadow:
-    10px 10px 0 #000000;
-}
-
-
-/* ========================================
-   MENU
-======================================== */
-
-.menu {
-
-  margin-top: 14vh;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  max-width: 500px;
-}
-
-
-.menu-item {
-
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  color: #000000;
-  text-decoration: none;
-  font-size: clamp(
-    1.5rem,
-    3vw,
-    3rem
-  );
-
-  letter-spacing: 0.15em;
   transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+    background 0.1s,
+    color 0.1s;
 }
 
 
-.menu-item:hover {
+.key:hover {
 
-  transform:
-    translateX(10px);
-  opacity: 0.5;
-}
+  background: #3a3a3a;
 
-
-.bullet {
-
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-
-/* ========================================
-   RIGHT AREA
-======================================== */
-
-.right-area {
-
-  position: relative;
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: #b7ff00;
 
 }
 
 
-/* ========================================
-   IMAGE PANEL
-======================================== */
+.key:active {
 
-.image-panel {
+  background: #b7ff00;
 
-  width: 100%;
-  height: 65vh;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-
-.image-panel img {
-
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  color: #000;
 
 }
 
 
-/* ========================================
-   CIRCLE LOGO
-======================================== */
+/* ENTER */
 
-.logo-circle {
+.key-enter {
 
-  width: clamp(
-    120px,
-    15vw,
-    220px
-  );
+  font-size: 11px;
 
-  aspect-ratio: 1 / 1;
-  margin-top: 5vh;
-  border:
-    10px solid #000000;
-
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: transparent;
+  letter-spacing: 1px;
 }
 
 
-.logo-circle img {
+/* CLEAR */
 
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.key-clear {
 
+  color: #777;
+
+  font-size: 14px;
 }
 
 
-/* ========================================
-   TABLET
-======================================== */
+/* =================================
+   FOOTER
+================================= */
 
-@media screen and (max-width: 800px) {
+.terminal-footer {
 
-  .container {
-    grid-template-columns:
-      1fr;
-    padding:
-      5vh 7vw;
-  }
+  margin-top: 20px;
 
-  .right-area {
-    min-height: auto;
-  }
+  text-align: center;
 
-  .image-panel {
-    height: 50vh;
-  }
+  font-size: 9px;
 
-  .logo-circle {
-    margin-top: 4vh;
-  }
+  color: #444;
 
+  letter-spacing: 2px;
 }
-/* ========================================
-   MOBILE
-======================================== */
 
-@media screen and (max-width: 800px) {
 
-  .container {
-    width: 100%;
-    min-height: 100svh;
-    padding: 5vh 5vw;
-    display: grid;
-    grid-template-columns:
-      1fr
-      0.42fr;
-    gap: 4vw;
+/* =================================
+   ERROR ANIMATION
+================================= */
+
+@keyframes errorFlash {
+
+  0% {
+    transform: translateX(0);
   }
 
-  .title-line {
-    font-size: 11vw;
+  25% {
+    transform: translateX(-5px);
   }
 
-  .menu {
-    margin-top: 12vh;
-    gap: 1.8rem;
+  50% {
+    transform: translateX(5px);
   }
 
-  .menu-item {
-    font-size: 4.5vw;
+  75% {
+    transform: translateX(-3px);
   }
 
-  .right-area {
-    min-height: 85vh;
-  }
-
-  .image-panel {
-    height: 60vh;
-    min-height: 350px;
-  }
-
-  .logo-circle {
-    width: 80%;
-    margin-top: 5vh;
-    border-width: 6px;
+  100% {
+    transform: translateX(0);
   }
 
 }
 
+
+.terminal.error {
+
+  animation: errorFlash 0.2s;
+
+}
