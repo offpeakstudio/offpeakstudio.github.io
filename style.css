@@ -30,11 +30,9 @@ body {
     );
 
   color: #000000;
-
-  font-family:
-    "Courier New",
-    Courier,
-    monospace;
+  font-family: 
+     "Fascinate Inline",
+     serif;
     overflow-x: hidden;
 }
 
