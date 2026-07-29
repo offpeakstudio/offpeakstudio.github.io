@@ -2,62 +2,39 @@
    OFFPEAK STUDIO
    ACCESS TERMINAL
 ========================================= */
-
-
 /* =========================================
    COLOR
 ========================================= */
 
 :root {
-
   --mint: #61c8b5;
-
   --mint-light: #9ce0d2;
-
   --pink: #e85b91;
-
   --pink-light: #f28bb2;
-
   --chocolate: #5b3023;
-
   --cream: #f4ead5;
-
   --cream-dark: #d9cdb5;
-
   --screen: #30231e;
-
   --screen-text: #66e5cf;
-
 }
-
 
 /* =========================================
    RESET
 ========================================= */
-
 * {
   box-sizing: border-box;
 }
-
-
 /* =========================================
    BODY
 ========================================= */
-
 body {
 
   margin: 0;
-
   min-height: 100vh;
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   padding: 20px;
-
   background:
 
     radial-gradient(
@@ -68,64 +45,41 @@ body {
     );
 
   color: var(--chocolate);
-
   font-family:
     "Courier New",
     monospace;
-
   user-select: none;
-
 }
-
 
 /* =========================================
    TERMINAL
 ========================================= */
-
 .terminal {
-
   width: 100%;
-
   max-width: 420px;
-
   padding: 20px;
-
   border-radius: 28px;
-
   background: var(--cream);
-
   border: 5px solid var(--chocolate);
-
   box-shadow:
-
     0 8px 0 var(--chocolate),
-
     0 16px 30px rgba(
       91,
       48,
       35,
       0.25
     );
-
 }
-
-
 /* =========================================
    HEADER
 ========================================= */
-
 .terminal-header {
 
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 10px;
-
   margin-bottom: 18px;
-
   padding: 4px 5px;
 
 }
@@ -138,39 +92,23 @@ body {
   font-family:
     "Fascinate Inline",
     cursive;
-
-  font-size: 21px;
-
+  font-size: 42px;
   line-height: 1;
-
   color: var(--mint);
-
   -webkit-text-stroke:
     1.5px var(--chocolate);
-
   text-shadow:
-
-    2px 2px 0 var(--pink);
-
+    4px 4px 0 var(--pink);
 }
-
 
 /* ACCESS TERMINAL */
-
 .terminal-title {
-
-  font-size: 9px;
-
+  font-size: 18px;
   font-weight: bold;
-
   letter-spacing: 1px;
-
   color: var(--pink);
-
   text-align: right;
-
 }
-
 
 /* =========================================
    DISPLAY
@@ -179,275 +117,159 @@ body {
 .display {
 
   position: relative;
-
   padding: 25px 15px;
-
   border-radius: 20px;
-
   background: var(--screen);
-
   border: 6px solid var(--pink);
-
   box-shadow:
-
     inset 0 0 0 3px var(--chocolate),
-
     inset 0 0 30px rgba(
       0,
       0,
       0,
       0.6
     ),
-
     0 4px 0 var(--chocolate);
-
   text-align: center;
-
   margin-bottom: 22px;
-
 }
-
-
 /* =========================================
    DISPLAY LABEL
 ========================================= */
-
 .display-label {
-
-  font-size: 11px;
-
+  font-size: 22px;
   letter-spacing: 2px;
-
   color: var(--screen-text);
-
   margin-bottom: 20px;
-
 }
-
-
 /* =========================================
    CODE
 ========================================= */
-
 .code-display {
-
   display: flex;
-
   justify-content: center;
-
   gap: 12px;
-
   min-height: 42px;
-
   font-size: 36px;
-
   line-height: 1;
-
 }
 
 
 .code-display span {
-
   display: block;
-
   width: 28px;
-
   color: var(--screen-text);
-
   text-shadow:
-
     0 0 5px var(--screen-text);
-
 }
-
-
 /* =========================================
    STATUS
 ========================================= */
-
 .status {
-
   height: 20px;
-
   margin-top: 20px;
-
-  font-size: 11px;
-
+  font-size: 22px;
   letter-spacing: 2px;
-
   color: #9a8175;
-
 }
-
-
 .status.error {
-
   color: #ff6b6b;
-
 }
-
-
 .status.success {
-
   color: var(--mint-light);
-
 }
-
-
 /* =========================================
    KEYPAD
 ========================================= */
 
 .keypad {
-
   display: grid;
-
   grid-template-columns:
     repeat(3, 1fr);
-
   gap: 9px;
-
 }
-
-
 /* =========================================
    BUTTON
 ========================================= */
-
 .key {
-
   height: 58px;
-
   border: 3px solid var(--chocolate);
-
   border-radius: 14px;
-
   background: var(--mint-light);
-
   color: var(--chocolate);
-
   font-family:
     "Fascinate Inline",
     cursive;
-
-  font-size: 20px;
-
+  font-size: 40px;
   cursor: pointer;
-
   box-shadow:
-
     0 4px 0 var(--chocolate);
-
   transition:
-
     transform 0.08s,
-
     box-shadow 0.08s,
-
     background 0.08s;
-
 }
-
 
 /* HOVER */
 
 .key:hover {
-
   background: #b5eadf;
-
 }
-
 
 /* PRESS */
 
 .key:active {
-
   transform:
     translateY(4px);
-
   box-shadow:
-
     0 0 0 var(--chocolate);
-
 }
-
-
 /* =========================================
    CLEAR BUTTON
 ========================================= */
 
 .key-clear {
-
   background: var(--pink-light);
-
   color: var(--chocolate);
-
-  font-size: 17px;
-
+  font-size: 32px;
 }
-
 
 .key-clear:hover {
-
   background: #f5a5c3;
-
 }
-
 
 /* =========================================
    ENTER BUTTON
 ========================================= */
 
 .key-enter {
-
   background: var(--pink);
-
   color: var(--cream);
-
   font-family:
     "Fascinate Inline",
     cursive;
-
-  font-size: 15px;
-
+  font-size: 30px;
   letter-spacing: 1px;
-
 }
-
 
 .key-enter:hover {
-
   background: #ef76a5;
-
 }
-
-
 /* =========================================
    FOOTER
 ========================================= */
 
 .terminal-footer {
-
   margin-top: 20px;
-
   padding-top: 12px;
-
   border-top:
     2px dashed var(--cream-dark);
-
   text-align: center;
-
-  font-size: 9px;
-
+  font-size: 18px;
   font-weight: bold;
-
   letter-spacing: 2px;
-
   color: var(--pink);
-
 }
-
-
 /* =========================================
    ERROR ANIMATION
 ========================================= */
@@ -457,19 +279,15 @@ body {
   0% {
     transform: translateX(0);
   }
-
   25% {
     transform: translateX(-5px);
   }
-
   50% {
     transform: translateX(5px);
   }
-
   75% {
     transform: translateX(-3px);
   }
-
   100% {
     transform: translateX(0);
   }
@@ -478,12 +296,9 @@ body {
 
 
 .terminal.error {
-
   animation:
     errorFlash 0.2s;
-
 }
-
 
 /* =========================================
    MOBILE
@@ -492,55 +307,30 @@ body {
 @media (max-width: 480px) {
 
   body {
-
     padding: 15px;
-
   }
-
-
   .terminal {
-
     padding: 16px;
-
     border-radius: 23px;
-
   }
-
-
   .terminal-header {
-
     margin-bottom: 15px;
-
   }
-
-
   .logo {
-
     font-size: 18px;
-
   }
-
-
   .terminal-title {
-
     font-size: 8px;
-
   }
-
-
   .display {
-
     padding: 22px 10px;
-
     border-radius: 17px;
-
   }
 
 
   .key {
 
     height: 55px;
-
   }
 
 }
