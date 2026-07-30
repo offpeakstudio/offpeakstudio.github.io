@@ -32,8 +32,8 @@ html, body {
   background-image: 
     linear-gradient(45deg, #181820 25%, transparent 25%, transparent 75%, #181820 75%, #181820),
     linear-gradient(45deg, #181820 25%, transparent 25%, transparent 75%, #181820 75%, #181820);
-  background-size: 12px 12px;
-  background-position: 0 0, 6px 6px;
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
 
 
   /* ネオン風ボーダー＆影 */
@@ -73,7 +73,7 @@ html, body {
 
 .tagline {
   color: #ff80bf;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   font-style: italic;
 }
@@ -94,9 +94,9 @@ html, body {
   text-transform: uppercase;
   margin-top: 2px;
   text-shadow: 
-    -4px -2px 0 #00f0ff, 
-     4px  2px 0 #ff007f,
-     6px  6px 0 #000;
+    -2px -1px 0 #00f0ff, 
+     2px  1px 0 #ff007f,
+     3px  3px 0 #000;
 }
 
 .top-controls {
