@@ -1,4 +1,4 @@
-     let audioCtx;
+let audioCtx;
 let sourceNode;
 let audioBuffer;
 let isPlaying = false;
@@ -13,49 +13,49 @@ let lfoNode, lfoGain;
 const pad = document.getElementById('pad');
 const pointer = document.getElementById('pointer');
 const playBtn = document.getElementById('playBtn');
+const demoBtn = document.getElementById('demoBtn'); // ← DEMOボタンを取得
 const audioFileInput = document.getElementById('audioFile');
 const speedSlider = document.getElementById('speed');
 const speedVal = document.getElementById('speedVal');
 const resetSpeedBtn = document.getElementById('resetSpeedBtn');
 
-// --- 追加機能: 初期デモ音源の自動ロード htmlから見て---
 const DEMO_AUDIO_PATH = 'music/demo.mp3';
 
-async function loadDemoAudio() {
-  try {
-    playBtn.textContent = 'LOADING DEMO...';
-    playBtn.disabled = true;
+// --- DEMOボタンが押されたときの処理 ---
+demoBtn.addEventListener('click', async () => {
+  if (isPlaying) return alert('再生を停止してから切り替えてください。');
 
-    // 初期起動時に Web Audio Context を作成
+  try {
+    demoBtn.textContent = '...';
+    demoBtn.disabled = true;
+
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
 
-    // demo.mp3 を取得してデコード
     const response = await fetch(DEMO_AUDIO_PATH);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     
     const arrayBuffer = await response.arrayBuffer();
     audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-    playBtn.textContent = 'PLAY';
-    playBtn.disabled = false;
-    console.log('Demo audio loaded successfully!');
+    demoBtn.textContent = 'DEMO';
+    demoBtn.disabled = false;
+    alert('デモ音源（demo.mp3）をセットしました！「PLAY」を押してください。');
   } catch (err) {
-    console.warn('Demo audio load failed (or local file policy restriction):', err);
-    // デモ音源の読み込みに失敗した場合は、通常待機状態に戻す
-    playBtn.textContent = 'PLAY';
-    playBtn.disabled = false;
+    console.error('Demo load error:', err);
+    alert('デモ音源の読み込みに失敗しました。ファイルパスやローカルサーバー（Live Server等）をご確認ください。');
+    demoBtn.textContent = 'DEMO';
+    demoBtn.disabled = false;
   }
-}
-
-// ページ読み込み完了時にデモ音源を取得
-window.addEventListener('DOMContentLoaded', loadDemoAudio);
+});
 
 // --- 手動ファイル選択時の処理 ---
 audioFileInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
+
+  if (isPlaying) return alert('再生を停止してから切り替えてください。');
 
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -80,7 +80,7 @@ audioFileInput.addEventListener('change', async (e) => {
 
 // --- 再生 / 停止処理 ---
 playBtn.addEventListener('click', () => {
-  if (!audioBuffer) return alert('音声ファイルが読み込まれていません。');
+  if (!audioBuffer) return alert('音声ファイルを選択するか、「DEMO」ボタンを押してください。');
 
   // 【STOP処理】
   if (isPlaying) {
@@ -103,7 +103,6 @@ playBtn.addEventListener('click', () => {
   }
 
   // 【PLAY処理】
-  // ブラウザの自動再生規制を解除するため、ユーザーのクリックで Context を resume する
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
@@ -181,7 +180,6 @@ function updateEffects(x, y) {
   const now = audioCtx.currentTime;
   const timeConstant = 0.03;
 
-  // 【X軸: フィルター】
   if (x < 0.5) {
     filterNode.type = 'lowpass';
     const freq = Math.pow(x * 2, 2) * 19980 + 20; 
@@ -192,7 +190,6 @@ function updateEffects(x, y) {
     filterNode.frequency.setTargetAtTime(freq, now, timeConstant);
   }
 
-  // 【Y軸: 上半分=フランジャー / 下半分=簡易ディレイ / 中央=ニュートラル】
   if (y < 0.5) {
     const amount = (0.5 - y) * 2; 
     lfoGain.gain.setTargetAtTime(amount * 0.003, now, timeConstant);
@@ -241,6 +238,4 @@ pad.addEventListener('pointerdown', (e) => {
 pad.addEventListener('pointermove', (e) => {
   if (e.buttons > 0 || e.touches) handlePointer(e);
 });
-pad.addEventListener('pointerup', () => {
-  // 指を離してもポインター位置を固定維持
-});
+pad.addEventListener('pointerup', () => {});
