@@ -138,14 +138,13 @@ button:active {
   background: #ff007f;
   color: #ffffff;
 }
-
-/* --- パッド領域：明るい水色ベース + ベタ影 --- */
+/* --- パッド領域 --- */
 #pad {
   width: 100%;
   flex-grow: 1;
   max-height: 360px;
   aspect-ratio: 1 / 1;
-  background: #e0ffff;
+  background: #0d0d11; /* 重ねる画像が引き立つダーク背景 */
   border: 3px solid #ff007f;
   box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), 6px 6px 0px #000000;
   position: relative;
@@ -156,15 +155,30 @@ button:active {
   overflow: hidden;
 }
 
-/* パッドのグリッド線背景 */
+/* 1. 薄く敷く背景画像（透明度50%） */
+#pad::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../images/kp1.png'); /* 画像のパス */
+  background-size: cover;                      /* 全体にフィット */
+  background-position: center;                 /* 中央寄せ */
+  background-repeat: no-repeat;
+  opacity: 0.5;                                /* 透明度50% */
+  z-index: 1;                                  /* 最下層 */
+  pointer-events: none;
+}
+
+/* 2. 画像の上に重ねるグリッド線 */
 #pad::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: 
-    linear-gradient(rgba(255, 0, 127, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 0, 127, 0.15) 1px, transparent 1px);
+    linear-gradient(rgba(255, 0, 127, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 127, 0.25) 1px, transparent 1px);
   background-size: 20px 20px;
+  z-index: 2;                                  /* 画像より上に配置 */
   pointer-events: none;
 }
 
