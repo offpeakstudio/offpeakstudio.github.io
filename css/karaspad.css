@@ -140,7 +140,7 @@ button:active {
 }
 /* --- パッド領域 --- */
 #pad {
-  width: 100%;
+  width: 80%;
   flex-grow: 1;
   max-height: 360px;
   aspect-ratio: 1 / 1;
@@ -209,7 +209,7 @@ button:active {
 }
 
 .bottom-controls {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
