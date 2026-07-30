@@ -24,7 +24,7 @@ if (document.readyState === 'loading') {
 }
 
 // --- 2. 各ページから呼び出せるコントロール用関数 ---
-function showLoader(message = 'LOADING...', title = 'KARAS SYSTEM') {
+function showLoader(message = 'LOADING...', title = 'OFF-PEAK STUDIO') {
   initLoader(); // 念のため未生成なら作成
   const overlay = document.getElementById('loaderOverlay');
   const status = document.getElementById('loaderStatus');
