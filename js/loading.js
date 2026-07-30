@@ -1,5 +1,7 @@
-// --- 1. HTML構造を自動的にbody直下に生成 ---
-(function initLoader() {
+// --- 1. DOMの準備が整ったら自動的にローディング画面を構築 ---
+function initLoader() {
+  if (document.getElementById('loaderOverlay')) return; // 二重生成防止
+
   const loaderHTML = `
     <div id="loaderOverlay" class="loader-overlay">
       <div class="loader-content">
@@ -12,14 +14,22 @@
     </div>
   `;
   document.body.insertAdjacentHTML('afterbegin', loaderHTML);
-})();
+}
+
+// DOM読み込み完了時、またはすでに完了していれば即実行
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLoader);
+} else {
+  initLoader();
+}
 
 // --- 2. 各ページから呼び出せるコントロール用関数 ---
 function showLoader(message = 'LOADING...', title = 'KARAS SYSTEM') {
+  initLoader(); // 念のため未生成なら作成
   const overlay = document.getElementById('loaderOverlay');
   const status = document.getElementById('loaderStatus');
   const progressBar = document.getElementById('progressBar');
-  const titleEl = overlay.querySelector('.loader-title');
+  const titleEl = overlay ? overlay.querySelector('.loader-title') : null;
 
   if (titleEl) titleEl.textContent = title;
   if (status) status.textContent = message;
@@ -40,8 +50,8 @@ function hideLoader() {
   }, 200);
 }
 
-// ページ読み込み完了時に自動で薄く消す
-window.addEventListener('DOMContentLoaded', () => {
+// 画面を最初に開いたときの初期アニメーション
+window.addEventListener('load', () => {
   updateProgress(100);
   setTimeout(() => {
     const overlay = document.getElementById('loaderOverlay');
