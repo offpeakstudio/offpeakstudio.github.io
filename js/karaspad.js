@@ -1,4 +1,4 @@
-let audioCtx;
+     let audioCtx;
 let sourceNode;
 let audioBuffer;
 let isPlaying = false;
@@ -18,6 +18,41 @@ const speedSlider = document.getElementById('speed');
 const speedVal = document.getElementById('speedVal');
 const resetSpeedBtn = document.getElementById('resetSpeedBtn');
 
+// --- 追加機能: 初期デモ音源の自動ロード ---
+const DEMO_AUDIO_PATH = 'music/demo.mp3';
+
+async function loadDemoAudio() {
+  try {
+    playBtn.textContent = 'LOADING DEMO...';
+    playBtn.disabled = true;
+
+    // 初期起動時に Web Audio Context を作成
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    // demo.mp3 を取得してデコード
+    const response = await fetch(DEMO_AUDIO_PATH);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const arrayBuffer = await response.arrayBuffer();
+    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+    playBtn.textContent = 'PLAY';
+    playBtn.disabled = false;
+    console.log('Demo audio loaded successfully!');
+  } catch (err) {
+    console.warn('Demo audio load failed (or local file policy restriction):', err);
+    // デモ音源の読み込みに失敗した場合は、通常待機状態に戻す
+    playBtn.textContent = 'PLAY';
+    playBtn.disabled = false;
+  }
+}
+
+// ページ読み込み完了時にデモ音源を取得
+window.addEventListener('DOMContentLoaded', loadDemoAudio);
+
+// --- 手動ファイル選択時の処理 ---
 audioFileInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -35,7 +70,6 @@ audioFileInput.addEventListener('change', async (e) => {
 
     playBtn.textContent = 'PLAY';
     playBtn.disabled = false;
-    alert(`「${file.name}」を読み込みました！`);
   } catch (err) {
     console.error('Audio decode error:', err);
     alert('ファイルの読み込みに失敗しました。');
@@ -44,8 +78,9 @@ audioFileInput.addEventListener('change', async (e) => {
   }
 });
 
+// --- 再生 / 停止処理 ---
 playBtn.addEventListener('click', () => {
-  if (!audioBuffer) return alert('MP3ファイルを選択してください');
+  if (!audioBuffer) return alert('音声ファイルが読み込まれていません。');
 
   // 【STOP処理】
   if (isPlaying) {
@@ -68,6 +103,7 @@ playBtn.addEventListener('click', () => {
   }
 
   // 【PLAY処理】
+  // ブラウザの自動再生規制を解除するため、ユーザーのクリックで Context を resume する
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
