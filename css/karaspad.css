@@ -169,16 +169,23 @@ button:active {
 }
 
 #pointer {
-  width: 24px;
-  height: 24px;
-  background: #ff0055;
-  border: 2px solid #ffffff;
+  width: 40px; /* 光の広がりを持たせるため少し大きめに設定 */
+  height: 40px;
+  /* 中心から外側に向かって透明になるグラデーション */
+  background: radial-gradient(circle, rgba(255, 0, 85, 1) 0%, rgba(255, 0, 127, 0.8) 30%, rgba(255, 0, 127, 0) 70%);
+  border: none; /* クッキリした枠線を削除 */
   border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
   pointer-events: none;
   display: none;
-  box-shadow: 0 0 12px #ff0055, 2px 2px 0px #000;
+  
+  /* 周囲への強い発光（ネオン感） */
+  box-shadow: 0 0 20px #ff0055, 0 0 40px #ff007f;
+  /* 全体を少しぼかして境界を完全に溶かし込む */
+  filter: blur(2px);
+  /* 光の発色をより鮮やかに補正 */
+  mix-blend-mode: screen; 
   z-index: 10;
 }
 
