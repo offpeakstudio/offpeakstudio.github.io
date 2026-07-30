@@ -1,0 +1,61 @@
+/* --- 共通ローディングオーバーレイ --- */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0c061a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.loader-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-content {
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+  font-family: monospace;
+}
+
+.loader-title {
+  color: #00f0ff;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00f0ff;
+  margin-bottom: 12px;
+}
+
+.loader-status {
+  color: #ff80bf;
+  font-size: 12px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 16px;
+  background: #000000;
+  border: 2px solid #ff007f;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff007f, #00f0ff);
+  box-shadow: 0 0 8px #00f0ff;
+  transition: width 0.1s ease;
+}
