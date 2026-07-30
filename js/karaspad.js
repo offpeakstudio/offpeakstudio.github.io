@@ -13,7 +13,7 @@ let lfoNode, lfoGain;
 const pad = document.getElementById('pad');
 const pointer = document.getElementById('pointer');
 const playBtn = document.getElementById('playBtn');
-const demoBtn = document.getElementById('demoBtn'); // ← DEMOボタンを取得
+const demoBtn = document.getElementById('demoBtn');
 const audioFileInput = document.getElementById('audioFile');
 const speedSlider = document.getElementById('speed');
 const speedVal = document.getElementById('speedVal');
@@ -26,8 +26,8 @@ demoBtn.addEventListener('click', async () => {
   if (isPlaying) return alert('再生を停止してから切り替えてください。');
 
   try {
-    demoBtn.textContent = '...';
-    demoBtn.disabled = true;
+    // 1. ローディング画面表示
+    showLoader('DOWNLOADING DEMO...', 'KARAS PAD');
 
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -35,18 +35,46 @@ demoBtn.addEventListener('click', async () => {
 
     const response = await fetch(DEMO_AUDIO_PATH);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    
-    const arrayBuffer = await response.arrayBuffer();
-    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-    demoBtn.textContent = 'DEMO';
-    demoBtn.disabled = false;
-    alert('デモ音源（demo.mp3）をセットしました！「PLAY」を押してください。');
+    // 進捗（プログレス）を計算しながら取得
+    const contentLength = response.headers.get('content-length');
+    const total = contentLength ? parseInt(contentLength, 10) : 0;
+    const reader = response.body.getReader();
+    let receivedLength = 0;
+    let chunks = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      receivedLength += value.length;
+
+      if (total) {
+        // 0% 〜 70% まで進捗バーを更新
+        updateProgress(Math.round((receivedLength / total) * 70));
+      }
+    }
+
+    // デコード処理
+    showLoader('DECODING AUDIO...', 'KARAS PAD');
+    updateProgress(85);
+
+    let allChunks = new Uint8Array(receivedLength);
+    let position = 0;
+    for (let chunk of chunks) {
+      allChunks.set(chunk, position);
+      position += chunk.length;
+    }
+
+    audioBuffer = await audioCtx.decodeAudioData(allChunks.buffer);
+
+    // 2. ローディング完了して画面を閉じる
+    hideLoader();
+
   } catch (err) {
     console.error('Demo load error:', err);
-    alert('デモ音源の読み込みに失敗しました。ファイルパスやローカルサーバー（Live Server等）をご確認ください。');
-    demoBtn.textContent = 'DEMO';
-    demoBtn.disabled = false;
+    hideLoader();
+    alert('デモ音源の読み込みに失敗しました。');
   }
 });
 
@@ -57,24 +85,28 @@ audioFileInput.addEventListener('change', async (e) => {
 
   if (isPlaying) return alert('再生を停止してから切り替えてください。');
 
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
   try {
-    playBtn.textContent = 'LOADING...';
-    playBtn.disabled = true;
+    // 1. ローディング画面表示
+    showLoader('READING FILE...', 'KARAS PAD');
+    updateProgress(30);
+
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
 
     const arrayBuffer = await file.arrayBuffer();
+    updateProgress(65);
+
+    showLoader('DECODING AUDIO...', 'KARAS PAD');
     audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-    playBtn.textContent = 'PLAY';
-    playBtn.disabled = false;
+    // 2. ローディング完了して画面を閉じる
+    hideLoader();
+
   } catch (err) {
     console.error('Audio decode error:', err);
+    hideLoader();
     alert('ファイルの読み込みに失敗しました。');
-    playBtn.textContent = 'PLAY';
-    playBtn.disabled = false;
   }
 });
 
