@@ -152,6 +152,7 @@ button:active {
   touch-action: none;
   border-radius: 10px;
   box-sizing: border-box;
+  margin: 20px auto; 
   overflow: hidden;
 }
 
@@ -177,7 +178,7 @@ button:active {
   background: 
     linear-gradient(rgba(255, 0, 127, 0.25) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 0, 127, 0.25) 1px, transparent 1px);
-  background-size: 36px 36px;
+  background-size: 20px 20px;
   z-index: 2;                                  /* 画像より上に配置 */
   pointer-events: none;
 }
