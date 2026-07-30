@@ -18,7 +18,7 @@ const speedSlider = document.getElementById('speed');
 const speedVal = document.getElementById('speedVal');
 const resetSpeedBtn = document.getElementById('resetSpeedBtn');
 
-// --- 追加機能: 初期デモ音源の自動ロード ---
+// --- 追加機能: 初期デモ音源の自動ロード htmlから見て---
 const DEMO_AUDIO_PATH = 'music/demo.mp3';
 
 async function loadDemoAudio() {
