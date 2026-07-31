@@ -92,9 +92,9 @@ body {
    ========================================================= */
 #audioFile {
   position: absolute;
-  top: 32%;
-  left: 8%;
-  width: 66%;
+  top: 35%;
+  left: 15%;
+  width: 70%;
   height: 28px;
   padding: 4px;
   font-family: monospace;
@@ -115,7 +115,7 @@ body {
 .transport-controls {
   position: absolute;
   top: 26%;
-  right: 8%;
+  right: 9%;
   display: flex;
   gap: 7px;
 }
@@ -165,9 +165,9 @@ button:active {
 
 #pad {
   position: absolute;
-  top: 40%;
-  left: 24%;
-  width: 52%;
+  top: 44%;
+  left: 20%;
+  width: 60%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: crosshair;
