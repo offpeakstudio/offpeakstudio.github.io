@@ -30,11 +30,9 @@ body {
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
-
 /* =========================================================
    OUTER WRAPPER
    ========================================================= */
-
 .outer-wrapper {
   width: 100%;
   height: 100%;
@@ -43,13 +41,10 @@ body {
   align-items: center;
   padding: 0px;
 }
-
-
 /* =========================================================
    HARDWARE CONTAINER
    1024 × 1536 = 2 : 3
    ========================================================= */
-
 .app-container {
   position: relative;
   width: min(
@@ -57,11 +52,6 @@ body {
     430px
   );
   aspect-ratio: 2 / 3;
-
-  /*
-    高さが画面からはみ出さないようにする
-  */
-
   max-height: calc(100vh - 10px);
   height: auto;
   overflow: hidden;
@@ -87,11 +77,9 @@ body {
   user-select: none;
   z-index: 1;
 }
-
 /* =========================================================
    UI LAYER
    ========================================================= */
-
 .ui-layer {
   position: absolute;
   inset: 0;
@@ -102,36 +90,28 @@ body {
 /* =========================================================
    FILE INPUT
    ========================================================= */
-
 #audioFile {
   position: absolute;
   top: 32%;
   left: 8%;
-
   width: 66%;
   height: 28px;
   padding: 4px;
   font-family: monospace;
   font-size: 9px;
   color: #aeeeee;
-
   background:
     rgba(0, 0, 0, 0.75);
-
   border:
     1px solid #00f0ff;
-
   border-radius: 3px;
   box-shadow:
     0 0 5px
     rgba(0, 240, 255, 0.35);
 }
-
-
 /* =========================================================
    DEMO / PLAY
    ========================================================= */
-
 .transport-controls {
   position: absolute;
   top: 26%;
@@ -139,12 +119,9 @@ body {
   display: flex;
   gap: 7px;
 }
-
-
 /* =========================================================
    BUTTON
    ========================================================= */
-
 button {
   min-width: 55px;
   height: 29px;
@@ -161,14 +138,10 @@ button {
     );
   border:
     2px solid #050505;
-
   border-radius: 5px;
-
   cursor: pointer;
-
   box-shadow:
     3px 3px 0 #ff007f;
-
   transition:
     transform 0.05s ease,
     box-shadow 0.05s ease;
@@ -178,13 +151,10 @@ button {
 button:active {
   transform:
     translate(2px, 2px);
-
   box-shadow:
     1px 1px 0 #ff007f;
-
   background:
     #ff007f;
-
   color: white;
 }
 
@@ -195,68 +165,38 @@ button:active {
 
 #pad {
   position: absolute;
-
-  /*
-    筐体画像中央の
-    パッド位置
-  */
-
   top: 40%;
-
   left: 24%;
-
   width: 52%;
-
   aspect-ratio: 1 / 1;
-
   overflow: hidden;
-
   cursor: crosshair;
-
   touch-action: none;
-
   /*
     パッド背景画像
   */
-
   background-image:
     url('../images/kp1.jpg');
-
-  background-size:
-    cover;
-
-  background-position:
-    center;
-
-  background-repeat:
-    no-repeat;
-
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   /*
     画像の上に薄く黒を重ねる
   */
-
   background-color:
     rgba(0, 0, 0, 0.2);
-
   background-blend-mode:
     multiply;
-
   border:
     2px solid
     rgba(255, 0, 127, 0.85);
-
   box-shadow:
-
     inset
     0 0 15px
     rgba(0, 0, 0, 0.7),
-
     0 0 10px
     rgba(255, 0, 127, 0.35);
-
 }
-
-
 /* =========================================================
    PAD GRID
    パッド画像の上にグリッドを表示
@@ -264,11 +204,8 @@ button:active {
 
 #pad::before {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   background:
 
     linear-gradient(
@@ -284,14 +221,9 @@ button:active {
 
   background-size:
     20px 20px;
-
   pointer-events: none;
-
   z-index: 2;
-
 }
-
-
 /* =========================================================
    PAD POINTER
    ========================================================= */
