@@ -41,7 +41,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 0px;
 }
 
 
@@ -105,10 +105,10 @@ body {
 
 #audioFile {
   position: absolute;
-  top: 28.5%;
+  top: 32%;
   left: 8%;
 
-  width: 46%;
+  width: 66%;
   height: 28px;
   padding: 4px;
   font-family: monospace;
@@ -134,8 +134,8 @@ body {
 
 .transport-controls {
   position: absolute;
-  top: 28.5%;
-  right: 7%;
+  top: 26%;
+  right: 8%;
   display: flex;
   gap: 7px;
 }
@@ -202,11 +202,11 @@ button:active {
     パッド位置
   */
 
-  top: 41%;
+  top: 40%;
 
-  left: 11%;
+  left: 24%;
 
-  width: 50%;
+  width: 52%;
 
   aspect-ratio: 1 / 1;
 
@@ -353,7 +353,7 @@ button:active {
 
   left: 10%;
 
-  bottom: 10%;
+  bottom: 6%;
 
   width: 80%;
 
