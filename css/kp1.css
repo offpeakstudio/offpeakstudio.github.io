@@ -1,0 +1,714 @@
+/* =========================================================
+   KARAS PAD KP-1
+   Vintage / Fake Hardware Effect Unit
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      #333 0%,
+      #171717 45%,
+      #080808 100%
+    );
+
+  color: #d8d4c8;
+  font-family: monospace;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   OUTER
+   ========================================================= */
+
+.outer-wrapper {
+  width: 100%;
+  height: 100%;
+
+  padding: clamp(10px, 2vh, 24px) 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* =========================================================
+   MAIN HARDWARE BODY
+   ========================================================= */
+
+.app-container {
+  position: relative;
+
+  width: 100%;
+  max-width: 430px;
+  max-height: 94vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 12px;
+  padding: 18px 18px 16px;
+
+  overflow: hidden;
+
+  /* 黒い金属パネル */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(
+      145deg,
+      #252525 0%,
+      #111 35%,
+      #191919 65%,
+      #090909 100%
+    );
+
+  border: 2px solid #050505;
+
+  /* 外装の厚み */
+  box-shadow:
+    inset 0 0 0 1px #484848,
+    inset 0 0 0 3px #111,
+    inset 0 0 20px rgba(0,0,0,0.9),
+    5px 7px 0 #050505,
+    8px 11px 18px rgba(0,0,0,0.75);
+
+  border-radius: 3px;
+}
+
+
+/* =========================================================
+   FAKE SCREW / HARDWARE DETAIL
+   ========================================================= */
+
+.app-container::before,
+.app-container::after {
+  content: "";
+
+  position: absolute;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #777 0%,
+      #222 45%,
+      #090909 100%
+    );
+
+  border: 1px solid #080808;
+
+  box-shadow:
+    inset 0 0 2px #aaa,
+    1px 1px 2px #000;
+
+  z-index: 20;
+}
+
+.app-container::before {
+  top: 8px;
+  left: 8px;
+}
+
+.app-container::after {
+  top: 8px;
+  right: 8px;
+}
+
+
+/* =========================================================
+   BRANDING
+   ========================================================= */
+
+.header-branding {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 2px 5px 0;
+
+  position: relative;
+}
+
+
+/* KP-1 + TAGLINE */
+
+.brand-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  width: 100%;
+
+  font-size: 11px;
+  font-weight: bold;
+
+  color: #aaa;
+}
+
+.model-name {
+  color: #d8d4c8;
+
+  font-size: 19px;
+  letter-spacing: 2px;
+
+  text-shadow:
+    1px 1px 0 #000;
+}
+
+.tagline {
+  color: #8b8980;
+
+  font-size: 9px;
+
+  letter-spacing: 0.5px;
+
+  font-style: normal;
+}
+
+
+/* PANEL DIVIDER */
+
+.brand-divider {
+  width: 100%;
+  height: 1px;
+
+  background: #080808;
+
+  border-top: 1px solid #555;
+
+  box-shadow:
+    0 1px 0 #111;
+}
+
+
+/* MAIN LOGO */
+
+.brand-main-logo {
+  font-family: Impact, "Arial Black", sans-serif;
+
+  font-size: clamp(26px, 8vw, 36px);
+
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+  color: #d7d3c8;
+
+  text-transform: uppercase;
+
+  line-height: 1;
+
+  margin-top: 3px;
+
+  text-shadow:
+    1px 1px 0 #000,
+    2px 2px 0 #000;
+}
+
+
+/* =========================================================
+   TOP CONTROL PANEL
+   ========================================================= */
+
+.top-controls {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 7px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #101010,
+      #1c1c1c
+    );
+
+  border-top: 1px solid #050505;
+  border-bottom: 1px solid #444;
+
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.05),
+    inset 0 -2px 5px rgba(0,0,0,0.7);
+}
+
+
+/* FILE INPUT */
+
+input[type="file"] {
+  width: 58%;
+
+  font-family: monospace;
+  font-size: 9px;
+
+  color: #aaa;
+
+  background: #080808;
+
+  border: 1px solid #444;
+
+  padding: 5px 4px;
+
+  border-radius: 2px;
+
+  box-shadow:
+    inset 0 1px 4px #000;
+}
+
+
+/* =========================================================
+   HARDWARE BUTTONS
+   ========================================================= */
+
+button {
+  position: relative;
+
+  min-width: 58px;
+
+  padding: 7px 12px;
+
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: bold;
+
+  color: #d8d4c8;
+
+  background:
+    linear-gradient(
+      180deg,
+      #555 0%,
+      #292929 45%,
+      #171717 100%
+    );
+
+  border: 1px solid #080808;
+
+  border-radius: 2px;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.25),
+    inset 0 -2px 3px rgba(0,0,0,0.8),
+    2px 2px 0 #050505;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.05s,
+    box-shadow 0.05s;
+}
+
+button:hover {
+  background:
+    linear-gradient(
+      180deg,
+      #666,
+      #303030
+    );
+}
+
+button:active {
+  transform: translate(1px, 1px);
+
+  box-shadow:
+    inset 0 2px 4px #000,
+    1px 1px 0 #050505;
+}
+
+
+/* =========================================================
+   PAD
+   ========================================================= */
+
+#pad {
+  position: relative;
+
+  width: 86%;
+
+  flex-grow: 1;
+
+  max-height: 370px;
+
+  aspect-ratio: 1 / 1;
+
+  margin: 8px auto 10px;
+
+  overflow: hidden;
+
+  cursor: crosshair;
+
+  touch-action: none;
+
+  background: #080808;
+
+  border: 4px solid #080808;
+
+  border-radius: 2px;
+
+  box-shadow:
+    inset 0 0 0 1px #555,
+    inset 0 0 20px rgba(0,0,0,0.9),
+    3px 4px 0 #050505,
+    0 0 0 1px #000;
+}
+
+
+/* =========================================================
+   ORIGINAL KP-1 IMAGE
+   ========================================================= */
+
+#pad::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background-image: url('../images/kp1.jpg');
+
+  background-size: cover;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  opacity: 0.45;
+
+  filter:
+    grayscale(30%)
+    contrast(115%)
+    brightness(70%);
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   SENSOR GRID
+   ========================================================= */
+
+#pad::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(220, 220, 210, 0.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(220, 220, 210, 0.12) 1px,
+      transparent 1px
+    );
+
+  background-size: 25px 25px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   XY AXIS LABELS
+   ========================================================= */
+
+#pad::after {
+  /* 画像を優先するため、ここでは追加ラベルなし */
+}
+
+
+/* =========================================================
+   POINTER
+   ========================================================= */
+
+#pointer {
+  width: 34px;
+  height: 34px;
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+
+  display: none;
+
+  pointer-events: none;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #fff 0%,
+      #fff 8%,
+      #ffb0d0 22%,
+      #ff176f 42%,
+      rgba(255,23,111,0.5) 62%,
+      rgba(255,23,111,0) 100%
+    );
+
+  box-shadow:
+    0 0 5px #fff,
+    0 0 12px #ff176f,
+    0 0 25px rgba(255,23,111,0.6);
+
+  filter: blur(0.7px);
+
+  mix-blend-mode: screen;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   BOTTOM CONTROL PANEL
+   ========================================================= */
+
+.bottom-controls {
+  width: 94%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 9px 10px 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #151515,
+      #090909
+    );
+
+  border-top: 1px solid #4b4b4b;
+  border-bottom: 1px solid #050505;
+
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.04),
+    inset 0 -3px 6px rgba(0,0,0,0.7);
+}
+
+
+/* SPEED LABEL */
+
+label {
+  width: 100%;
+
+  font-size: 10px;
+
+  color: #a9a69d;
+
+  font-weight: bold;
+
+  letter-spacing: 0.5px;
+
+  text-align: left;
+}
+
+#speedVal {
+  color: #e5e0d3;
+}
+
+
+/* =========================================================
+   SPEED CONTROL
+   ========================================================= */
+
+.speed-wrapper {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+/* RESET BUTTON */
+
+#resetSpeedBtn {
+  width: 38px;
+  height: 28px;
+
+  min-width: 38px;
+
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 2px;
+
+  font-size: 10px;
+
+  color: #ccc;
+
+  background:
+    linear-gradient(
+      180deg,
+      #555,
+      #222
+    );
+
+  border: 1px solid #080808;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.2),
+    2px 2px 0 #050505;
+}
+
+#resetSpeedBtn:active {
+  transform: translate(1px, 1px);
+
+  box-shadow:
+    inset 0 2px 3px #000,
+    1px 1px 0 #050505;
+}
+
+
+/* =========================================================
+   RANGE SLIDER
+   ========================================================= */
+
+input[type="range"] {
+  flex: 1;
+
+  width: 100%;
+
+  height: 4px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      #777,
+      #222
+    );
+
+  border: 1px solid #050505;
+
+  border-radius: 0;
+
+  box-shadow:
+    inset 0 1px 2px #000;
+}
+
+
+/* SLIDER THUMB */
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #777,
+      #222
+    );
+
+  border: 1px solid #080808;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.3),
+    2px 2px 2px #000;
+
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #777,
+      #222
+    );
+
+  border: 1px solid #080808;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.3),
+    2px 2px 2px #000;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+   ========================================================= */
+
+@media (max-height: 650px) {
+
+  .app-container {
+    padding: 12px 14px;
+    gap: 7px;
+  }
+
+  .brand-main-logo {
+    font-size: 27px;
+  }
+
+  #pad {
+    width: 78%;
+    margin: 4px auto;
+  }
+
+  .bottom-controls {
+    padding: 6px 8px;
+  }
+        }
