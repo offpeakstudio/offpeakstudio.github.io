@@ -162,9 +162,9 @@ button:active {
 
 #pad {
   position: absolute;
-  top: 40%;
-  left: 20%;
-  width: 60%;
+  top: 40.5%;
+  left: 16%;
+  width: 64%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: crosshair;
