@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
+  >
+
+  <title>Karas Pad KP-1</title>
+
+  <link rel="stylesheet" href="css/karaspad.css">
+  <link rel="stylesheet" href="css/loading.css">
+</head>
+
+<body>
+
+  <div class="outer-wrapper">
+
+    <!-- ==========================================
+         KARAS PAD 本体
+         ========================================== -->
+
+    <div class="app-container">
+
+      <!-- 筐体画像 -->
+      <img
+        class="hardware-image"
+        src="images/kp1.png"
+        alt="KARAS PAD KP-1"
+      >
+
+
+      <!-- ========================================
+           操作レイヤー
+           ======================================== -->
+
+      <div class="ui-layer">
+
+
+        <!-- ----------------------------------------
+             ファイル選択
+             ---------------------------------------- -->
+
+        <input
+          type="file"
+          id="audioFile"
+          accept=".mp3,.wav,.m4a,audio/*"
+        >
+
+
+        <!-- ----------------------------------------
+             DEMO / PLAY
+             ---------------------------------------- -->
+
+        <div class="transport-controls">
+
+          <button id="demoBtn">
+            DEMO
+          </button>
+
+          <button id="playBtn">
+            PLAY
+          </button>
+
+        </div>
+
+
+        <!-- ----------------------------------------
+             XY PAD
+             ---------------------------------------- -->
+
+        <div id="pad">
+
+          <div id="pointer"></div>
+
+        </div>
+
+
+        <!-- ----------------------------------------
+             SPEED / PITCH
+             ---------------------------------------- -->
+
+        <div class="bottom-controls">
+
+          <label for="speed">
+            SPEED / PITCH:
+            <span id="speedVal">1.00</span>x
+          </label>
+
+
+          <div class="speed-wrapper">
+
+            <button
+              id="resetSpeedBtn"
+              title="1.0に戻す"
+            >
+              1.0
+            </button>
+
+
+            <input
+              type="range"
+              id="speed"
+              min="0.2"
+              max="2.0"
+              step="0.01"
+              value="1.0"
+            >
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="js/loading.js"></script>
+  <script src="js/karaspad.js"></script>
+
+</body>
+</html>
