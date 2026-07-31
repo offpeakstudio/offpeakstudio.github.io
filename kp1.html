@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+  <title>Karas Pad kp-1</title>
+
+  <link rel="stylesheet" href="css/karaspad.css">
+  <link rel="stylesheet" href="css/loading.css">
+</head>
+
+<body>
+
+  <div class="outer-wrapper">
+
+    <div class="app-container">
+
+      <!-- 左上のネジ -->
+      <div class="screw screw-tl"></div>
+      <div class="screw screw-tr"></div>
+      <div class="screw screw-bl"></div>
+      <div class="screw screw-br"></div>
+
+
+      <!-- ヘッダーブランド -->
+      <div class="header-branding">
+
+        <div class="brand-top-row">
+
+          <div class="model-power">
+            <span class="model-name">KP-1</span>
+
+            <span class="power-led">
+              <span class="power-light"></span>
+              POWER
+            </span>
+          </div>
+
+          <span class="tagline">
+            DON'T THINK / MOVE YOUR FINGER
+          </span>
+
+        </div>
+
+        <div class="brand-divider"></div>
+
+        <div class="brand-main-logo">
+          KARAS PAD
+        </div>
+
+      </div>
+
+
+      <!-- INPUT / OUTPUT 表記 -->
+      <div class="io-label">
+        <span>↓ INPUT</span>
+        <span>/</span>
+        <span>↑ OUTPUT</span>
+      </div>
+
+
+      <!-- コントロール -->
+      <div class="top-controls">
+
+        <input
+          type="file"
+          id="audioFile"
+          accept=".mp3,.wav,.m4a,audio/*"
+        >
+
+        <button id="demoBtn">DEMO</button>
+
+        <button id="playBtn">PLAY</button>
+
+      </div>
+
+
+      <!-- XY PAD -->
+      <div id="pad">
+
+        <div class="pad-axis-x">
+          ← FILTER →
+        </div>
+
+        <div class="pad-axis-y">
+          EFFECT
+        </div>
+
+        <div id="pointer"></div>
+
+      </div>
+
+
+      <!-- SPEED -->
+      <div class="bottom-controls">
+
+        <label for="speed">
+          SPEED / PITCH:
+          <span id="speedVal">1.00</span>x
+        </label>
+
+        <div class="speed-wrapper">
+
+          <button
+            id="resetSpeedBtn"
+            title="1.0に戻す"
+          >
+            1.0
+          </button>
+
+          <input
+            type="range"
+            id="speed"
+            min="0.2"
+            max="2.0"
+            step="0.01"
+            value="1.0"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- 筐体下部の機材表記 -->
+      <div class="hardware-footer">
+
+        <span>DYNAMIC EFFECT / CONTROLER</span>
+
+        <span class="serial">
+          KP-1 / 00000088
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="js/loading.js"></script>
+  <script src="js/karaspad.js"></script>
+
+</body>
+</html>
