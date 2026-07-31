@@ -159,7 +159,6 @@ button {
       #00f0ff 0%,
       #00b8c7 100%
     );
-
   border:
     2px solid #050505;
 
@@ -332,13 +331,10 @@ button:active {
 
     0 0 25px
     rgba(255, 0, 127, 0.8);
-
   filter:
     blur(1px);
-
   mix-blend-mode:
     screen;
-
   z-index: 10;
 
 }
@@ -350,19 +346,12 @@ button:active {
 
 .bottom-controls {
   position: absolute;
-
   left: 10%;
-
   bottom: 6%;
-
   width: 80%;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   gap: 5px;
 }
 
@@ -373,11 +362,8 @@ button:active {
 
 label {
   font-size: 11px;
-
   color: #00f0ff;
-
   font-weight: bold;
-
   text-shadow:
     0 0 4px
     rgba(0, 240, 255, 0.5);
@@ -390,13 +376,9 @@ label {
 
 .speed-wrapper {
   width: 100%;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 10px;
 }
 
@@ -408,28 +390,18 @@ label {
 #resetSpeedBtn {
   width: 40px;
   height: 40px;
-
   min-width: 40px;
-
   padding: 0;
-
   border-radius: 50%;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   font-size: 10px;
-
   color: white;
-
   background:
     #ff007f;
-
   border:
     2px solid #000;
-
   box-shadow:
     2px 2px 0 #00f0ff;
 }
@@ -441,11 +413,9 @@ label {
 
 #speed {
   width: 70%;
-
   accent-color:
     #ff007f;
 }
-
 
 /* =========================================================
    SMALL SCREEN
@@ -457,9 +427,7 @@ label {
 
   .app-container {
     height: 96vh;
-
     width: auto;
-
     aspect-ratio: 2 / 3;
   }
 
