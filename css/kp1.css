@@ -1,6 +1,6 @@
 /* =========================================================
    KARAS PAD KP-1
-   Vintage / Fake Hardware Effect Unit
+   Vintage / Worn Hardware Effect Unit
    ========================================================= */
 
 * {
@@ -11,19 +11,22 @@ html,
 body {
   width: 100%;
   height: 100%;
+
   margin: 0;
   padding: 0;
+
   overflow: hidden;
 
   background:
     radial-gradient(
       circle at 50% 30%,
-      #333 0%,
-      #171717 45%,
-      #080808 100%
+      #292929 0%,
+      #111 55%,
+      #050505 100%
     );
 
-  color: #d8d4c8;
+  color: #d2cec2;
+
   font-family: monospace;
 
   user-select: none;
@@ -43,6 +46,7 @@ body {
   padding: clamp(10px, 2vh, 24px) 12px;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 }
@@ -53,6 +57,7 @@ body {
    ========================================================= */
 
 .app-container {
+
   position: relative;
 
   width: 100%;
@@ -60,96 +65,236 @@ body {
   max-height: 94vh;
 
   display: flex;
+
   flex-direction: column;
   align-items: center;
 
-  gap: 12px;
-  padding: 18px 18px 16px;
+  gap: 10px;
+
+  padding: 18px 18px 14px;
 
   overflow: hidden;
 
-  /* 黒い金属パネル */
-  background:
+  /* =====================================================
+     古い黒い塗装
+     ===================================================== */
+
+  background-color: #1b1b1a;
+
+  background-image:
+
+    /* 細かい金属の粒 */
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 1px,
+      rgba(255,255,255,0.025) 0px,
+      rgba(255,255,255,0.025) 1px,
       transparent 1px,
       transparent 3px
     ),
+
+    /* 塗装のムラ */
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(255,255,255,0.08),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      ellipse at 80% 70%,
+      rgba(0,0,0,0.7),
+      transparent 40%
+    ),
+
     linear-gradient(
-      145deg,
-      #252525 0%,
-      #111 35%,
-      #191919 65%,
-      #090909 100%
+      135deg,
+      #292928 0%,
+      #171716 40%,
+      #222220 65%,
+      #101010 100%
     );
 
   border: 2px solid #050505;
 
-  /* 外装の厚み */
-  box-shadow:
-    inset 0 0 0 1px #484848,
-    inset 0 0 0 3px #111,
-    inset 0 0 20px rgba(0,0,0,0.9),
-    5px 7px 0 #050505,
-    8px 11px 18px rgba(0,0,0,0.75);
-
   border-radius: 3px;
+
+  box-shadow:
+
+    /* 内側の金属フレーム */
+    inset 0 0 0 1px #555,
+
+    inset 0 0 0 3px #111,
+
+    /* 深い筐体感 */
+    inset 0 0 25px rgba(0,0,0,0.9),
+
+    /* 外側の厚み */
+    5px 7px 0 #030303,
+
+    8px 12px 20px rgba(0,0,0,0.8);
 }
 
 
 /* =========================================================
-   FAKE SCREW / HARDWARE DETAIL
+   剥がれた塗装
    ========================================================= */
 
-.app-container::before,
-.app-container::after {
+.app-container::before {
+
   content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 30;
+
+  opacity: 0.8;
+
+  background:
+
+    /* 大きめの塗装剥がれ */
+    radial-gradient(
+      ellipse at 8% 23%,
+      transparent 0%,
+      transparent 4%,
+      rgba(95,95,88,0.35) 4.5%,
+      transparent 6%
+    ),
+
+    radial-gradient(
+      ellipse at 92% 18%,
+      transparent 0%,
+      transparent 3%,
+      rgba(110,110,103,0.3) 3.5%,
+      transparent 5%
+    ),
+
+    radial-gradient(
+      ellipse at 18% 92%,
+      transparent 0%,
+      transparent 5%,
+      rgba(100,100,95,0.25) 5.5%,
+      transparent 7%
+    ),
+
+    /* 細かい傷 */
+    repeating-linear-gradient(
+      115deg,
+      transparent 0px,
+      transparent 80px,
+      rgba(200,200,190,0.025) 81px,
+      transparent 83px,
+      transparent 140px
+    );
+
+  mix-blend-mode: screen;
+}
+
+
+/* =========================================================
+   擦れた金属っぽいハイライト
+   ========================================================= */
+
+.app-container::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 5px;
+
+  pointer-events: none;
+
+  z-index: 29;
+
+  border: 1px solid rgba(255,255,255,0.035);
+
+  box-shadow:
+    inset 0 0 30px rgba(255,255,255,0.015);
+}
+
+
+/* =========================================================
+   SCREWS
+   ========================================================= */
+
+.screw {
 
   position: absolute;
 
   width: 9px;
   height: 9px;
 
+  z-index: 50;
+
   border-radius: 50%;
 
   background:
     linear-gradient(
       135deg,
-      #777 0%,
-      #222 45%,
-      #090909 100%
+      #888 0%,
+      #444 35%,
+      #151515 70%,
+      #050505 100%
     );
 
-  border: 1px solid #080808;
+  border: 1px solid #050505;
 
   box-shadow:
     inset 0 0 2px #aaa,
     1px 1px 2px #000;
-
-  z-index: 20;
 }
 
-.app-container::before {
+.screw::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 6px;
+  height: 1px;
+
+  top: 3px;
+  left: 1px;
+
+  background: #111;
+
+  transform: rotate(35deg);
+}
+
+.screw-tl {
   top: 8px;
   left: 8px;
 }
 
-.app-container::after {
+.screw-tr {
   top: 8px;
+  right: 8px;
+}
+
+.screw-bl {
+  bottom: 8px;
+  left: 8px;
+}
+
+.screw-br {
+  bottom: 8px;
   right: 8px;
 }
 
 
 /* =========================================================
-   BRANDING
+   BRAND HEADER
    ========================================================= */
 
 .header-branding {
+
   width: 100%;
 
   display: flex;
+
   flex-direction: column;
 
   gap: 5px;
@@ -157,49 +302,117 @@ body {
   padding: 2px 5px 0;
 
   position: relative;
+
+  z-index: 40;
 }
 
-
-/* KP-1 + TAGLINE */
 
 .brand-top-row {
+
   display: flex;
+
   justify-content: space-between;
-  align-items: baseline;
+
+  align-items: center;
 
   width: 100%;
-
-  font-size: 11px;
-  font-weight: bold;
-
-  color: #aaa;
 }
 
+
+/* =========================================================
+   KP-1 + POWER
+   ========================================================= */
+
+.model-power {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
 .model-name {
+
   color: #d8d4c8;
 
   font-size: 19px;
+
+  font-weight: bold;
+
   letter-spacing: 2px;
 
   text-shadow:
     1px 1px 0 #000;
 }
 
-.tagline {
-  color: #8b8980;
 
-  font-size: 9px;
+/* =========================================================
+   POWER LED
+   ========================================================= */
+
+.power-led {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  font-size: 8px;
+
+  color: #777;
 
   letter-spacing: 0.5px;
-
-  font-style: normal;
 }
 
 
-/* PANEL DIVIDER */
+.power-light {
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #c90022;
+
+  border: 1px solid #390008;
+
+  box-shadow:
+
+    inset 0 0 2px #ff7788,
+
+    0 0 3px rgba(255,0,30,0.7),
+
+    0 0 8px rgba(255,0,30,0.3);
+}
+
+
+/* TAGLINE */
+
+.tagline {
+
+  color: #777;
+
+  font-size: 8px;
+
+  letter-spacing: 0.4px;
+
+  font-style: normal;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
 
 .brand-divider {
+
   width: 100%;
+
   height: 1px;
 
   background: #080808;
@@ -211,20 +424,25 @@ body {
 }
 
 
-/* MAIN LOGO */
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .brand-main-logo {
-  font-family: Impact, "Arial Black", sans-serif;
 
-  font-size: clamp(26px, 8vw, 36px);
+  font-family:
+    Impact,
+    "Arial Black",
+    sans-serif;
+
+  font-size:
+    clamp(26px, 8vw, 36px);
 
   font-weight: 900;
 
   letter-spacing: 4px;
 
-  color: #d7d3c8;
-
-  text-transform: uppercase;
+  color: #d4d0c5;
 
   line-height: 1;
 
@@ -237,45 +455,86 @@ body {
 
 
 /* =========================================================
-   TOP CONTROL PANEL
+   INPUT / OUTPUT LABEL
+   ========================================================= */
+
+.io-label {
+
+  position: absolute;
+
+  top: 67px;
+  right: 20px;
+
+  z-index: 45;
+
+  font-size: 7px;
+
+  color: #777;
+
+  letter-spacing: 0.5px;
+
+  text-align: right;
+
+  line-height: 1.5;
+
+  transform: rotate(-1deg);
+}
+
+
+/* =========================================================
+   TOP CONTROLS
    ========================================================= */
 
 .top-controls {
+
   width: 100%;
 
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 
-  gap: 8px;
+  gap: 7px;
 
   padding: 8px 7px;
 
   background:
     linear-gradient(
       180deg,
-      #101010,
+      #111,
       #1c1c1c
     );
 
   border-top: 1px solid #050505;
+
   border-bottom: 1px solid #444;
 
   box-shadow:
+
     inset 0 1px 3px rgba(255,255,255,0.05),
+
     inset 0 -2px 5px rgba(0,0,0,0.7);
+
+  position: relative;
+
+  z-index: 40;
 }
 
 
-/* FILE INPUT */
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
 
 input[type="file"] {
-  width: 58%;
+
+  width: 55%;
 
   font-family: monospace;
-  font-size: 9px;
 
-  color: #aaa;
+  font-size: 8px;
+
+  color: #999;
 
   background: #080808;
 
@@ -291,60 +550,77 @@ input[type="file"] {
 
 
 /* =========================================================
-   HARDWARE BUTTONS
+   PHYSICAL SWITCH BUTTON
    ========================================================= */
 
 button {
-  position: relative;
 
-  min-width: 58px;
+  min-width: 55px;
 
-  padding: 7px 12px;
+  height: 28px;
+
+  padding: 0 10px;
 
   font-family: monospace;
-  font-size: 11px;
+
+  font-size: 10px;
+
   font-weight: bold;
 
-  color: #d8d4c8;
+  letter-spacing: 0.5px;
+
+  color: #c8c5bb;
 
   background:
+
     linear-gradient(
       180deg,
-      #555 0%,
-      #292929 45%,
-      #171717 100%
+      #686866 0%,
+      #3a3a39 45%,
+      #1a1a19 100%
     );
 
-  border: 1px solid #080808;
+  border: 1px solid #050505;
 
   border-radius: 2px;
 
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.25),
-    inset 0 -2px 3px rgba(0,0,0,0.8),
-    2px 2px 0 #050505;
-
   cursor: pointer;
+
+  box-shadow:
+
+    inset 0 1px 1px rgba(255,255,255,0.25),
+
+    inset 0 -2px 3px rgba(0,0,0,0.8),
+
+    2px 2px 0 #050505;
 
   transition:
     transform 0.05s,
     box-shadow 0.05s;
 }
 
+
 button:hover {
+
   background:
+
     linear-gradient(
       180deg,
-      #666,
-      #303030
+      #777,
+      #363636
     );
 }
 
+
 button:active {
-  transform: translate(1px, 1px);
+
+  transform:
+    translate(1px, 1px);
 
   box-shadow:
+
     inset 0 2px 4px #000,
+
     1px 1px 0 #050505;
 }
 
@@ -354,6 +630,7 @@ button:active {
    ========================================================= */
 
 #pad {
+
   position: relative;
 
   width: 86%;
@@ -364,7 +641,7 @@ button:active {
 
   aspect-ratio: 1 / 1;
 
-  margin: 8px auto 10px;
+  margin: 7px auto 9px;
 
   overflow: hidden;
 
@@ -379,25 +656,29 @@ button:active {
   border-radius: 2px;
 
   box-shadow:
+
     inset 0 0 0 1px #555,
+
     inset 0 0 20px rgba(0,0,0,0.9),
+
     3px 4px 0 #050505,
+
     0 0 0 1px #000;
 }
 
 
-/* =========================================================
-   ORIGINAL KP-1 IMAGE
-   ========================================================= */
+/* PAD IMAGE */
 
 #pad::after {
+
   content: "";
 
   position: absolute;
 
   inset: 0;
 
-  background-image: url('../images/kp1.jpg');
+  background-image:
+    url('../images/kp1.jpg');
 
   background-size: cover;
 
@@ -418,11 +699,10 @@ button:active {
 }
 
 
-/* =========================================================
-   SENSOR GRID
-   ========================================================= */
+/* GRID */
 
 #pad::before {
+
   content: "";
 
   position: absolute;
@@ -430,17 +710,20 @@ button:active {
   inset: 0;
 
   background:
+
     linear-gradient(
-      rgba(220, 220, 210, 0.12) 1px,
+      rgba(220,220,210,0.12) 1px,
       transparent 1px
     ),
+
     linear-gradient(
       90deg,
-      rgba(220, 220, 210, 0.12) 1px,
+      rgba(220,220,210,0.12) 1px,
       transparent 1px
     );
 
-  background-size: 25px 25px;
+  background-size:
+    25px 25px;
 
   z-index: 2;
 
@@ -448,12 +731,48 @@ button:active {
 }
 
 
-/* =========================================================
-   XY AXIS LABELS
-   ========================================================= */
+/* PAD AXIS */
 
-#pad::after {
-  /* 画像を優先するため、ここでは追加ラベルなし */
+.pad-axis-x {
+
+  position: absolute;
+
+  top: 5px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 5;
+
+  color: rgba(220,220,210,0.55);
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+
+  pointer-events: none;
+}
+
+
+.pad-axis-y {
+
+  position: absolute;
+
+  bottom: 5px;
+
+  right: 6px;
+
+  z-index: 5;
+
+  color: rgba(220,220,210,0.55);
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+
+  pointer-events: none;
 }
 
 
@@ -462,12 +781,14 @@ button:active {
    ========================================================= */
 
 #pointer {
+
   width: 34px;
   height: 34px;
 
   position: absolute;
 
-  transform: translate(-50%, -50%);
+  transform:
+    translate(-50%, -50%);
 
   display: none;
 
@@ -476,22 +797,33 @@ button:active {
   border-radius: 50%;
 
   background:
+
     radial-gradient(
       circle,
+
       #fff 0%,
+
       #fff 8%,
+
       #ffb0d0 22%,
+
       #ff176f 42%,
+
       rgba(255,23,111,0.5) 62%,
+
       rgba(255,23,111,0) 100%
     );
 
   box-shadow:
+
     0 0 5px #fff,
+
     0 0 12px #ff176f,
+
     0 0 25px rgba(255,23,111,0.6);
 
-  filter: blur(0.7px);
+  filter:
+    blur(0.7px);
 
   mix-blend-mode: screen;
 
@@ -500,14 +832,17 @@ button:active {
 
 
 /* =========================================================
-   BOTTOM CONTROL PANEL
+   BOTTOM CONTROL
    ========================================================= */
 
 .bottom-controls {
+
   width: 94%;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
   gap: 7px;
@@ -515,6 +850,7 @@ button:active {
   padding: 9px 10px 10px;
 
   background:
+
     linear-gradient(
       180deg,
       #151515,
@@ -522,17 +858,21 @@ button:active {
     );
 
   border-top: 1px solid #4b4b4b;
+
   border-bottom: 1px solid #050505;
 
   box-shadow:
+
     inset 0 1px 3px rgba(255,255,255,0.04),
+
     inset 0 -3px 6px rgba(0,0,0,0.7);
 }
 
 
-/* SPEED LABEL */
+/* LABEL */
 
 label {
+
   width: 100%;
 
   font-size: 10px;
@@ -546,28 +886,31 @@ label {
   text-align: left;
 }
 
+
 #speedVal {
+
   color: #e5e0d3;
 }
 
 
 /* =========================================================
-   SPEED CONTROL
+   SPEED
    ========================================================= */
 
 .speed-wrapper {
+
   width: 100%;
 
   display: flex;
+
   align-items: center;
 
   gap: 10px;
 }
 
 
-/* RESET BUTTON */
-
 #resetSpeedBtn {
+
   width: 38px;
   height: 28px;
 
@@ -576,6 +919,7 @@ label {
   padding: 0;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
@@ -586,6 +930,7 @@ label {
   color: #ccc;
 
   background:
+
     linear-gradient(
       180deg,
       #555,
@@ -595,24 +940,32 @@ label {
   border: 1px solid #080808;
 
   box-shadow:
+
     inset 0 1px 1px rgba(255,255,255,0.2),
+
     2px 2px 0 #050505;
 }
 
+
 #resetSpeedBtn:active {
-  transform: translate(1px, 1px);
+
+  transform:
+    translate(1px, 1px);
 
   box-shadow:
+
     inset 0 2px 3px #000,
+
     1px 1px 0 #050505;
 }
 
 
 /* =========================================================
-   RANGE SLIDER
+   RANGE
    ========================================================= */
 
 input[type="range"] {
+
   flex: 1;
 
   width: 100%;
@@ -620,9 +973,11 @@ input[type="range"] {
   height: 4px;
 
   appearance: none;
+
   -webkit-appearance: none;
 
   background:
+
     linear-gradient(
       90deg,
       #777,
@@ -638,10 +993,10 @@ input[type="range"] {
 }
 
 
-/* SLIDER THUMB */
-
 input[type="range"]::-webkit-slider-thumb {
+
   appearance: none;
+
   -webkit-appearance: none;
 
   width: 18px;
@@ -650,6 +1005,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
 
   background:
+
     linear-gradient(
       145deg,
       #777,
@@ -659,19 +1015,24 @@ input[type="range"]::-webkit-slider-thumb {
   border: 1px solid #080808;
 
   box-shadow:
+
     inset 0 1px 2px rgba(255,255,255,0.3),
+
     2px 2px 2px #000;
 
   cursor: pointer;
 }
 
+
 input[type="range"]::-moz-range-thumb {
+
   width: 18px;
   height: 18px;
 
   border-radius: 50%;
 
   background:
+
     linear-gradient(
       145deg,
       #777,
@@ -681,10 +1042,48 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid #080808;
 
   box-shadow:
+
     inset 0 1px 2px rgba(255,255,255,0.3),
+
     2px 2px 2px #000;
 
   cursor: pointer;
+}
+
+
+/* =========================================================
+   HARDWARE FOOTER
+   ========================================================= */
+
+.hardware-footer {
+
+  width: 94%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color: #666;
+
+  font-size: 7px;
+
+  letter-spacing: 0.5px;
+
+  padding: 0 3px;
+
+  position: relative;
+
+  z-index: 40;
+}
+
+
+.serial {
+
+  color: #555;
+
+  font-size: 6px;
 }
 
 
@@ -695,20 +1094,36 @@ input[type="range"]::-moz-range-thumb {
 @media (max-height: 650px) {
 
   .app-container {
+
     padding: 12px 14px;
+
     gap: 7px;
   }
 
   .brand-main-logo {
+
     font-size: 27px;
   }
 
+  .io-label {
+
+    top: 52px;
+  }
+
   #pad {
+
     width: 78%;
+
     margin: 4px auto;
   }
 
   .bottom-controls {
+
     padding: 6px 8px;
   }
-        }
+
+  .hardware-footer {
+
+    display: none;
+  }
+}
