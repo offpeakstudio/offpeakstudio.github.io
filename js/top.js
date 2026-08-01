@@ -164,7 +164,8 @@ window.addEventListener('load', function() {
   const openingScene = document.getElementById('opening-scene');
   const openingText = document.getElementById('opening-text');
   
-  const message = "こんにちは";
+  const message = `こんにちは
+off-peak studioへようこそ`; // ※複数行メッセージにも対応
   let charIndex = 0;
   const typingSpeed = 180; // 1文字あたりのタイピング速度 (ミリ秒)
 
@@ -176,20 +177,16 @@ window.addEventListener('load', function() {
       setTimeout(typeWriter, typingSpeed);
     } else {
       // 2. 文字がすべて打ち終わったら「間（タメ）」を作ってからテレビ起動！
-      setTimeout(startCrtScene, 600); // 0.6秒余韻を残す
+      setTimeout(startCrtScene, 800); // 0.8秒余韻を残して黒画面のタメを作る
     }
   }
 
   // 3. CRTテレビ起動処理
   function startCrtScene() {
-    // テキストを一瞬で消去して黒画面に戻す
-    openingText.style.display = 'none';
-    
-    // クラスを付与してCRTアニメーションを走らせる
+    // クラスを付与（CSS側で文字が消え、静寂の黒画面 → CRT起動へと繋がります）
     openingScene.classList.add('crt-turn-on');
   }
 
   // ページ読み込み完了後、少し（0.4秒）暗転を置いてからタイピングスタート
   setTimeout(typeWriter, 400);
 });
-
