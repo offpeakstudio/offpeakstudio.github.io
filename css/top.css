@@ -293,13 +293,10 @@ body {
   }
 
 }
-
-
 .terminal.error {
   animation:
     errorFlash 0.2s;
 }
-
 /* =========================================
    CRT & VHS EFFECTS (走査線 + VHS揺れ)
 ========================================= */
@@ -400,7 +397,6 @@ body {
 
 
   .key {
-
     height: 55px;
   }
 
