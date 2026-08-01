@@ -419,6 +419,86 @@ body::after {
     transform: scaleY(1) skewX(0deg);
   }
 }
+/* =========================================
+   OPENING SCENE (CRT起動オープニング)
+========================================= */
+
+#opening-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000; /* 完全な真っ暗画面 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+/* タイプライターテキスト（レトログリーン） */
+#opening-text {
+  font-family: "Courier New", monospace;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--screen-text); /* #66e5cf (CRTグリーン) */
+  letter-spacing: 4px;
+  text-shadow: 0 0 8px var(--screen-text);
+  min-height: 1.2em;
+}
+
+/* 点滅カーソル */
+#opening-text::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--screen-text);
+  animation: cursorBlink 0.6s infinite alternate;
+}
+
+@keyframes cursorBlink {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* -----------------------------------------
+   ブラウン管（CRT）起動アニメーション
+----------------------------------------- */
+#opening-scene.crt-turn-on {
+  animation: crtPowerOn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crtPowerOn {
+  /* 0%〜15%: 電源ONの瞬間！中央に白く光る横線が「プツン」と出現 */
+  0% {
+    clip-path: ellipse(0px 0px at 50% 50%);
+    background: #fff;
+    filter: brightness(3);
+  }
+  15% {
+    clip-path: ellipse(140px 2px at 50% 50%); /* 細い光の線 */
+    background: #111;
+    filter: brightness(2);
+  }
+  
+  /* 20%〜70%: モヤ〜ッと楕円状に画面全体へ広がっていく */
+  40% {
+    clip-path: ellipse(40% 15% at 50% 50%);
+    filter: brightness(1.5) contrast(120%);
+  }
+  
+  /* 70%〜100%: パッと全開になり暗転解除 */
+  85% {
+    clip-path: ellipse(80% 80% at 50% 50%);
+    filter: brightness(1.1);
+  }
+  100% {
+    clip-path: ellipse(150% 150% at 50% 50%);
+    filter: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
 
 /* =========================================
