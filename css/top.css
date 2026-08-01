@@ -466,32 +466,40 @@ body::after {
   /* ★ steps(12) を使うことで、あえてコマ送りのカクカクした動きにします！ */
   animation: crtCheapPowerOn 1.8s steps(12) forwards;
 }
+/* -----------------------------------------
+   CRT起動：暗転の間 ＋ カクカク横長開口
+----------------------------------------- */
+#opening-scene.crt-turn-on {
+  /* 全体時間を2.0秒にして、コマ送り(14ステップ)でカクカク動かします */
+  animation: crtCheapPowerOn 2.0s steps(14) forwards;
+}
 
 @keyframes crtCheapPowerOn {
-  /* 0%: 静寂の真っ暗 */
-  0% {
+  /* 0%〜18%: ★完全な真っ暗な画面（静寂の間） */
+  0%, 18% {
     clip-path: inset(50% 50% 50% 50%);
     background: #000;
+    filter: none;
   }
 
-  /* 10%〜25%: 真ん中に横一線の「ピピッ」とした光の筋（チープな横線） */
-  10% {
+  /* 20%〜30%: 真ん中に横一線のチープな光の筋が「ピピッ」と走る */
+  22% {
     clip-path: inset(49.5% 35% 49.5% 35%); /* 極細の横線 */
     background: #fff;
     filter: brightness(3);
   }
-  20% {
-    clip-path: inset(49% 10% 49% 10%); /* 横にびーっと伸びる */
+  28% {
+    clip-path: inset(49% 8% 49% 8%); /* 横にびーっと伸ばす */
     background: var(--screen-text);
     filter: brightness(2);
   }
 
-  /* 30%〜80%: ここから上下に「パカッ」と粗く開いていく（楕円ではなく四角形ベースの開口） */
-  35% {
+  /* 35%〜80%: ここから四角形（□）が上下にパカッと開いていく */
+  38% {
     clip-path: inset(38% 5% 38% 5% round 15px); /* 四隅が丸い四角 */
-    filter: contrast(200%) hue-rotate(20deg); /* 一瞬色もチープに狂う */
+    filter: contrast(200%) hue-rotate(20deg);
   }
-  50% {
+  52% {
     clip-path: inset(22% 3% 22% 3% round 20px);
     filter: contrast(140%);
   }
@@ -500,8 +508,8 @@ body::after {
     filter: brightness(1.2);
   }
 
-  /* 85%〜100%: バシッと画面全体へ広がって消える */
-  85% {
+  /* 88%〜100%: 画面全体にカチッと切り替わり、オープニング完了 */
+  88% {
     clip-path: inset(0% 0% 0% 0% round 0px);
     filter: none;
     opacity: 1;
@@ -512,6 +520,8 @@ body::after {
     visibility: hidden;
   }
 }
+
+
 /* =========================================
    MOBILE
 ========================================= */
