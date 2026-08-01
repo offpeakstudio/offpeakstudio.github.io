@@ -460,38 +460,52 @@ body::after {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
 /* -----------------------------------------
-   ブラウン管（CRT）起動アニメーション
+   ブラウン管（CRT）起動アニメーション（じっくり拡大版）
 ----------------------------------------- */
 #opening-scene.crt-turn-on {
-  animation: crtPowerOn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  /* 時間を1.2s -> 2.2s に伸ばし、イージングでじわじわ開く感じを強調 */
+  animation: crtPowerOn 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes crtPowerOn {
-  /* 0%〜15%: 電源ONの瞬間！中央に白く光る横線が「プツン」と出現 */
+  /* 0%〜10%: 一瞬完全な真っ暗（静寂） */
   0% {
-    clip-path: ellipse(0px 0px at 50% 50%);
+    clip-path: circle(0px at 50% 50%);
+    background: #000;
+    filter: none;
+  }
+
+  /* 10%〜20%: 中央に「プツン」と小さな白い高電圧の光が出現 */
+  12% {
+    clip-path: ellipse(40px 1px at 50% 50%);
     background: #fff;
-    filter: brightness(3);
+    filter: brightness(4) blur(1px);
   }
-  15% {
-    clip-path: ellipse(140px 2px at 50% 50%); /* 細い光の線 */
+  18% {
+    clip-path: ellipse(20px 8px at 50% 50%);
     background: #111;
-    filter: brightness(2);
+    filter: brightness(2) blur(0px);
   }
-  
-  /* 20%〜70%: モヤ〜ッと楕円状に画面全体へ広がっていく */
-  40% {
-    clip-path: ellipse(40% 15% at 50% 50%);
-    filter: brightness(1.5) contrast(120%);
+
+  /* 20%〜80%: ここから「モヤ〜ッ」と時間をかけて真ん中から見える範囲が広がっていく */
+  35% {
+    /* 画面中央に小さく楕円でくり抜かれ、裏の画面が見え始める */
+    clip-path: ellipse(15% 8% at 50% 50%);
+    filter: brightness(1.8) contrast(140%) blur(2px);
   }
-  
-  /* 70%〜100%: パッと全開になり暗転解除 */
+  60% {
+    /* じわじわと広がり、ぼかし（モヤ〜感）が残る */
+    clip-path: ellipse(45% 28% at 50% 50%);
+    filter: brightness(1.4) contrast(120%) blur(1px);
+  }
   85% {
-    clip-path: ellipse(80% 80% at 50% 50%);
-    filter: brightness(1.1);
+    /* ほぼ画面全体へ */
+    clip-path: ellipse(80% 65% at 50% 50%);
+    filter: brightness(1.1) blur(0px);
   }
+
+  /* 100%: くっきり完全に開いてオープニング終了 */
   100% {
     clip-path: ellipse(150% 150% at 50% 50%);
     filter: none;
