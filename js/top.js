@@ -165,8 +165,8 @@ window.addEventListener('load', function() {
   const openingText = document.getElementById('opening-text');
   
   const message = `こんにちは
-off-peak studio
-へようこそ`; // ※複数行メッセージにも対応
+off-peak studio へ
+ようこそ`; // ※複数行メッセージにも対応
   let charIndex = 0;
   const typingSpeed = 180; // 1文字あたりのタイピング速度 (ミリ秒)
 
