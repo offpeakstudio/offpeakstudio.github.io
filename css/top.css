@@ -420,25 +420,24 @@ body::after {
   }
 }
 /* =========================================
-   CRT OPENING SCENE (修正版)
+   CRT OPENING SCENE (決定版)
 ========================================= */
 
-/* 1. 全体を真っ黒で覆い尽くすベースの幕 */
+/* 1. 画面全体を【完全に真っ黒】で覆う */
 #opening-scene {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #000; /* 常に画面全体を黒で覆う */
+  background-color: #000000 !important; /* 絶対に端末を透けさせない */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999;
-  /* アニメーションが終わるまではしっかり覆う */
+  z-index: 99999; /* 最前面に配置 */
 }
 
-/* 2. テキスト表示エリア */
+/* 2. テキストスタイル */
 #opening-text {
   font-family: "Courier New", monospace;
   font-size: 22px;
@@ -462,63 +461,63 @@ body::after {
 }
 
 /* -----------------------------------------
-   CRT起動アニメーション（黒い幕自体を四角く開く）
+   CRT起動：JSでこのクラス（.crt-turn-on）がついたら発動
 ----------------------------------------- */
-#opening-scene.crt-turn-on {
-  /* 文字を消す */
-  color: transparent;
-  
-  /* コマ送り(14ステップ)で黒い幕を開く */
-  animation: crtCheapPowerOn 2.0s steps(14) forwards;
+#opening-scene.crt-turn-on #opening-text {
+  /* 文字は起動時に即座に消す */
+  display: none !important;
 }
 
-#opening-scene.crt-turn-on #opening-text {
-  display: none; /* タイピング文字を確実に非表示 */
+#opening-scene.crt-turn-on {
+  /* 2.0秒かけて黒い幕を開く */
+  animation: crtCheapPowerOn 2.0s steps(12) forwards;
 }
 
 @keyframes crtCheapPowerOn {
-  /* 0%〜20%: ★完全な真っ暗（端末は絶対に透けない） */
-  0%, 20% {
-    clip-path: inset(50% 50% 50% 50%);
-    background: #000;
+  /* 【フェーズ1】0%〜25%：完全な真っ暗の静寂（端末は1ミリも透けない） */
+  0%, 25% {
+    clip-path: inset(0% 0% 0% 0%); /* 全面黒 */
+    background-color: #000000;
   }
 
-  /* 22%〜30%: 真ん中に横一線の光（まだ画面は開かない） */
-  22% {
-    clip-path: inset(49.5% 35% 49.5% 35%);
-    background: #fff;
+  /* 【フェーズ2】26%〜35%：中央に一瞬「横一線の白い光」が走る */
+  26% {
+    clip-path: inset(49.5% 20% 49.5% 20%);
+    background-color: #ffffff; /* 白い発光 */
   }
-  28% {
-    clip-path: inset(49% 8% 49% 8%);
-    background: var(--screen-text);
-  }
-
-  /* 35%〜85%: 黒い幕の中央から「□」の形で外側へくり抜かれていく */
-  38% {
-    clip-path: inset(38% 5% 38% 5% round 15px);
-    background: transparent; /* ここから後ろの端末が□の中にだけ見え始める */
-  }
-  52% {
-    clip-path: inset(22% 3% 22% 3% round 20px);
-    background: transparent;
-  }
-  70% {
-    clip-path: inset(8% 1% 8% 1% round 25px);
-    background: transparent;
+  32% {
+    clip-path: inset(49% 5% 49% 5%);
+    background-color: var(--screen-text); /* ミント色の発光 */
   }
 
-  /* 88%〜100%: 全開になって幕が消え、端末が完全に映る */
-  88% {
+  /* 【フェーズ3】36%〜85%：黒い幕が中央から「□」状にくり抜かれて広がり、端末が覗く */
+  36% {
+    clip-path: inset(40% 15% 40% 15% round 12px);
+    background-color: #000000;
+  }
+  55% {
+    clip-path: inset(22% 8% 22% 8% round 20px);
+    background-color: #000000;
+  }
+  75% {
+    clip-path: inset(6% 2% 6% 2% round 24px);
+    background-color: #000000;
+  }
+
+  /* 【フェーズ4】90%〜100%：完全に幕が開いて消失、端末が画面全体に現れる */
+  90% {
     clip-path: inset(0% 0% 0% 0% round 0px);
-    opacity: 1;
+    background-color: transparent;
   }
   100% {
     clip-path: inset(0% 0% 0% 0%);
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
+    pointer-events: none; /* クリックを邪魔しない */
   }
 }
+
+
 /* =========================================
    MOBILE
 ========================================= */
