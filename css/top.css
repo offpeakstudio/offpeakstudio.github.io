@@ -420,24 +420,24 @@ body::after {
   }
 }
 /* =========================================
-   CRT OPENING SCENE (決定版)
+   CRT OPENING SCENE (決定版・正しい順番)
 ========================================= */
 
-/* 1. 画面全体を【完全に真っ黒】で覆う */
+/* 1. 画面全体を覆う真っ黒な幕 */
 #opening-scene {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000 !important; /* 絶対に端末を透けさせない */
+  background-color: #000000 !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999; /* 最前面に配置 */
+  z-index: 99999;
 }
 
-/* 2. テキストスタイル */
+/* 2. 中央のテキスト */
 #opening-text {
   font-family: "Courier New", monospace;
   font-size: 22px;
@@ -447,6 +447,8 @@ body::after {
   text-shadow: 2px 2px 0px rgba(0,0,0,0.8), 0 0 4px var(--screen-text);
   white-space: pre-wrap;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 #opening-text::after {
@@ -460,63 +462,104 @@ body::after {
   to { visibility: hidden; }
 }
 
+/* 3. 広がる「光る四角」の擬似要素（初期状態は消しておく） */
+#opening-scene::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0px;
+  height: 0px;
+  transform: translate(-50%, -50%);
+  background: var(--screen-text); /* 光るミント色 */
+  box-shadow: 0 0 20px var(--screen-text), inset 0 0 15px #fff;
+  border-radius: 10px;
+  opacity: 0;
+  z-index: 1;
+}
+
 /* -----------------------------------------
-   CRT起動：JSでこのクラス（.crt-turn-on）がついたら発動
+   CRT起動アニメーション
 ----------------------------------------- */
+
+/* 文字は起動開始で即削除 */
 #opening-scene.crt-turn-on #opening-text {
-  /* 文字は起動時に即座に消す */
   display: none !important;
 }
 
-#opening-scene.crt-turn-on {
-  /* 2.0秒かけて黒い幕を開く */
-  animation: crtCheapPowerOn 2.0s steps(12) forwards;
+/* 光る四角のアニメーション */
+#opening-scene.crt-turn-on::before {
+  animation: squareExpand 1.2s steps(8) forwards;
 }
 
-@keyframes crtCheapPowerOn {
-  /* 【フェーズ1】0%〜25%：完全な真っ暗の静寂（端末は1ミリも透けない） */
-  0%, 25% {
-    clip-path: inset(0% 0% 0% 0%); /* 全面黒 */
-    background-color: #000000;
-  }
+/* 黒い幕全体の消失 */
+#opening-scene.crt-turn-on {
+  animation: sceneFadeOut 1.2s steps(8) forwards;
+}
 
-  /* 【フェーズ2】26%〜35%：中央に一瞬「横一線の白い光」が走る */
-  26% {
-    clip-path: inset(49.5% 20% 49.5% 20%);
-    background-color: #ffffff; /* 白い発光 */
+/* 【アニメーション1】光る四角（□）が大きくなる */
+@keyframes squareExpand {
+  /* 0%〜20%: 文字が消えた後の「黒いタメ」 */
+  0%, 20% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
   }
-  32% {
-    clip-path: inset(49% 5% 49% 5%);
-    background-color: var(--screen-text); /* ミント色の発光 */
+  /* 25%: 一瞬小さな「点〜横線」が現れる */
+  25% {
+    width: 80px;
+    height: 4px;
+    opacity: 1;
+    background: #ffffff;
   }
-
-  /* 【フェーズ3】36%〜85%：黒い幕が中央から「□」状にくり抜かれて広がり、端末が覗く */
-  36% {
-    clip-path: inset(40% 15% 40% 15% round 12px);
-    background-color: #000000;
+  /* 40%〜80%: 「□」になって段階的に画面全体へ広がる */
+  40% {
+    width: 25vw;
+    height: 18vh;
+    opacity: 1;
+    background: var(--screen-text);
   }
-  55% {
-    clip-path: inset(22% 8% 22% 8% round 20px);
-    background-color: #000000;
+  60% {
+    width: 60vw;
+    height: 45vh;
   }
-  75% {
-    clip-path: inset(6% 2% 6% 2% round 24px);
-    background-color: #000000;
+  80% {
+    width: 90vw;
+    height: 80vh;
   }
-
-  /* 【フェーズ4】90%〜100%：完全に幕が開いて消失、端末が画面全体に現れる */
+  /* 90%: 全面を覆い尽くすほどの光になる */
   90% {
-    clip-path: inset(0% 0% 0% 0% round 0px);
-    background-color: transparent;
+    width: 150vw;
+    height: 150vh;
+    border-radius: 0;
+    opacity: 1;
+  }
+  /* 100%: 光が消える */
+  100% {
+    width: 150vw;
+    height: 150vh;
+    opacity: 0;
+  }
+}
+
+/* 【アニメーション2】黒い幕が消えて端末が現れる */
+@keyframes sceneFadeOut {
+  0%, 85% {
+    background-color: #000000 !important;
+    opacity: 1;
+  }
+  /* 四角が広がりきった直後（90%〜）に黒い幕が消えて端末が登場！ */
+  90% {
+    background-color: transparent !important;
+    opacity: 1;
   }
   100% {
-    clip-path: inset(0% 0% 0% 0%);
+    background-color: transparent !important;
     opacity: 0;
     visibility: hidden;
-    pointer-events: none; /* クリックを邪魔しない */
+    pointer-events: none;
   }
 }
-
 
 /* =========================================
    MOBILE
