@@ -419,9 +419,10 @@ body::after {
     transform: scaleY(1) skewX(0deg);
   }
 }
+
 /* =========================================
-   OPENING SCENE (CRT起動オープニング)
-========================================= */
+   CHEAP & RETRO CRT OPENING (愛おしいチープ感)
+======================================== */
 
 #opening-scene {
   position: fixed;
@@ -429,7 +430,7 @@ body::after {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #000; /* 完全な真っ暗画面 */
+  background: #050505;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -437,84 +438,80 @@ body::after {
   pointer-events: none;
 }
 
-/* タイプライターテキスト（レトログリーン） */
 #opening-text {
   font-family: "Courier New", monospace;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
-  color: var(--screen-text); /* #66e5cf (CRTグリーン) */
-  letter-spacing: 4px;
-  text-shadow: 0 0 8px var(--screen-text);
-  min-height: 1.2em;
+  color: var(--screen-text);
+  letter-spacing: 3px;
+  /* ぼかし（Glow）を少し雑にしてチープに */
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8), 0 0 4px var(--screen-text);
 }
 
-/* 点滅カーソル */
 #opening-text::after {
-  content: "█";
-  margin-left: 4px;
+  content: "■"; /* 四角いカーソルのほうがチープ感が出ます */
+  margin-left: 6px;
   color: var(--screen-text);
-  animation: cursorBlink 0.6s infinite alternate;
+  animation: cursorBlink 0.4s steps(2, start) infinite;
 }
 
 @keyframes cursorBlink {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  to { visibility: hidden; }
 }
+
 /* -----------------------------------------
-   ブラウン管（CRT）起動アニメーション（じっくり拡大版）
+   CRT起動：カクカク ＆ 横長歪みステップ
 ----------------------------------------- */
 #opening-scene.crt-turn-on {
-  /* 時間を1.2s -> 2.2s に伸ばし、イージングでじわじわ開く感じを強調 */
-  animation: crtPowerOn 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* ★ steps(12) を使うことで、あえてコマ送りのカクカクした動きにします！ */
+  animation: crtCheapPowerOn 1.8s steps(12) forwards;
 }
 
-@keyframes crtPowerOn {
-  /* 0%〜10%: 一瞬完全な真っ暗（静寂） */
+@keyframes crtCheapPowerOn {
+  /* 0%: 静寂の真っ暗 */
   0% {
-    clip-path: circle(0px at 50% 50%);
+    clip-path: inset(50% 50% 50% 50%);
     background: #000;
-    filter: none;
   }
 
-  /* 10%〜20%: 中央に「プツン」と小さな白い高電圧の光が出現 */
-  12% {
-    clip-path: ellipse(40px 1px at 50% 50%);
+  /* 10%〜25%: 真ん中に横一線の「ピピッ」とした光の筋（チープな横線） */
+  10% {
+    clip-path: inset(49.5% 35% 49.5% 35%); /* 極細の横線 */
     background: #fff;
-    filter: brightness(4) blur(1px);
+    filter: brightness(3);
   }
-  18% {
-    clip-path: ellipse(20px 8px at 50% 50%);
-    background: #111;
-    filter: brightness(2) blur(0px);
+  20% {
+    clip-path: inset(49% 10% 49% 10%); /* 横にびーっと伸びる */
+    background: var(--screen-text);
+    filter: brightness(2);
   }
 
-  /* 20%〜80%: ここから「モヤ〜ッ」と時間をかけて真ん中から見える範囲が広がっていく */
+  /* 30%〜80%: ここから上下に「パカッ」と粗く開いていく（楕円ではなく四角形ベースの開口） */
   35% {
-    /* 画面中央に小さく楕円でくり抜かれ、裏の画面が見え始める */
-    clip-path: ellipse(15% 8% at 50% 50%);
-    filter: brightness(1.8) contrast(140%) blur(2px);
+    clip-path: inset(38% 5% 38% 5% round 15px); /* 四隅が丸い四角 */
+    filter: contrast(200%) hue-rotate(20deg); /* 一瞬色もチープに狂う */
   }
-  60% {
-    /* じわじわと広がり、ぼかし（モヤ〜感）が残る */
-    clip-path: ellipse(45% 28% at 50% 50%);
-    filter: brightness(1.4) contrast(120%) blur(1px);
+  50% {
+    clip-path: inset(22% 3% 22% 3% round 20px);
+    filter: contrast(140%);
   }
-  85% {
-    /* ほぼ画面全体へ */
-    clip-path: ellipse(80% 65% at 50% 50%);
-    filter: brightness(1.1) blur(0px);
+  70% {
+    clip-path: inset(8% 1% 8% 1% round 25px);
+    filter: brightness(1.2);
   }
 
-  /* 100%: くっきり完全に開いてオープニング終了 */
-  100% {
-    clip-path: ellipse(150% 150% at 50% 50%);
+  /* 85%〜100%: バシッと画面全体へ広がって消える */
+  85% {
+    clip-path: inset(0% 0% 0% 0% round 0px);
     filter: none;
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 0%);
     opacity: 0;
     visibility: hidden;
   }
 }
-
-
 /* =========================================
    MOBILE
 ========================================= */
