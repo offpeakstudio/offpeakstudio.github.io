@@ -30,6 +30,7 @@
 body {
 
   margin: 0;
+  width: 100vh;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -57,6 +58,7 @@ body {
 .terminal {
   width: 100%;
   max-width: 420px;
+  height: auto;
   padding: 20px;
   border-radius: 28px;
   background: var(--cream);
