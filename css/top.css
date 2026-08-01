@@ -419,37 +419,39 @@ body::after {
     transform: scaleY(1) skewX(0deg);
   }
 }
-
 /* =========================================
-   CHEAP & RETRO CRT OPENING (愛おしいチープ感)
-======================================== */
+   CRT OPENING SCENE (修正版)
+========================================= */
 
+/* 1. 全体を真っ黒で覆い尽くすベースの幕 */
 #opening-scene {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #050505;
+  background: #000; /* 常に画面全体を黒で覆う */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99999;
-  pointer-events: none;
+  /* アニメーションが終わるまではしっかり覆う */
 }
 
+/* 2. テキスト表示エリア */
 #opening-text {
   font-family: "Courier New", monospace;
   font-size: 22px;
   font-weight: bold;
   color: var(--screen-text);
   letter-spacing: 3px;
-  /* ぼかし（Glow）を少し雑にしてチープに */
   text-shadow: 2px 2px 0px rgba(0,0,0,0.8), 0 0 4px var(--screen-text);
+  white-space: pre-wrap;
+  text-align: center;
 }
 
 #opening-text::after {
-  content: "■"; /* 四角いカーソルのほうがチープ感が出ます */
+  content: "■";
   margin-left: 6px;
   color: var(--screen-text);
   animation: cursorBlink 0.4s steps(2, start) infinite;
@@ -460,68 +462,63 @@ body::after {
 }
 
 /* -----------------------------------------
-   CRT起動：カクカク ＆ 横長歪みステップ
+   CRT起動アニメーション（黒い幕自体を四角く開く）
 ----------------------------------------- */
 #opening-scene.crt-turn-on {
-  /* ★ steps(12) を使うことで、あえてコマ送りのカクカクした動きにします！ */
-  animation: crtCheapPowerOn 1.8s steps(12) forwards;
-}
-/* -----------------------------------------
-   CRT起動：暗転の間 ＋ カクカク横長開口
------------------------------------------ */
-#opening-scene.crt-turn-on {
-  /* 全体時間を2.0秒にして、コマ送り(14ステップ)でカクカク動かします */
+  /* 文字を消す */
+  color: transparent;
+  
+  /* コマ送り(14ステップ)で黒い幕を開く */
   animation: crtCheapPowerOn 2.0s steps(14) forwards;
 }
 
+#opening-scene.crt-turn-on #opening-text {
+  display: none; /* タイピング文字を確実に非表示 */
+}
+
 @keyframes crtCheapPowerOn {
-  /* 0%〜18%: ★完全な真っ暗な画面（静寂の間） */
-  0%, 18% {
+  /* 0%〜20%: ★完全な真っ暗（端末は絶対に透けない） */
+  0%, 20% {
     clip-path: inset(50% 50% 50% 50%);
     background: #000;
-    filter: none;
   }
 
-  /* 20%〜30%: 真ん中に横一線のチープな光の筋が「ピピッ」と走る */
+  /* 22%〜30%: 真ん中に横一線の光（まだ画面は開かない） */
   22% {
-    clip-path: inset(49.5% 35% 49.5% 35%); /* 極細の横線 */
+    clip-path: inset(49.5% 35% 49.5% 35%);
     background: #fff;
-    filter: brightness(3);
   }
   28% {
-    clip-path: inset(49% 8% 49% 8%); /* 横にびーっと伸ばす */
+    clip-path: inset(49% 8% 49% 8%);
     background: var(--screen-text);
-    filter: brightness(2);
   }
 
-  /* 35%〜80%: ここから四角形（□）が上下にパカッと開いていく */
+  /* 35%〜85%: 黒い幕の中央から「□」の形で外側へくり抜かれていく */
   38% {
-    clip-path: inset(38% 5% 38% 5% round 15px); /* 四隅が丸い四角 */
-    filter: contrast(200%) hue-rotate(20deg);
+    clip-path: inset(38% 5% 38% 5% round 15px);
+    background: transparent; /* ここから後ろの端末が□の中にだけ見え始める */
   }
   52% {
     clip-path: inset(22% 3% 22% 3% round 20px);
-    filter: contrast(140%);
+    background: transparent;
   }
   70% {
     clip-path: inset(8% 1% 8% 1% round 25px);
-    filter: brightness(1.2);
+    background: transparent;
   }
 
-  /* 88%〜100%: 画面全体にカチッと切り替わり、オープニング完了 */
+  /* 88%〜100%: 全開になって幕が消え、端末が完全に映る */
   88% {
     clip-path: inset(0% 0% 0% 0% round 0px);
-    filter: none;
     opacity: 1;
   }
   100% {
     clip-path: inset(0% 0% 0% 0%);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
   }
 }
-
-
 /* =========================================
    MOBILE
 ========================================= */
