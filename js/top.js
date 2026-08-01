@@ -4,13 +4,11 @@
 
 const pages = {
 
-  "1996": "karaspad.html",
+  "1996": "kp1.html",
 
-  "1999": "kp1.html",
+  "1999": "radio.html",
 
   "2001": "visual.html",
-
-  "4040": "archive.html"
 
 };
 
