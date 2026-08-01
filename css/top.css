@@ -2,6 +2,7 @@
    OFFPEAK STUDIO
    ACCESS TERMINAL
 ========================================= */
+
 /* =========================================
    COLOR
 ========================================= */
@@ -21,23 +22,29 @@
 /* =========================================
    RESET
 ========================================= */
+
 * {
   box-sizing: border-box;
 }
-/* =========================================
-   BODY
-========================================= */
-body {
 
+html {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
   margin: 0;
-  width: 100vh;
+  width: 100%;
+  min-width: 0;
   min-height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  background:
 
+  padding: 20px;
+
+  background:
     radial-gradient(
       circle at center,
       #f4ead5 0%,
@@ -46,23 +53,40 @@ body {
     );
 
   color: var(--chocolate);
+
   font-family:
     "Courier New",
     monospace;
+
   user-select: none;
+
+  /* VHS演出 */
+  animation: vhsGlitch 6s infinite;
+
+  /* 横スクロール防止 */
+  overflow-x: hidden;
 }
+
 
 /* =========================================
    TERMINAL
 ========================================= */
+
 .terminal {
   width: 100%;
   max-width: 420px;
-  height: auto;
+
+  /* 高さを画面内に収めやすくする */
+  max-height: calc(100vh - 40px);
+
   padding: 20px;
+
   border-radius: 28px;
+
   background: var(--cream);
+
   border: 5px solid var(--chocolate);
+
   box-shadow:
     0 8px 0 var(--chocolate),
     0 16px 30px rgba(
@@ -71,46 +95,71 @@ body {
       35,
       0.25
     );
+
+  /* 中身が大きすぎた場合のみスクロール */
+  overflow-y: auto;
 }
+
+
 /* =========================================
    HEADER
 ========================================= */
+
 .terminal-header {
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   gap: 10px;
+
   margin-bottom: 18px;
   padding: 4px 5px;
 
 }
 
 
-/* OFFPEAK STUDIO */
+/* =========================================
+   OFFPEAK STUDIO
+========================================= */
 
 .logo {
 
   font-family:
     "Fascinate Inline",
     cursive;
+
   font-size: 42px;
   line-height: 1;
+
   color: var(--mint);
+
   -webkit-text-stroke:
     1.5px var(--chocolate);
+
   text-shadow:
     4px 4px 0 var(--pink);
+
 }
 
-/* ACCESS TERMINAL */
+
+/* =========================================
+   ACCESS TERMINAL
+========================================= */
+
 .terminal-title {
+
   font-size: 18px;
   font-weight: bold;
+
   letter-spacing: 1px;
+
   color: var(--pink);
+
   text-align: right;
+
 }
+
 
 /* =========================================
    DISPLAY
@@ -119,10 +168,15 @@ body {
 .display {
 
   position: relative;
+
   padding: 25px 15px;
+
   border-radius: 20px;
+
   background: var(--screen);
+
   border: 6px solid var(--pink);
+
   box-shadow:
     inset 0 0 0 3px var(--chocolate),
     inset 0 0 30px rgba(
@@ -132,146 +186,238 @@ body {
       0.6
     ),
     0 4px 0 var(--chocolate);
+
   text-align: center;
+
   margin-bottom: 22px;
+
 }
+
+
 /* =========================================
    DISPLAY LABEL
 ========================================= */
+
 .display-label {
+
   font-size: 22px;
+
   letter-spacing: 2px;
+
   color: var(--screen-text);
+
   margin-bottom: 20px;
+
 }
+
+
 /* =========================================
    CODE
 ========================================= */
+
 .code-display {
+
   display: flex;
+
   justify-content: center;
+
   gap: 12px;
+
   min-height: 42px;
+
   font-size: 36px;
+
   line-height: 1;
+
 }
 
 
 .code-display span {
+
   display: block;
+
   width: 28px;
+
   color: var(--screen-text);
+
   text-shadow:
     0 0 5px var(--screen-text);
+
 }
+
+
 /* =========================================
    STATUS
 ========================================= */
+
 .status {
+
   height: 20px;
+
   margin-top: 20px;
+
   font-size: 22px;
+
   letter-spacing: 2px;
+
   color: #9a8175;
+
 }
+
 .status.error {
   color: #ff6b6b;
 }
+
 .status.success {
   color: var(--mint-light);
 }
+
+
 /* =========================================
    KEYPAD
 ========================================= */
 
 .keypad {
+
   display: grid;
+
   grid-template-columns:
     repeat(3, 1fr);
+
   gap: 9px;
+
 }
+
+
 /* =========================================
    BUTTON
 ========================================= */
+
 .key {
+
   height: 58px;
+
   border: 3px solid var(--chocolate);
+
   border-radius: 14px;
+
   background: var(--mint-light);
+
   color: var(--chocolate);
+
   font-family:
     "Fascinate Inline",
     cursive;
+
   font-size: 40px;
+
   cursor: pointer;
+
   box-shadow:
     0 4px 0 var(--chocolate);
+
   transition:
     transform 0.08s,
     box-shadow 0.08s,
     background 0.08s;
+
 }
 
-/* HOVER */
+
+/* =========================================
+   HOVER
+========================================= */
 
 .key:hover {
   background: #b5eadf;
 }
 
-/* PRESS */
+
+/* =========================================
+   PRESS
+========================================= */
 
 .key:active {
+
   transform:
     translateY(4px);
+
   box-shadow:
     0 0 0 var(--chocolate);
+
 }
+
+
 /* =========================================
    CLEAR BUTTON
 ========================================= */
 
 .key-clear {
+
   background: var(--pink-light);
+
   color: var(--chocolate);
+
   font-size: 32px;
+
 }
 
 .key-clear:hover {
   background: #f5a5c3;
 }
 
+
 /* =========================================
    ENTER BUTTON
 ========================================= */
 
 .key-enter {
+
   background: var(--pink);
+
   color: var(--cream);
+
   font-family:
     "Fascinate Inline",
     cursive;
+
   font-size: 16px;
+
   letter-spacing: 1px;
+
 }
 
 .key-enter:hover {
   background: #ef76a5;
 }
+
+
 /* =========================================
    FOOTER
 ========================================= */
 
 .terminal-footer {
+
   margin-top: 20px;
+
   padding-top: 12px;
+
   border-top:
     2px dashed var(--cream-dark);
+
   text-align: center;
+
   font-size: 18px;
+
   font-weight: bold;
+
   letter-spacing: 2px;
+
   color: var(--pink);
+
 }
+
+
 /* =========================================
    ERROR ANIMATION
 ========================================= */
@@ -281,289 +427,542 @@ body {
   0% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-5px);
   }
+
   50% {
     transform: translateX(5px);
   }
+
   75% {
     transform: translateX(-3px);
   }
+
   100% {
     transform: translateX(0);
   }
 
 }
+
 .terminal.error {
+
   animation:
     errorFlash 0.2s;
+
 }
+
+
 /* =========================================
-   CRT & VHS EFFECTS (走査線 + VHS揺れ)
+   CRT & VHS EFFECTS
 ========================================= */
 
-/* 1. 画面全体の背景オーバーレイ（走査線） */
+/* 走査線 */
+
 body::before {
+
   content: "";
+
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* マウス操作を邪魔しない */
-  z-index: 9999;
-  
-  /* 細い走査線模様を作成 */
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  );
-  background-size: 100% 4px; /* 線の太さ調整 */
-  
-  /* ゆっくり上から下へ移動 */
-  animation: scanline 8s linear infinite;
-}
 
-/* 2. VHS特有の画面全体のジッター（グラッとする揺れ・歪み） */
-body {
-  /* 既存のプロパティに以下を追加 */
-  animation: vhsGlitch 6s infinite;
-}
-
-/* =========================================
-   KEYFRAMES (アニメーション定義)
-========================================= */
-
-/* 走査線がゆっくり降りていくアニメーション */
-@keyframes scanline {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-
-/* VHSの「グラッ」とした同期ずれ揺れ */
-@keyframes vhsGlitch {
-  0%, 85%, 100% {
-    transform: translate(0, 0) skew(0deg);
-    filter: none;
-  }
-  /* 86%〜89%の間だけ突発的に揺れる */
-  86% {
-    transform: translate(-3px, 1px) skew(-0.5deg);
-    filter: hue-rotate(-10deg); /* かすかな色のズレ */
-  }
-  87% {
-    transform: translate(4px, -1px) skew(1deg);
-  }
-  88% {
-    transform: translate(-1px, 2px) skew(-0.2deg);
-    filter: brightness(1.1);
-  }
-  89% {
-    transform: translate(0, 0) skew(0deg);
-    filter: none;
-  }
-}
-/* =========================================
-   VHS TRACKING NOISE (太く歪む横ライン)
-========================================= */
-
-/* body::after で「太いノイズ帯」を作成 */
-body::after {
-  content: "";
-  position: fixed;
-  top: -20vh; /* 画面外からスタート */
-  left: 0;
-  width: 100vw;
-  height: 120px; /* ★ノイズ帯の太さ（お好みで調整） */
-  pointer-events: none;
-  z-index: 10000;
-
-  /* 太い帯グラデーション（半透明の白・黒・ノイズの混ざり） */
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.08) 15%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(97, 200, 181, 0.15) 80%, /* ブランドカラーのミントを少し混ぜて馴染ませる */
-    transparent 100%
-  );
-
-  /* 画面を大きく歪ませるブラー＆変形 */
-  backdrop-filter: blur(2px) contrast(150%) saturate(180%);
-  
-  /* ゆっくり上から下へ通過（12秒かけて1周） */
-  animation: vhsTracking 12s linear infinite;
-}
-
-/* 太い帯が降りてくるキーフレーム */
-@keyframes vhsTracking {
-  0% {
-    top: -20vh;
-    transform: scaleY(1) skewX(0deg);
-  }
-  /* 下降途中で時折ギュッと伸び縮み＆横ブレ（VHSのズレ感） */
-  30% {
-    transform: scaleY(1.3) skewX(2deg);
-  }
-  32% {
-    transform: scaleY(0.8) skewX(-3deg);
-  }
-  35% {
-    transform: scaleY(1.1) skewX(1deg);
-  }
-  100% {
-    top: 120vh;
-    transform: scaleY(1) skewX(0deg);
-  }
-}
-/* =========================================
-   CRT OPENING SCENE (決定版・正しい順番)
-========================================= */
-
-/* 1. 画面全体を覆う真っ黒な幕 */
-#opening-scene {
-  position: fixed;
   top: 0;
   left: 0;
+
   width: 100vw;
   height: 100vh;
-  background-color: #000000 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
+
+  pointer-events: none;
+
+  z-index: 9999;
+
+  background:
+    linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.25) 50%
+    );
+
+  background-size:
+    100% 4px;
+
+  animation:
+    scanline 8s linear infinite;
+
 }
 
-/* 2. 中央のテキスト */
+
+/* =========================================
+   VHS TRACKING NOISE
+========================================= */
+
+body::after {
+
+  content: "";
+
+  position: fixed;
+
+  top: -20vh;
+  left: 0;
+
+  width: 100vw;
+  height: 120px;
+
+  pointer-events: none;
+
+  z-index: 10000;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 15%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(97, 200, 181, 0.15) 80%,
+      transparent 100%
+    );
+
+  backdrop-filter:
+    blur(2px)
+    contrast(150%)
+    saturate(180%);
+
+  animation:
+    vhsTracking 12s linear infinite;
+
+}
+
+
+/* =========================================
+   SCANLINE ANIMATION
+========================================= */
+
+@keyframes scanline {
+
+  0% {
+    background-position:
+      0 0;
+  }
+
+  100% {
+    background-position:
+      0 100%;
+  }
+
+}
+
+
+/* =========================================
+   VHS GLITCH
+========================================= */
+
+@keyframes vhsGlitch {
+
+  0%, 85%, 100% {
+
+    transform:
+      translate(0, 0)
+      skew(0deg);
+
+    filter: none;
+
+  }
+
+  86% {
+
+    transform:
+      translate(-3px, 1px)
+      skew(-0.5deg);
+
+    filter:
+      hue-rotate(-10deg);
+
+  }
+
+  87% {
+
+    transform:
+      translate(4px, -1px)
+      skew(1deg);
+
+  }
+
+  88% {
+
+    transform:
+      translate(-1px, 2px)
+      skew(-0.2deg);
+
+    filter:
+      brightness(1.1);
+
+  }
+
+  89% {
+
+    transform:
+      translate(0, 0)
+      skew(0deg);
+
+    filter: none;
+
+  }
+
+}
+
+
+/* =========================================
+   VHS TRACKING ANIMATION
+========================================= */
+
+@keyframes vhsTracking {
+
+  0% {
+
+    top: -20vh;
+
+    transform:
+      scaleY(1)
+      skewX(0deg);
+
+  }
+
+  30% {
+
+    transform:
+      scaleY(1.3)
+      skewX(2deg);
+
+  }
+
+  32% {
+
+    transform:
+      scaleY(0.8)
+      skewX(-3deg);
+
+  }
+
+  35% {
+
+    transform:
+      scaleY(1.1)
+      skewX(1deg);
+
+  }
+
+  100% {
+
+    top: 120vh;
+
+    transform:
+      scaleY(1)
+      skewX(0deg);
+
+  }
+
+}
+
+
+/* =========================================
+   CRT OPENING SCENE
+========================================= */
+
+#opening-scene {
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color:
+    #000000 !important;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  z-index: 99999;
+
+}
+
+
+/* =========================================
+   OPENING TEXT
+========================================= */
+
 #opening-text {
-  font-family: "Courier New", monospace;
+
+  font-family:
+    "Courier New",
+    monospace;
+
   font-size: 22px;
+
   font-weight: bold;
-  color: var(--screen-text);
+
+  color:
+    var(--screen-text);
+
   letter-spacing: 3px;
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.8), 0 0 4px var(--screen-text);
-  white-space: pre-wrap;
-  text-align: center;
-  position: relative;
+
+  text-shadow:
+    2px 2px 0px rgba(0,0,0,0.8),
+    0 0 4px var(--screen-text);
+
+  white-space:
+    pre-wrap;
+
+  text-align:
+    center;
+
+  position:
+    relative;
+
   z-index: 2;
+
 }
 
 #opening-text::after {
-  content: "■";
-  margin-left: 6px;
-  color: var(--screen-text);
-  animation: cursorBlink 0.4s steps(2, start) infinite;
+
+  content:
+    "■";
+
+  margin-left:
+    6px;
+
+  color:
+    var(--screen-text);
+
+  animation:
+    cursorBlink 0.4s steps(2, start) infinite;
+
 }
 
 @keyframes cursorBlink {
-  to { visibility: hidden; }
+
+  to {
+    visibility:
+      hidden;
+  }
+
 }
 
-/* 3. 広がる「光る四角」の擬似要素（初期状態は消しておく） */
+
+/* =========================================
+   CRT OPENING SQUARE
+========================================= */
+
 #opening-scene::before {
+
   content: "";
+
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   width: 0px;
   height: 0px;
-  transform: translate(-50%, -50%);
-  background: var(--screen-text); /* 光るミント色 */
-  box-shadow: 0 0 20px var(--screen-text), inset 0 0 15px #fff;
-  border-radius: 10px;
-  opacity: 0;
-  z-index: 1;
+
+  transform:
+    translate(-50%, -50%);
+
+  background:
+    var(--screen-text);
+
+  box-shadow:
+    0 0 20px var(--screen-text),
+    inset 0 0 15px #fff;
+
+  border-radius:
+    10px;
+
+  opacity:
+    0;
+
+  z-index:
+    1;
+
 }
 
-/* -----------------------------------------
-   CRT起動アニメーション
------------------------------------------ */
 
-/* 文字は起動開始で即削除 */
+/* =========================================
+   CRT TURN ON
+========================================= */
+
 #opening-scene.crt-turn-on #opening-text {
-  display: none !important;
+
+  display:
+    none !important;
+
 }
 
-/* 光る四角のアニメーション */
 #opening-scene.crt-turn-on::before {
-  animation: squareExpand 1.2s steps(8) forwards;
+
+  animation:
+    squareExpand 1.2s steps(8) forwards;
+
 }
 
-/* 黒い幕全体の消失 */
 #opening-scene.crt-turn-on {
-  animation: sceneFadeOut 1.2s steps(8) forwards;
+
+  animation:
+    sceneFadeOut 1.2s steps(8) forwards;
+
 }
 
-/* 【アニメーション1】光る四角（□）が大きくなる */
+
+/* =========================================
+   CRT SQUARE EXPAND
+========================================= */
+
 @keyframes squareExpand {
-  /* 0%〜20%: 文字が消えた後の「黒いタメ」 */
+
   0%, 20% {
-    width: 0px;
-    height: 0px;
-    opacity: 0;
+
+    width:
+      0px;
+
+    height:
+      0px;
+
+    opacity:
+      0;
+
   }
-  /* 25%: 一瞬小さな「点〜横線」が現れる */
+
   25% {
-    width: 80px;
-    height: 4px;
-    opacity: 1;
-    background: #ffffff;
+
+    width:
+      80px;
+
+    height:
+      4px;
+
+    opacity:
+      1;
+
+    background:
+      #ffffff;
+
   }
-  /* 40%〜80%: 「□」になって段階的に画面全体へ広がる */
+
   40% {
-    width: 25vw;
-    height: 18vh;
-    opacity: 1;
-    background: var(--screen-text);
+
+    width:
+      25vw;
+
+    height:
+      18vh;
+
+    opacity:
+      1;
+
+    background:
+      var(--screen-text);
+
   }
+
   60% {
-    width: 60vw;
-    height: 45vh;
+
+    width:
+      60vw;
+
+    height:
+      45vh;
+
   }
+
   80% {
-    width: 90vw;
-    height: 80vh;
+
+    width:
+      90vw;
+
+    height:
+      80vh;
+
   }
-  /* 90%: 全面を覆い尽くすほどの光になる */
+
   90% {
-    width: 150vw;
-    height: 150vh;
-    border-radius: 0;
-    opacity: 1;
+
+    width:
+      150vw;
+
+    height:
+      150vh;
+
+    border-radius:
+      0;
+
+    opacity:
+      1;
+
   }
-  /* 100%: 光が消える */
+
   100% {
-    width: 150vw;
-    height: 150vh;
-    opacity: 0;
+
+    width:
+      150vw;
+
+    height:
+      150vh;
+
+    opacity:
+      0;
+
   }
+
 }
 
-/* 【アニメーション2】黒い幕が消えて端末が現れる */
+
+/* =========================================
+   CRT SCENE FADE OUT
+========================================= */
+
 @keyframes sceneFadeOut {
+
   0%, 85% {
-    background-color: #000000 !important;
-    opacity: 1;
+
+    background-color:
+      #000000 !important;
+
+    opacity:
+      1;
+
   }
-  /* 四角が広がりきった直後（90%〜）に黒い幕が消えて端末が登場！ */
+
   90% {
-    background-color: transparent !important;
-    opacity: 1;
+
+    background-color:
+      transparent !important;
+
+    opacity:
+      1;
+
   }
+
   100% {
-    background-color: transparent !important;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+
+    background-color:
+      transparent !important;
+
+    opacity:
+      0;
+
+    visibility:
+      hidden;
+
+    pointer-events:
+      none;
+
   }
+
 }
+
 
 /* =========================================
    MOBILE
@@ -572,29 +971,322 @@ body::after {
 @media (max-width: 480px) {
 
   body {
-    padding: 15px;
+
+    padding:
+      12px;
+
+    /* 縦画面で確実に中央寄せ */
+    min-height:
+      100dvh;
+
   }
+
+
   .terminal {
-    padding: 16px;
-    border-radius: 23px;
+
+    width:
+      100%;
+
+    max-width:
+      420px;
+
+    /* 画面の高さを超えない */
+    max-height:
+      calc(100dvh - 24px);
+
+    padding:
+      14px;
+
+    border-radius:
+      23px;
+
   }
+
+
   .terminal-header {
-    margin-bottom: 15px;
+
+    margin-bottom:
+      14px;
+
+    gap:
+      6px;
+
   }
+
+
   .logo {
-    font-size: 32px;
+
+    font-size:
+      clamp(24px, 8vw, 32px);
+
   }
+
+
   .terminal-title {
-    font-size: 16px;
+
+    font-size:
+      clamp(12px, 4vw, 16px);
+
   }
+
+
   .display {
-    padding: 22px 10px;
-    border-radius: 17px;
+
+    padding:
+      20px 8px;
+
+    border-radius:
+      17px;
+
+    margin-bottom:
+      18px;
+
+  }
+
+
+  .display-label {
+
+    font-size:
+      clamp(16px, 5vw, 22px);
+
+  }
+
+
+  .code-display {
+
+    gap:
+      8px;
+
+    font-size:
+      32px;
+
+  }
+
+
+  .code-display span {
+
+    width:
+      24px;
+
+  }
+
+
+  .status {
+
+    font-size:
+      18px;
+
+  }
+
+
+  .keypad {
+
+    gap:
+      7px;
+
   }
 
 
   .key {
-    height: 55px;
+
+    height:
+      52px;
+
+    font-size:
+      34px;
+
+  }
+
+
+  .key-clear {
+
+    font-size:
+      28px;
+
+  }
+
+
+  .key-enter {
+
+    font-size:
+      14px;
+
+  }
+
+
+  .terminal-footer {
+
+    margin-top:
+      16px;
+
+    padding-top:
+      10px;
+
+    font-size:
+      14px;
+
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+   例：iPhone SEクラス
+========================================= */
+
+@media (max-width: 380px) {
+
+  body {
+
+    padding:
+      8px;
+
+  }
+
+
+  .terminal {
+
+    padding:
+      11px;
+
+    border-width:
+      4px;
+
+    border-radius:
+      20px;
+
+  }
+
+
+  .terminal-header {
+
+    margin-bottom:
+      10px;
+
+  }
+
+
+  .logo {
+
+    font-size:
+      25px;
+
+  }
+
+
+  .terminal-title {
+
+    font-size:
+      11px;
+
+  }
+
+
+  .display {
+
+    padding:
+      16px 6px;
+
+    margin-bottom:
+      14px;
+
+  }
+
+
+  .display-label {
+
+    margin-bottom:
+      12px;
+
+    font-size:
+      15px;
+
+  }
+
+
+  .code-display {
+
+    min-height:
+      36px;
+
+    gap:
+      6px;
+
+    font-size:
+      28px;
+
+  }
+
+
+  .code-display span {
+
+    width:
+      20px;
+
+  }
+
+
+  .status {
+
+    margin-top:
+      14px;
+
+    font-size:
+      15px;
+
+  }
+
+
+  .keypad {
+
+    gap:
+      5px;
+
+  }
+
+
+  .key {
+
+    height:
+      46px;
+
+    border-width:
+      2px;
+
+    border-radius:
+      11px;
+
+    font-size:
+      29px;
+
+  }
+
+
+  .key-clear {
+
+    font-size:
+      24px;
+
+  }
+
+
+  .key-enter {
+
+    font-size:
+      12px;
+
+  }
+
+
+  .terminal-footer {
+
+    margin-top:
+      12px;
+
+    font-size:
+      12px;
+
   }
 
 }
