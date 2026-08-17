@@ -6,7 +6,7 @@ const pages = {
 
   "1996": "kp1.html",
 
-  "1999": "radio.html",
+  "1985": "binary.html",
 
   "2001": "visual.html",
 
