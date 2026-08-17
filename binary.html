@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>片付けゲーム demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    body {
+      margin: 0;
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 10px 0;
+    }
+    
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    /* 画面切り替え用の表示制御 */
+    .view-screen {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* --- ステージセレクト画面 --- */
+    #select-screen {
+      padding: 20px 10px;
+      text-align: center;
+    }
+    .select-title {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #00e676;
+      letter-spacing: 2px;
+    }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 280px;
+    }
+    .stage-btn {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 16px 0;
+      font-size: 14px;
+      font-family: monospace;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .stage-btn:not(.locked):active {
+      background-color: #00e676;
+      color: #000;
+    }
+    .stage-btn.locked {
+      background-color: #1a1a1a;
+      color: #555;
+      border-color: #2a2a2a;
+      cursor: not-allowed;
+    }
+
+    /* --- ゲームプレイ画面 --- */
+    .screen-label {
+      font-size: 18px;
+      margin: 4px 0 2px 0;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(11, 21px);
+      grid-template-rows: repeat(9, 21px);
+      gap: 1px;
+      padding: 3px;
+      border: 2px solid #444;
+      border-radius: 4px;
+      background-color: #222;
+    }
+
+    #real-world {
+      background-color: #2b2622;
+      border-color: #8c6d53;
+    }
+    #spirit-world {
+      background-color: #151a24;
+      border-color: #4a6fa5;
+    }
+
+    .cell {
+      width: 21px;
+      height: 21px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 1px;
+    }
+    .wall { background-color: #444; }
+
+    .interface {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding: 0 12px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 38px);
+      grid-template-rows: repeat(3, 38px);
+      gap: 4px;
+    }
+    .btn {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn:active {
+      background-color: #555;
+    }
+
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+      padding: 0 8px;
+    }
+    .stage-badge {
+      font-size: 14px;
+      font-weight: bold;
+      color: #00e676;
+      background-color: #000;
+      padding: 4px 8px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+    #status {
+      font-size: 11px;
+      height: 16px;
+      text-align: center;
+      color: #ffb74d;
+    }
+
+    .action-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #btn-reset, #btn-select {
+      width: 50px;
+      height: 32px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 9px;
+      font-weight: bold;
+      border: none;
+      font-family: monospace;
+    }
+    #btn-reset {
+      background: #8e0000;
+      border: 1px solid #b71c1c;
+    }
+    #btn-reset:active { background: #d32f2f; }
+    
+    #btn-select {
+      background: #333;
+      border: 1px solid #555;
+    }
+    #btn-select:active { background: #555; }
+  </style>
+</head>
+<body>
+
+<div class="game-container">
+  <!-- 1. ステージセレクト画面 -->
+  <div id="select-screen" class="view-screen">
+    <div class="select-title">[ STAGE SELECT ]</div>
+    <div id="stage-buttons" class="stage-grid"></div>
+  </div>
+
+  <!-- 2. ゲームプレイ画面 -->
+  <div id="play-screen" class="view-screen hidden">
+    <div class="screen-label" style="color: #d7ccc8;">箱を片付けよう。</div>
+    <div id="real-world" class="grid"></div>
+
+    <div class="screen-label" style="color: #90caf9;">オバケに捕まるな。</div>
+    <div id="spirit-world" class="grid"></div>
+
+    <div class="interface">
+      <!-- 左：十字キー -->
+      <div class="controls">
+        <div class="btn" id="btn-up" style="grid-column: 2; grid-row: 1;">▲</div>
+        <div class="btn" id="btn-left" style="grid-column: 1; grid-row: 2;">◀</div>
+        <div class="btn" id="btn-right" style="grid-column: 3; grid-row: 2;">▶</div>
+        <div class="btn" id="btn-down" style="grid-column: 2; grid-row: 3;">▼</div>
+      </div>
+
+      <!-- 中央：ステージ表示 & メッセージ -->
+      <div class="info-panel">
+        <div class="stage-badge" id="stage-display">[STAGE-1]</div>
+        <div id="status">READY</div>
+      </div>
+
+      <!-- 右：操作ボタン（リセット / セレクトへ戻る） -->
+      <div class="action-btns">
+        <button id="btn-reset">RESET</button>
+        <button id="btn-select">STAGE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ROWS = 9;
+const COLS = 11;
+
+let currentStage = 1;
+// ブラウザの保存データから最高到達ステージを取得（初期値は1）
+let unlockedStage = parseInt(localStorage.getItem('recordShop_unlockedStage')) || 1;
+
+// ステージデータ（1〜3）
+const stages = {
+  1: {
+    realMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,0,1,1,1,0,1,1,1,0,1],
+      [1,0,1,0,0,0,0,0,1,0,1],
+      [1,0,0,0,2,0,2,0,0,0,1],
+      [1,0,1,0,0,0,0,0,1,0,1],
+      [1,0,1,1,3,0,3,1,1,0,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    spiritMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,0,1,1,1,0,1,1,1,0,1],
+      [1,0,1,0,4,0,4,0,1,0,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,0,1,0,4,0,1,0,1,0,1],
+      [1,0,1,1,0,0,0,0,1,0,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    boxes: [{r: 4, c: 4}, {r: 4, c: 6}],
+    realPlayer: {r: 1, c: 1},
+    spiritPlayer: {r: 1, c: 1}
+  },
+  2: {
+    realMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,1,0,0,0,0,0,1],
+      [1,0,1,0,1,0,1,0,1,0,1],
+      [1,0,2,0,0,0,0,0,1,0,1],
+      [1,1,1,1,0,1,0,0,0,0,1],
+      [1,3,0,0,0,0,0,2,0,0,1],
+      [1,0,0,0,0,1,0,1,1,0,1],
+      [1,3,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    spiritMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,4,0,0,0,0,0,0,0,1],
+      [1,0,1,0,1,1,1,0,1,0,1],
+      [1,0,0,0,0,4,0,0,1,0,1],
+      [1,0,1,1,0,1,0,0,0,0,1],
+      [1,0,0,0,0,1,0,0,4,0,1],
+      [1,0,0,0,0,1,0,1,1,0,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    boxes: [{r: 3, c: 2}, {r: 5, c: 7}],
+    realPlayer: {r: 1, c: 1},
+    spiritPlayer: {r: 1, c: 1}
+  },
+  3: {
+    realMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,0,1,1,1,1,1,1,1,0,1],
+      [1,0,1,3,0,0,0,3,1,0,1],
+      [1,0,1,0,2,0,2,0,1,0,1],
+      [1,0,1,0,0,0,0,0,1,0,1],
+      [1,0,1,1,1,0,1,1,1,0,1],
+      [1,0,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    spiritMap: [
+      [1,1,1,1,1,1,1,1,1,1,1],
+      [1,0,0,0,1,4,1,0,0,4,1],
+      [1,0,1,0,0,0,0,0,1,0,1],
+      [1,0,1,0,1,0,1,0,1,0,1],
+      [1,0,0,0,1,4,1,0,4,0,1],
+      [1,0,1,0,1,0,1,0,1,0,1],
+      [1,0,0,0,0,0,0,0,1,0,1],
+      [1,1,0,0,4,0,1,4,0,0,1],
+      [1,1,1,1,1,1,1,1,1,1,1]
+    ],
+    boxes: [{r: 4, c: 4}, {r: 4, c: 6}],
+    realPlayer: {r: 1, c: 1},
+    spiritPlayer: {r: 1, c: 1}
+  }
+};
+
+let realMap, spiritMap, boxes, realPlayer, spiritPlayer, isGameOver, isClear;
+
+// 画面切り替え（セレクト画面を開く）
+function showSelectScreen() {
+  document.getElementById('play-screen').classList.add('hidden');
+  document.getElementById('select-screen').classList.remove('hidden');
+  renderStageButtons();
+}
+
+// ステージボタン描画
+function renderStageButtons() {
+  const container = document.getElementById('stage-buttons');
+  container.innerHTML = '';
+  const totalStages = Object.keys(stages).length;
+
+  for (let i = 1; i <= totalStages; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'stage-btn';
+    
+    if (i <= unlockedStage) {
+      btn.textContent = `STAGE ${i}`;
+      btn.onclick = () => startStage(i);
+    } else {
+      btn.textContent = '🔒';
+      btn.classList.add('locked');
+    }
+    container.appendChild(btn);
+  }
+}
+
+// ゲーム画面を開いてステージ開始
+function startStage(stageNum) {
+  currentStage = stageNum;
+  document.getElementById('select-screen').classList.add('hidden');
+  document.getElementById('play-screen').classList.remove('hidden');
+  loadStage(currentStage);
+}
+
+function loadStage(stageNum) {
+  const stage = stages[stageNum];
+  realMap = stage.realMap.map(row => [...row]);
+  spiritMap = stage.spiritMap.map(row => [...row]);
+  boxes = stage.boxes.map(b => ({...b}));
+  realPlayer = {...stage.realPlayer};
+  spiritPlayer = {...stage.spiritPlayer};
+  
+  isGameOver = false;
+  isClear = false;
+
+  document.getElementById('stage-display').textContent = `[STAGE-${stageNum}]`;
+  document.getElementById('status').textContent = 'PUSH ALL BOXES';
+  document.getElementById('status').style.color = '#ffb74d';
+  render();
+}
+
+function createGrids() {
+  ['real-world', 'spirit-world'].forEach(id => {
+    const container = document.getElementById(id);
+    container.innerHTML = '';
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.id = `${id}-${r}-${c}`;
+        container.appendChild(cell);
+      }
+    }
+  });
+}
+
+function render() {
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const realCell = document.getElementById(`real-world-${r}-${c}`);
+      const spiritCell = document.getElementById(`spirit-world-${r}-${c}`);
+      
+      realCell.className = 'cell';
+      spiritCell.className = 'cell';
+
+      if (realMap[r][c] === 1) realCell.classList.add('wall');
+      if (spiritMap[r][c] === 1) spiritCell.classList.add('wall');
+
+      if (realMap[r][c] === 3) realCell.textContent = '◯';
+      else realCell.textContent = '';
+
+      if (spiritMap[r][c] === 4) spiritCell.textContent = '👻';
+      else spiritCell.textContent = '';
+    }
+  }
+
+  boxes.forEach(b => {
+    document.getElementById(`real-world-${b.r}-${b.c}`).textContent = '📦';
+  });
+
+  if (!isGameOver) {
+    document.getElementById(`real-world-${realPlayer.r}-${realPlayer.c}`).textContent = '🧍';
+    document.getElementById(`spirit-world-${spiritPlayer.r}-${spiritPlayer.c}`).textContent = '👤';
+  }
+}
+
+function move(dr, dc) {
+  if (isGameOver || isClear) return;
+
+  // 現実移動
+  const nrR = realPlayer.r + dr; 
+  const ncR = realPlayer.c + dc;
+  if (realMap[nrR][ncR] !== 1) {
+    const boxIdx = boxes.findIndex(b => b.r === nrR && b.c === ncR);
+    let canMove = true;
+    if (boxIdx !== -1) {
+      const nnrR = nrR + dr; 
+      const nncR = ncR + dc;
+      if (realMap[nnrR][nncR] === 1 || boxes.some(b => b.r === nnrR && b.c === nncR)) {
+        canMove = false;
+      } else {
+        boxes[boxIdx].r = nnrR; 
+        boxes[boxIdx].c = nncR;
+      }
+    }
+    if (canMove) { realPlayer.r = nrR; realPlayer.c = ncR; }
+  }
+
+  // 霊界移動
+  const nrS = spiritPlayer.r + dr; 
+  const ncS = spiritPlayer.c + dc;
+  if (spiritMap[nrS][ncS] !== 1) { 
+    spiritPlayer.r = nrS; 
+    spiritPlayer.c = ncS; 
+  }
+
+  checkState();
+  render();
+}
+
+function checkState() {
+  if (spiritMap[spiritPlayer.r][spiritPlayer.c] === 4) {
+    isGameOver = true;
+    document.getElementById('status').textContent = 'GAME OVER';
+    document.getElementById('status').style.color = '#ef5350';
+  } else if (boxes.every(b => realMap[b.r][b.c] === 3)) {
+    isClear = true;
+    document.getElementById('status').textContent = 'CLEAR!';
+    document.getElementById('status').style.color = '#66bb6a';
+
+    // 次のステージ解放処理
+    const nextStage = currentStage + 1;
+    if (nextStage > unlockedStage && stages[nextStage]) {
+      unlockedStage = nextStage;
+      localStorage.setItem('recordShop_unlockedStage', unlockedStage);
+    }
+
+    // 1秒後に自動で次ステージへ移動、全クリアならセレクト画面へ
+    setTimeout(() => {
+      if (stages[nextStage]) {
+        startStage(nextStage);
+      } else {
+        document.getElementById('status').textContent = 'ALL CLEAR!!';
+        setTimeout(showSelectScreen, 1500);
+      }
+    }, 1000);
+  }
+}
+
+// イベント設定
+document.getElementById('btn-reset').addEventListener('click', () => loadStage(currentStage));
+document.getElementById('btn-select').addEventListener('click', showSelectScreen);
+
+document.getElementById('btn-up').addEventListener('click', () => move(-1, 0));
+document.getElementById('btn-down').addEventListener('click', () => move(1, 0));
+document.getElementById('btn-left').addEventListener('click', () => move(0, -1));
+document.getElementById('btn-right').addEventListener('click', () => move(0, 1));
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowUp') move(-1, 0);
+  if (e.key === 'ArrowDown') move(1, 0);
+  if (e.key === 'ArrowLeft') move(0, -1);
+  if (e.key === 'ArrowRight') move(0, 1);
+});
+
+// 初期化
+createGrids();
+showSelectScreen();
+</script>
+</body>
+</html>
