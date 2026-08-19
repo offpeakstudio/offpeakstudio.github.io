@@ -82,6 +82,31 @@
       cursor: not-allowed;
     }
 
+    /* クリア後メッセージエリア */
+    .thank-you-box {
+      margin-top: 24px;
+      padding: 14px;
+      background-color: #1e1e1e;
+      border: 1px dashed #00e676;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #e0e0e0;
+      width: 100%;
+      max-width: 280px;
+      box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+    }
+    .thank-you-link {
+      color: #00e676;
+      font-weight: bold;
+      text-decoration: underline;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    .thank-you-link:hover {
+      color: #69f0ae;
+    }
+
     /* --- ゲームプレイ画面 --- */
     .screen-label {
       font-size: 18px;
@@ -211,6 +236,12 @@
   <div id="select-screen" class="view-screen">
     <div class="select-title">[ STAGE SELECT ]</div>
     <div id="stage-buttons" class="stage-grid"></div>
+    
+    <!-- クリア後メッセージ枠（初期表示は非表示） -->
+    <div id="thank-you-message" class="thank-you-box hidden">
+      遊んでくれてありがとう。<br>
+      この続きは、こちらで開発続けてます→<a href="https://example.com" target="_blank" rel="noopener noreferrer" class="thank-you-link">リンク先</a>
+    </div>
   </div>
 
   <!-- 2. ゲームプレイ画面 -->
@@ -252,6 +283,7 @@ const COLS = 11;
 let currentStage = 1;
 // ブラウザの保存データから最高到達ステージを取得（初期値は1）
 let unlockedStage = parseInt(localStorage.getItem('recordShop_unlockedStage')) || 1;
+let isAllCleared = localStorage.getItem('recordShop_isAllCleared') === 'true';
 
 // ステージデータ（1〜3）
 const stages = {
@@ -344,6 +376,15 @@ let realMap, spiritMap, boxes, realPlayer, spiritPlayer, isGameOver, isClear;
 function showSelectScreen() {
   document.getElementById('play-screen').classList.add('hidden');
   document.getElementById('select-screen').classList.remove('hidden');
+  
+  // 全ステージクリア状態であればメッセージを表示
+  const msgElement = document.getElementById('thank-you-message');
+  if (isAllCleared) {
+    msgElement.classList.remove('hidden');
+  } else {
+    msgElement.classList.add('hidden');
+  }
+
   renderStageButtons();
 }
 
@@ -495,6 +536,9 @@ function checkState() {
         startStage(nextStage);
       } else {
         document.getElementById('status').textContent = 'ALL CLEAR!!';
+        // 全クリアフラグを保存
+        isAllCleared = true;
+        localStorage.setItem('recordShop_isAllCleared', 'true');
         setTimeout(showSelectScreen, 1500);
       }
     }, 1000);
