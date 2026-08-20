@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>10バイヤーズマンション - UI統合版（修正版）</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Courier New', Consolas, monospace;
+      padding: 20px;
+      line-height: 1.4;
+    }
+    h1 { color: #569cd6; font-size: 1.2rem; border-bottom: 1px solid #404040; padding-bottom: 8px; margin-bottom: 10px; }
+    
+    /* プレイヤーダッシュボード */
+    #player-dashboard {
+      background: #252526;
+      border: 1px solid #007acc;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .dash-header { color: #4ec9b0; font-weight: bold; font-size: 1rem; margin-bottom: 6px; }
+    .dash-info { display: flex; gap: 20px; margin-bottom: 8px; color: #ce9178; font-weight: bold; }
+    .dash-items { display: flex; gap: 15px; flex-wrap: wrap; background: #1e1e1e; padding: 8px; border-radius: 3px; }
+    .dash-item-box { color: #dcdcaa; }
+
+    /* 行動入力フォームエリア */
+    #action-panel {
+      background: #2d2d2d;
+      border: 1px solid #3c3c3c;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+    .panel-title { color: #ffd700; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; }
+    .action-mode-buttons { display: flex; gap: 10px; margin-bottom: 10px; }
+    
+    button {
+      background: #0e639c; color: white; border: none; padding: 8px 16px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+    }
+    button:hover { background: #1177bb; }
+    button.mode-btn { background: #3a3d41; color: #ccc; }
+    button.mode-btn.active { background: #d7ba7d; color: #1e1e1e; }
+    button.execute-btn { background: #2e7d32; font-size: 0.9rem; padding: 8px 20px; }
+    button.execute-btn:hover { background: #388e3c; }
+    button.reset { background: #a31515; }
+    button.reset:hover { background: #c72e2e; }
+
+    .form-group { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    label { font-size: 0.85rem; color: #9cdcfe; }
+    select, input[type="number"] {
+      background: #1e1e1e; color: #d4d4d4; border: 1px solid #555; padding: 5px 8px; font-family: inherit; font-size: 0.85rem;
+    }
+
+    #log {
+      background: #111; border: 1px solid #333; padding: 15px; height: 400px; overflow-y: auto; white-space: pre-wrap; font-size: 0.85rem;
+    }
+    .month-header { color: #569cd6; font-size: 1rem; border-top: 2px solid #569cd6; border-bottom: 1px solid #569cd6; padding: 4px 0; margin-top: 15px; }
+    .day-header { color: #ce9178; font-weight: bold; margin-top: 10px; border-bottom: 1px dashed #444; }
+    .trade-success { color: #6a9955; font-weight: bold; }
+    .trade-fail { color: #666666; }
+    .landlord-log { color: #ff00ff; font-weight: bold; }
+    .event-log { color: #dcdcaa; font-weight: bold; }
+    .result-log { color: #4ec9b0; }
+    .danger { color: #f44747; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>10バイヤーズマンション - UI統合版（修正版）</h1>
+
+  <!-- プレイヤー状態ダッシュボード -->
+  <div id="player-dashboard">
+    <div class="dash-header">【プレイヤー状態】</div>
+    <div class="dash-info">
+      <div>Day: <span id="dash-day">1ヶ月目 1日目</span></div>
+      <div>部屋: 101号室</div>
+      <div>名前: プレイヤー</div>
+      <div>所持金: <span id="dash-money" style="color:#ffd700;">500,000</span> 円</div>
+    </div>
+    <div class="dash-items" id="dash-inventory">
+      <!-- JSで動的生成 -->
+    </div>
+  </div>
+
+  <!-- 行動フォーム -->
+  <div id="action-panel">
+    <div class="panel-title">【本日の行動選択】</div>
+    <div class="action-mode-buttons">
+      <button id="btn-mode-sell" class="mode-btn active" onclick="setActionMode('sell')">1. 売る（出品）</button>
+      <button id="btn-mode-buy" class="mode-btn" onclick="setActionMode('buy')">2. 買う（購入準備）</button>
+      <button id="btn-mode-walk" class="mode-btn" onclick="setActionMode('walk')">3. 散歩（獲得）</button>
+      <button class="reset" style="margin-left:auto;" onclick="initGame()">最初からリセット</button>
+    </div>
+
+    <!-- 売る用の入力領域 -->
+    <div id="form-sell" class="action-form">
+      <div class="form-group">
+        <label>出品アイテム:</label>
+        <select id="sell-item-select" onchange="updateSellFormInfo()"></select>
+        <label>数量:</label>
+        <input type="number" id="sell-qty-input" min="1" value="1" style="width: 60px;">
+        <label>希望価格(1個あたり):</label>
+        <input type="number" id="sell-price-input" step="100" style="width: 100px;">
+        <span id="sell-market-info" style="color:#888; font-size:0.8rem;"></span>
+      </div>
+    </div>
+
+    <!-- 買う用の案内領域 -->
+    <div id="form-buy" class="action-form" style="display:none;">
+      <div style="font-size:0.85rem; color:#aaa; margin-bottom:8px;">
+        ※「1日を進める」を押すと、本日出品された商品リストから購入対象を選択できます。
+      </div>
+    </div>
+
+    <!-- 散歩用の案内領域 -->
+    <div id="form-walk" class="action-form" style="display:none;">
+      <div style="font-size:0.85rem; color:#aaa; margin-bottom:8px;">
+        ※本日アイテムの売買を行わず、散歩してランダムなアイテムを探します。
+      </div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <button class="execute-btn" onclick="submitPlayerAction()">1日（1ターン）を進める</button>
+    </div>
+  </div>
+
+  <div id="log">行動を選択して「1日を進める」を押してください...</div>
+
+<script>
+// ==========================================
+// 1. 定数・グローバル状態
+// ==========================================
+const ITEMS = {
+  sneakers: { name: 'スニーカー', max: 128, initialPrice: 20000, walkMin: 1, walkMax: 2 },
+  game:     { name: 'ゲームソフト', max: 512, initialPrice: 5000, walkMin: 1, walkMax: 5 },
+  record:   { name: 'レコード', max: 1024, initialPrice: 2500, walkMin: 1, walkMax: 5 },
+  liquor:   { name: 'お酒', max: 4096, initialPrice: 600, walkMin: 10, walkMax: 50 }
+};
+
+const RENT = 150000; 
+let currentMonth = 1;
+let currentDay = 1;
+let bankFundPool = 0;
+
+let marketHistory = {};
+let uncirculated = {};
+let residents = [];
+let vacantRooms = [];
+let currentActionMode = 'sell';
+
+let monthlyTradeVolume = { sneakers: 0, game: 0, record: 0, liquor: 0 };
+
+const NPC_TYPES = ['chaser', 'pro', 'collector_sneakers', 'collector_record', 'collector_game', 'pacing'];
+const NAMES_POOL = ['ポチ', 'タマ', 'ミケ', 'ハチ', 'コロ', 'モモ', 'トラ', 'ブチ', 'シロ', 'クロ', 'チョコ', 'マル'];
+
+class Resident {
+  constructor(id, name, type, money, initialItems = {}) {
+    this.id = id;
+    this.name = name;
+    this.type = type;
+    this.money = money;
+    this.inventory = { sneakers: 0, game: 0, record: 0, liquor: 0, ...initialItems };
+  }
+
+  getCategoryCount() {
+    return Object.values(this.inventory).filter(qty => qty > 0).length;
+  }
+
+  getMarketPrice(itemKey) {
+    const history = marketHistory[itemKey];
+    if (!history) return ITEMS[itemKey].initialPrice;
+
+    let totalValue = 0;
+    let totalQty = 0;
+    
+    history.forEach(trade => {
+      totalValue += trade.price * trade.qty;
+      totalQty += trade.qty;
+    });
+
+    if (totalQty === 0) return ITEMS[itemKey].initialPrice;
+    return Math.round(totalValue / totalQty);
+  }
+
+  getCollectorTarget() {
+    if (this.type === 'collector_sneakers') return 'sneakers';
+    if (this.type === 'collector_record') return 'record';
+    if (this.type === 'collector_game') return 'game';
+    return null;
+  }
+}
+
+function printLog(msg, className = '') {
+  const logEl = document.getElementById('log');
+  const div = document.createElement('div');
+  if (className) div.className = className;
+  div.textContent = msg;
+  logEl.appendChild(div);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function setActionMode(mode) {
+  currentActionMode = mode;
+  ['sell', 'buy', 'walk'].forEach(m => {
+    document.getElementById(`btn-mode-${m}`).classList.toggle('active', m === mode);
+    document.getElementById(`form-${m}`).style.display = (m === mode) ? 'block' : 'none';
+  });
+}
+
+function updateInfoDisplay() {
+  const player = residents.find(r => r.type === 'player');
+  document.getElementById('dash-day').textContent = `${currentMonth}ヶ月目 ${currentDay}日目`;
+  
+  if (player) {
+    document.getElementById('dash-money').textContent = player.money.toLocaleString();
+    
+    const invEl = document.getElementById('dash-inventory');
+    invEl.innerHTML = `
+      <div class="dash-item-box">スニーカー: <b>${player.inventory.sneakers || 0}</b> 個</div>
+      <div class="dash-item-box">ゲームソフト: <b>${player.inventory.game || 0}</b> 個</div>
+      <div class="dash-item-box">レコード: <b>${player.inventory.record || 0}</b> 個</div>
+      <div class="dash-item-box">お酒: <b>${player.inventory.liquor || 0}</b> 個</div>
+    `;
+
+    // 売るフォームのドロップダウン更新
+    const selectEl = document.getElementById('sell-item-select');
+    selectEl.innerHTML = '';
+    const sellables = Object.keys(player.inventory).filter(k => player.inventory[k] > 0);
+    
+    if (sellables.length === 0) {
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = '（所持アイテムなし）';
+      selectEl.appendChild(option);
+    } else {
+      sellables.forEach(k => {
+        const option = document.createElement('option');
+        option.value = k;
+        option.textContent = `${ITEMS[k].name} (所持:${player.inventory[k]}個)`;
+        selectEl.appendChild(option);
+      });
+    }
+    updateSellFormInfo();
+  }
+}
+
+function updateSellFormInfo() {
+  const player = residents.find(r => r.type === 'player');
+  const selectEl = document.getElementById('sell-item-select');
+  const itemKey = selectEl.value;
+  
+  if (player && itemKey && ITEMS[itemKey]) {
+    const marketPrice = player.getMarketPrice(itemKey);
+    document.getElementById('sell-price-input').value = marketPrice;
+    document.getElementById('sell-qty-input').max = player.inventory[itemKey];
+    document.getElementById('sell-market-info').textContent = `(相場: @${marketPrice.toLocaleString()}円)`;
+  } else {
+    document.getElementById('sell-market-info').textContent = '';
+  }
+}
+
+function initGame() {
+  currentMonth = 1;
+  currentDay = 1;
+  bankFundPool = 0;
+  vacantRooms = [];
+  monthlyTradeVolume = { sneakers: 0, game: 0, record: 0, liquor: 0 };
+
+  marketHistory = {
+    sneakers: [{price: 20000, qty: 1}, {price: 20000, qty: 1}, {price: 20000, qty: 1}],
+    game:     [{price: 5000, qty: 1}, {price: 5000, qty: 1}, {price: 5000, qty: 1}],
+    record:   [{price: 2500, qty: 1}, {price: 2500, qty: 1}, {price: 2500, qty: 1}],
+    liquor:   [{price: 600, qty: 1}, {price: 600, qty: 1}, {price: 600, qty: 1}]
+  };
+
+  uncirculated = { sneakers: 64, game: 256, record: 512, liquor: 2048 };
+
+  residents = [];
+  // 初期所持アイテム（スニーカー:3, ゲームソフト:5, レコード:2）
+  residents.push(new Resident('101', 'プレイヤー', 'player', 500000, { sneakers: 3, game: 5, record: 2 }));
+
+  const roomIds = ['102', '103', '201', '202', '203', '301', '302', '303'];
+  roomIds.forEach((id, idx) => {
+    const type = NPC_TYPES[idx % NPC_TYPES.length];
+    const name = NAMES_POOL[idx % NAMES_POOL.length] + `(${type})`;
+    residents.push(new Resident(id, name, type, 1000000, {
+      sneakers: 4, game: 16, record: 32, liquor: 128
+    }));
+  });
+
+  residents.push(new Resident('PH', '大家さん', 'landlord', 33000000, {}));
+
+  const logEl = document.getElementById('log');
+  logEl.innerHTML = '【ゲーム初期化完了】行動を選択して「1日を進める」を押してください。';
+  setActionMode('sell');
+  updateInfoDisplay();
+}
+
+// ==========================================
+// 2. プレイヤーの行動送信
+// ==========================================
+function submitPlayerAction() {
+  const player = residents.find(r => r.type === 'player');
+  if (!player) return;
+
+  let playerIntent = { type: currentActionMode };
+
+  if (currentActionMode === 'sell') {
+    const itemKey = document.getElementById('sell-item-select').value;
+    const qty = parseInt(document.getElementById('sell-qty-input').value);
+    const price = parseInt(document.getElementById('sell-price-input').value);
+
+    if (!itemKey || !player.inventory[itemKey]) {
+      alert('売却可能なアイテムが選択されていません。');
+      return;
+    }
+    if (isNaN(qty) || qty < 1 || qty > player.inventory[itemKey]) {
+      alert('有効な数量を入力してください。');
+      return;
+    }
+    if (isNaN(price) || price <= 0) {
+      alert('有効な希望価格を入力してください。');
+      return;
+    }
+
+    playerIntent.item = itemKey;
+    playerIntent.qty = qty;
+    playerIntent.price = price;
+  }
+
+  processOneDay(playerIntent);
+}
+
+// ==========================================
+// 3. 1日（1ターン）のメインロジック
+// ==========================================
+function processOneDay(playerIntent) {
+  const player = residents.find(r => r.type === 'player');
+
+  if (currentDay === 1) {
+    for (let i = vacantRooms.length - 1; i >= 0; i--) {
+      const room = vacantRooms[i];
+      if (currentMonth - room.vacantSinceMonth >= 1) {
+        const newType = NPC_TYPES[Math.floor(Math.random() * NPC_TYPES.length)];
+        const randomName = NAMES_POOL[Math.floor(Math.random() * NAMES_POOL.length)] + `(新:${newType})`;
+        
+        let startMoney = 300000;
+        if (bankFundPool >= 200000) {
+          startMoney += 200000;
+          bankFundPool -= 200000;
+        }
+
+        residents.push(new Resident(room.id, randomName, newType, startMoney, {
+          sneakers: 2, game: 8, record: 16, liquor: 64
+        }));
+        vacantRooms.splice(i, 1);
+        printLog(`[新住人入居] ${room.id}号室に ${randomName} が入居！（所持金: ${startMoney.toLocaleString()}円）`, 'event-log');
+      }
+    }
+  }
+
+  printLog(`--- 【${currentMonth}ヶ月目 ${currentDay}日目】 ---`, 'day-header');
+
+  let shopList = [];
+  let potentialBuyers = [];
+
+  // ----------------------------------------------------
+  // Phase 1: 出品者の募集
+  // ----------------------------------------------------
+  if (playerIntent.type === 'sell') {
+    shopList.push({
+      seller: player,
+      item: playerIntent.item,
+      price: playerIntent.price,
+      qty: playerIntent.qty,
+      isPanic: false
+    });
+    printLog(` [出品] ${player.name}: ${ITEMS[playerIntent.item].name} x${playerIntent.qty} (@${playerIntent.price.toLocaleString()}円)`);
+  } else if (playerIntent.type === 'buy') {
+    potentialBuyers.push(player);
+  }
+
+  residents.forEach(res => {
+    if (res.type === 'landlord' || res.type === 'player') return;
+
+    let isPanicSelling = (currentDay >= 20 && res.money < RENT);
+
+    let intent = 'buy';
+    if (isPanicSelling) {
+      intent = 'shop';
+    } else if (res.type === 'pacing') {
+      intent = Math.random() < 0.6 ? 'shop' : 'buy';
+    } else {
+      intent = Math.random() < 0.45 ? 'shop' : 'buy';
+    }
+
+    if (intent === 'shop') {
+      const collectorTarget = res.getCollectorTarget();
+      let sellableItems = Object.keys(res.inventory).filter(k => 
+        res.inventory[k] > 0 && k !== collectorTarget
+      );
+
+      if (sellableItems.length > 0) {
+        let selectedItem = sellableItems[Math.floor(Math.random() * sellableItems.length)];
+        let marketPrice = res.getMarketPrice(selectedItem);
+        let price = isPanicSelling ? Math.round(marketPrice * 0.9) : Math.round(marketPrice * (res.type === 'pacing' ? 1.0 : 1.15));
+        let qty = Math.min(res.inventory[selectedItem], 2);
+
+        shopList.push({ seller: res, item: selectedItem, price: price, qty: qty, isPanic: isPanicSelling });
+        printLog(` [出品] ${res.name}: ${ITEMS[selectedItem].name} x${qty} (@${price.toLocaleString()}円 / 加重相場:@${marketPrice.toLocaleString()}円)`);
+      } else {
+        potentialBuyers.push(res);
+      }
+    } else {
+      potentialBuyers.push(res);
+    }
+  });
+
+  // ----------------------------------------------------
+  // Phase 2: 買い手の行動
+  // ----------------------------------------------------
+  if (playerIntent.type === 'buy') {
+    const availableShops = shopList.filter(s => s.seller !== player && s.qty > 0);
+    
+    if (availableShops.length === 0) {
+      printLog(`  [プレイヤー買付] 本日購入可能な出品がないため散歩へ移行しました`, 'trade-fail');
+      executeWalk(player);
+    } else {
+      let shopMenu = '【本日出品中のリスト】購入したい番号を選択してください:\n';
+      availableShops.forEach((s, idx) => {
+        shopMenu += `${idx + 1}: ${s.seller.name} - ${ITEMS[s.item].name} 残${s.qty}個 (@${s.price.toLocaleString()}円)\n`;
+      });
+
+      const choiceInput = prompt(shopMenu);
+      const shopIdx = parseInt(choiceInput) - 1;
+
+      if (!isNaN(shopIdx) && shopIdx >= 0 && shopIdx < availableShops.length) {
+        const targetShop = availableShops[shopIdx];
+        const maxBuyQty = Math.min(targetShop.qty, Math.floor(player.money / targetShop.price));
+
+        if (maxBuyQty <= 0) {
+          alert('所持金が足りません。散歩へ移行します。');
+          executeWalk(player);
+        } else {
+          const buyQtyInput = prompt(`${targetShop.seller.name}から ${ITEMS[targetShop.item].name} (@${targetShop.price.toLocaleString()}円) を何個買いますか？ (1～${maxBuyQty})`, '1');
+          const buyQty = parseInt(buyQtyInput);
+
+          if (!isNaN(buyQty) && buyQty >= 1 && buyQty <= maxBuyQty) {
+            let tradeCost = targetShop.price * buyQty;
+            player.money -= tradeCost;
+            targetShop.seller.money += tradeCost;
+            player.inventory[targetShop.item] = (player.inventory[targetShop.item] || 0) + buyQty;
+            targetShop.seller.inventory[targetShop.item] -= buyQty;
+            targetShop.qty -= buyQty;
+
+            monthlyTradeVolume[targetShop.item] += buyQty;
+            marketHistory[targetShop.item].shift();
+            marketHistory[targetShop.item].push({ price: targetShop.price, qty: buyQty });
+
+            printLog(`  =>【取引成立】${player.name} が ${targetShop.seller.name} から ${ITEMS[targetShop.item].name} を @${targetShop.price.toLocaleString()}円で ${buyQty}個 購入！`, 'trade-success');
+          } else {
+            executeWalk(player);
+          }
+        }
+      } else {
+        executeWalk(player);
+      }
+    }
+  } else if (playerIntent.type === 'walk') {
+    executeWalk(player);
+  }
+
+  // NPC 買い手の買い付けロジック
+  potentialBuyers.forEach(res => {
+    if (res.type === 'player') return;
+
+    const itemKeys = Object.keys(ITEMS);
+    let targetItem = '';
+
+    const collectorTarget = res.getCollectorTarget();
+    if (collectorTarget) {
+      targetItem = collectorTarget;
+    } else {
+      targetItem = itemKeys[Math.floor(Math.random() * itemKeys.length)];
+    }
+
+    let maxPrice = Math.round(res.getMarketPrice(targetItem) * 1.2);
+
+    if (res.type === 'chaser' && Math.random() < 0.5) {
+      printLog(`  [チェイサー見送り] ${res.name}: 気分により本日の買付を辞退`, 'trade-fail');
+      executeWalk(res);
+      return;
+    }
+
+    let matchingShops = shopList.filter(s => 
+      s.item === targetItem && 
+      s.qty > 0 && 
+      s.seller !== res && 
+      s.price <= maxPrice &&
+      res.money >= s.price
+    );
+
+    matchingShops.sort((a, b) => a.price - b.price);
+
+    if (matchingShops.length > 0) {
+      let shop = matchingShops[0];
+
+      let maxAffordableQty = Math.floor(res.money / shop.price);
+      let tradeQty = Math.min(shop.qty, maxAffordableQty);
+
+      if (tradeQty > 0 && (res.inventory[targetItem] || res.getCategoryCount() < 3)) {
+        let tradeCost = shop.price * tradeQty;
+
+        res.money -= tradeCost;
+        shop.seller.money += tradeCost;
+        res.inventory[targetItem] = (res.inventory[targetItem] || 0) + tradeQty;
+        shop.seller.inventory[targetItem] -= tradeQty;
+        shop.qty -= tradeQty;
+
+        monthlyTradeVolume[targetItem] += tradeQty;
+
+        marketHistory[targetItem].shift();
+        marketHistory[targetItem].push({ price: shop.price, qty: tradeQty });
+
+        printLog(`  =>【取引成立】${res.name} が ${shop.seller.name} から ${ITEMS[targetItem].name} x${tradeQty} を @${shop.price.toLocaleString()}円で購入！`, 'trade-success');
+      }
+    } else {
+      printLog(`  [切り替え] ${res.name}: 目的の ${ITEMS[targetItem].name} (予算上限:@${maxPrice.toLocaleString()}円) の条件に合う出品がないため散歩へ`, 'trade-fail');
+      executeWalk(res);
+    }
+  });
+   // ----------------------------------------------------
+  // Phase 3: 大家さんの買い付け（毎月25日）
+  // ----------------------------------------------------
+  if (currentDay === 25) {
+    const landlord = residents.find(r => r.type === 'landlord');
+
+    if (landlord.money >= 25000000) {
+      let targetItem = 'liquor';
+      let maxVol = -1;
+      for (let k in monthlyTradeVolume) {
+        if (monthlyTradeVolume[k] > maxVol) {
+          maxVol = monthlyTradeVolume[k];
+          targetItem = k;
+        }
+      }
+
+      let targetBuyQty = (targetItem === 'liquor') ? 100 : Math.floor(Math.random() * 11) + 10;
+      const marketPrice = landlord.getMarketPrice(targetItem);
+      const offerPrice = Math.round(marketPrice * 1.1);
+
+      let targets = residents.filter(r => r.type !== 'landlord' && (r.inventory[targetItem] || 0) > 0);
+      targets.sort((a, b) => a.money - b.money);
+
+      let totalBought = 0;
+      let totalSpent = 0;
+
+      for (let seller of targets) {
+        if (targetBuyQty <= 0) break;
+
+        let buyQty = Math.min(seller.inventory[targetItem], targetBuyQty);
+        let cost = offerPrice * buyQty;
+
+        if (landlord.money >= cost) {
+          landlord.money -= cost;
+          seller.money += cost;
+          seller.inventory[targetItem] -= buyQty;
+          uncirculated[targetItem] += buyQty;
+
+          targetBuyQty -= buyQty;
+          totalBought += buyQty;
+          totalSpent += cost;
+        }
+      }
+
+      if (totalBought > 0) {
+        printLog(`\n [大家さんの25日買い上げ] 今月人気『${ITEMS[targetItem].name}』を相場1.1倍(@${offerPrice.toLocaleString()}円)で資金難の住人から優先的に${totalBought}個買い上げ！(総支出: ${totalSpent.toLocaleString()}円)`, 'landlord-log');
+      } else {
+        printLog(`\n [大家さんの25日買い上げ] 対象『${ITEMS[targetItem].name}』の所有者がいないため見送り`, 'landlord-log');
+      }
+    }
+  }
+
+  // 日付進行
+  if (currentDay >= 30) {
+    processMonthEnd();
+    currentDay = 1;
+    currentMonth++;
+  } else {
+    currentDay++;
+  }
+  updateInfoDisplay();
+}
+
+// 散歩処理
+function executeWalk(res) {
+  const itemKeys = Object.keys(ITEMS);
+  const findItem = itemKeys[Math.floor(Math.random() * itemKeys.length)];
+  const config = ITEMS[findItem];
+  if (uncirculated[findItem] > 0) {
+    let getQty = Math.floor(Math.random() * (config.walkMax - config.walkMin + 1)) + config.walkMin;
+    getQty = Math.min(getQty, uncirculated[findItem]);
+
+    if (res.inventory[findItem] || res.getCategoryCount() < 3) {
+      res.inventory[findItem] = (res.inventory[findItem] || 0) + getQty;
+      uncirculated[findItem] -= getQty;
+      printLog(`   └[散歩結果] ${res.name}: 散歩で ${ITEMS[findItem].name} x${getQty} 獲得`);
+    }
+  }
+}
+
+// 月末処理
+function processMonthEnd() {
+  printLog(`\n==================================================`, 'month-header');
+  printLog(`【 ${currentMonth} ヶ月目 月末リザルト 】`, 'month-header');
+  printLog(`==================================================`, 'month-header');
+
+  const landlord = residents.find(r => r.type === 'landlord');
+  let bankruptList = [];
+
+  for (let i = residents.length - 1; i >= 0; i--) {
+    const res = residents[i];
+    if (res.type === 'landlord') continue;
+
+    if (res.money >= RENT) {
+      res.money -= RENT;
+      landlord.money += RENT;
+      printLog(`${res.id}号室 ${res.name}: 家賃OK (残金: ${res.money.toLocaleString()}円)`, 'result-log');
+    } else {
+      printLog(`${res.id}号室 ${res.name}: 家賃不足で【退去】(所持金: ${res.money.toLocaleString()}円)`, 'danger');
+      bankruptList.push(res);
+      vacantRooms.push({ id: res.id, vacantSinceMonth: currentMonth });
+      residents.splice(i, 1);
+    }
+  }
+
+  bankruptList.forEach(bankrupt => {
+    printLog(`[競売] ${bankrupt.name} の遺留品が未流通市場へ回収されました。`, 'event-log');
+    for (let itemKey in bankrupt.inventory) {
+      if (bankrupt.inventory[itemKey] > 0) {
+        uncirculated[itemKey] += bankrupt.inventory[itemKey];
+      }
+    }
+  });
+
+  if (currentMonth % 12 === 0) {
+    const bankPayment = 1500000;
+    if (landlord.money >= bankPayment) {
+      landlord.money -= bankPayment;
+      bankFundPool += bankPayment;
+      printLog(`\n[決算] 大家さんが銀行へ150万円支払いました。（新資金プール: ${bankFundPool.toLocaleString()}円）`, 'event-log');
+    }
+  }
+
+  monthlyTradeVolume = { sneakers: 0, game: 0, record: 0, liquor: 0 };
+
+  printLog(`\n【月末加重相場】 スニ: ${landlord.getMarketPrice('sneakers').toLocaleString()}円 / ゲーム: ${landlord.getMarketPrice('game').toLocaleString()}円 / レコード: ${landlord.getMarketPrice('record').toLocaleString()}円 / お酒: ${landlord.getMarketPrice('liquor').toLocaleString()}円`, 'event-log');
+  printLog(`大家さんの総資産: ${landlord.money.toLocaleString()}円`, 'landlord-log');
+}
+
+// 起動時初期化
+initGame();
+</script>
+
+</body>
+</html>
+
+
+
+
+
