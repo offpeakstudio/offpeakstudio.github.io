@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>2.5D Adventure</title>
+
+<style>
+
+body {
+  margin: 0;
+  background: #111;
+  color: #00ffcc;
+  font-family: monospace;
+  text-align: center;
+}
+
+#game {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* =========================
+   上画面
+========================= */
+
+#scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  background-size: cover;
+  background-position: center;
+
+  border: 1px solid #00ffcc;
+}
+
+/* 上画面の探索タイル */
+
+.tile {
+  position: absolute;
+
+  width: 25%;
+  height: 25%;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(0,255,204,0.25);
+
+  cursor: pointer;
+}
+
+.tile:hover {
+  background: rgba(0,255,204,0.15);
+}
+
+
+/* =========================
+   メッセージ
+========================= */
+
+#message {
+  min-height: 40px;
+  padding: 10px;
+}
+
+
+/* =========================
+   全体マップ
+========================= */
+
+#map {
+  width: 260px;
+  height: 260px;
+
+  margin: 20px auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+
+  gap: 2px;
+
+  transform:
+    rotateX(60deg)
+    rotateZ(-45deg);
+
+  transform-style: preserve-3d;
+}
+
+
+/* マップのマス */
+
+.map-tile {
+  border: 1px solid #00ffcc;
+
+  background: rgba(0,255,204,0.05);
+
+  aspect-ratio: 1;
+
+  cursor: pointer;
+}
+
+
+/* プレイヤー */
+
+.player {
+  background: #ff007f;
+
+  box-shadow:
+    0 0 10px #ff007f;
+}
+
+
+/* 移動ボタン */
+
+.controls {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+
+  margin: 3px;
+
+  background: #111;
+
+  color: #00ffcc;
+
+  border: 1px solid #00ffcc;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div id="game">
+
+
+  <!-- =====================
+       上画面
+  ====================== -->
+
+  <div id="scene">
+
+    <!-- 4×4探索タイル -->
+
+    <div class="tile"
+         style="left:0;top:0"
+         onclick="inspect('何もない。')">
+    </div>
+
+    <div class="tile"
+         style="left:25%;top:0"
+         onclick="inspect('壁に傷がある。')">
+    </div>
+
+    <div class="tile"
+         style="left:50%;top:0"
+         onclick="inspect('古い照明だ。')">
+    </div>
+
+    <div class="tile"
+         style="left:75%;top:0"
+         onclick="inspect('出口がある。')">
+    </div>
+
+
+    <div class="tile"
+         style="left:0;top:25%"
+         onclick="inspect('何か落ちている。')">
+    </div>
+
+    <div class="tile"
+         style="left:25%;top:25%"
+         onclick="inspect('床が濡れている。')">
+    </div>
+
+    <div class="tile"
+         style="left:50%;top:25%"
+         onclick="inspect('何もない。')">
+    </div>
+
+    <div class="tile"
+         style="left:75%;top:25%"
+         onclick="inspect('古い箱がある。')">
+    </div>
+
+
+    <div class="tile"
+         style="left:0;top:50%"
+         onclick="inspect('壁だ。')">
+    </div>
+
+    <div class="tile"
+         style="left:25%;top:50%"
+         onclick="inspect('小さな穴がある。')">
+    </div>
+
+    <div class="tile"
+         style="left:50%;top:50%"
+         onclick="inspect('足音が聞こえる。')">
+    </div>
+
+    <div class="tile"
+         style="left:75%;top:50%"
+         onclick="inspect('何かいる。')">
+    </div>
+
+
+    <div class="tile"
+         style="left:0;top:75%"
+         onclick="inspect('暗い。')">
+    </div>
+
+    <div class="tile"
+         style="left:25%;top:75%"
+         onclick="inspect('古い椅子だ。')">
+    </div>
+
+    <div class="tile"
+         style="left:50%;top:75%"
+         onclick="inspect('何もない。')">
+    </div>
+
+    <div class="tile"
+         style="left:75%;top:75%"
+         onclick="inspect('出口はない。')">
+    </div>
+
+  </div>
+
+
+  <div id="message">
+    周囲を探索してください。
+  </div>
+
+
+  <!-- =====================
+       全体マップ
+  ====================== -->
+
+  <div id="map"></div>
+
+
+  <!-- =====================
+       移動
+  ====================== -->
+
+  <div class="controls">
+
+    <button onclick="move(0,-1)">↑</button>
+
+    <br>
+
+    <button onclick="move(-1,0)">←</button>
+
+    <button onclick="move(1,0)">→</button>
+
+    <br>
+
+    <button onclick="move(0,1)">↓</button>
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================
+   マップ
+========================= */
+
+const mapSize = 5;
+
+let playerX = 2;
+let playerY = 2;
+
+
+/* =========================
+   背景
+========================= */
+
+const scenes = {
+
+  "2,2": "images/room1.jpg",
+
+  "3,2": "images/room2.jpg",
+
+  "4,2": "images/room3.jpg",
+
+  "2,1": "images/room4.jpg",
+
+  "2,3": "images/room5.jpg"
+
+};
+
+
+/* =========================
+   マップ描画
+========================= */
+
+const map = document.getElementById("map");
+
+
+function drawMap() {
+
+  map.innerHTML = "";
+
+  for (let y = 0; y < mapSize; y++) {
+
+    for (let x = 0; x < mapSize; x++) {
+
+      const tile = document.createElement("div");
+
+      tile.className = "map-tile";
+
+
+      if (
+        x === playerX &&
+        y === playerY
+      ) {
+
+        tile.classList.add("player");
+
+      }
+
+
+      map.appendChild(tile);
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   場所移動
+========================= */
+
+function move(dx, dy) {
+
+  const newX = playerX + dx;
+  const newY = playerY + dy;
+
+
+  if (
+    newX < 0 ||
+    newX >= mapSize ||
+    newY < 0 ||
+    newY >= mapSize
+  ) {
+
+    return;
+
+  }
+
+
+  playerX = newX;
+  playerY = newY;
+
+
+  showScene();
+
+  drawMap();
+
+}
+
+
+/* =========================
+   背景変更
+========================= */
+
+function showScene() {
+
+  const key =
+    playerX + "," + playerY;
+
+
+  const image =
+    scenes[key];
+
+
+  if (image) {
+
+    document.getElementById("scene")
+      .style.backgroundImage =
+      `url("${image}")`;
+
+  }
+
+}
+
+
+/* =========================
+   探索
+========================= */
+
+function inspect(text) {
+
+  document.getElementById("message")
+    .textContent = text;
+
+}
+
+
+/* =========================
+   初期化
+========================= */
+
+showScene();
+drawMap();
+
+</script>
+
+</body>
+</html>
