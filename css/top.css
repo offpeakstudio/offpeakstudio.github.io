@@ -1758,3 +1758,41 @@ body {
   }
 
 }
+
+/* =========================================
+   SITE LINKS
+========================================= */
+
+.site-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--cream-dark);
+}
+
+.site-links a {
+  color: var(--chocolate);
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.15s ease;
+  user-select: text;
+}
+
+.site-links a span {
+  color: var(--pink);
+}
+
+.site-links a:hover {
+  color: #b83f70;
+}
+
+.about-divider {
+  margin: 0 0 22px;
+  border: 0;
+  border-top: 2px dashed var(--cream-dark);
+}
+
