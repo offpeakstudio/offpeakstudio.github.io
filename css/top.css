@@ -1456,6 +1456,143 @@ body {
 
 
 /* =========================================
+   ABOUT / SELECTED WORKS
+========================================= */
+
+.terminal {
+  width: calc(100% - 40px);
+  max-width: 520px;
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mint) var(--cream);
+}
+
+/* ABOUT section */
+
+.about-section {
+  padding: 8px 5px 24px;
+  color: var(--chocolate);
+}
+
+.about-title {
+  margin: 0 0 22px;
+  font-family: "Fascinate Inline", cursive;
+  font-size: clamp(30px, 7vw, 42px);
+  line-height: 1.1;
+  color: var(--mint);
+  -webkit-text-stroke: 1px var(--chocolate);
+  text-shadow: 3px 3px 0 var(--pink);
+  overflow-wrap: anywhere;
+}
+
+.about-label {
+  margin: 0 0 12px;
+  color: var(--pink);
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.about-intro {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  user-select: text;
+}
+
+.about-categories {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.about-description {
+  margin: 0 0 24px;
+  font-size: 13px;
+  line-height: 1.8;
+  user-select: text;
+}
+
+.works-label {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--pink);
+}
+
+.selected-works {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.selected-works a {
+  color: var(--chocolate);
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--cream-dark);
+  padding-bottom: 3px;
+  transition: color 0.15s ease;
+  user-select: text;
+}
+
+.selected-works a:hover {
+  color: #b83f70;
+}
+
+/* Divider between ABOUT and terminal */
+
+.about-divider {
+  margin: 0 0 22px;
+  border: 0;
+  border-top: 2px dashed var(--cream-dark);
+}
+
+/* Terminal heading */
+
+.terminal-header {
+  margin-bottom: 18px;
+}
+
+.terminal-title {
+  text-align: right;
+}
+
+/* Small screens */
+
+@media (max-width: 480px) {
+  .terminal {
+    width: calc(100% - 24px);
+    max-height: calc(100% - 24px);
+    padding: 14px;
+  }
+
+  .about-section {
+    padding: 6px 3px 20px;
+  }
+
+  .about-title {
+    font-size: clamp(27px, 8vw, 36px);
+  }
+
+  .about-intro {
+    font-size: 13px;
+  }
+
+  .about-categories {
+    font-size: 16px;
+  }
+
+  .about-description {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
    VERY SMALL MOBILE
 ========================================= */
 
