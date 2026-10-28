@@ -12,6 +12,7 @@
   --screen: #30231e;
   --screen-text: #66e5cf;
 }
+
 /* =========================================
    RESET
 ========================================= */
@@ -37,210 +38,90 @@ body {
   overflow: hidden;
 }
 
-
 /* =========================================
-   CRT SCREEN
-   実際の「画面」
+   CRT SCREEN 実際の「画面」
 ========================================= */
-
 #crt-screen {
-
-  position:
-    relative;
-
-  width:
-    100vw;
-
-  height:
-    100vh;
-
-  width:
-    100dvw;
-
-  height:
-    100dvh;
-
-  min-width:
-    0;
-
-  min-height:
-    0;
-
-  display:
-    flex;
-
-  justify-content:
-    center;
-
-  align-items:
-    center;
-
-  overflow:
-    hidden;
-
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   background:
-
-    radial-gradient(
+   radial-gradient(
       circle at center,
       #f4ead5 0%,
       #e7dcc5 60%,
       #d5c9b0 100%
     );
-
   /* CRT画面の黒いフレーム */
-
-  border:
-    12px solid #000;
-
+  border: 12px solid #000;
   box-shadow:
-
-    inset 0 0 0 2px #111,
-
-    inset 0 0 40px
-      rgba(0, 0, 0, 0.8),
-
-    0 0 0 4px #111,
-
-    0 0 40px
-      rgba(0, 0, 0, 0.9);
-
+   inset 0 0 0 2px #111,
+   inset 0 0 40px rgba(0, 0, 0, 0.8),
+   0 0 0 4px #111,
+   0 0 40px rgba(0, 0, 0, 0.9);
   /* VHS画面揺れ */
-
-  animation:
-    vhsGlitch 6s infinite;
-
+  animation: vhsGlitch 6s infinite;
 }
 
-
 /* =========================================
-   CRT SCREEN
-   SCANLINES
+   CRT SCREEN SCANLINES
 ========================================= */
-
 #crt-screen::before {
-
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  pointer-events:
-    none;
-
-  z-index:
-    9999;
-
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
   background:
-
-    linear-gradient(
+   linear-gradient(
       rgba(18, 16, 16, 0) 50%,
       rgba(0, 0, 0, 0.25) 50%
     );
-
-  background-size:
-    100% 4px;
-
-  animation:
-    scanline
-    8s
-    linear
-    infinite;
-
+  background-size: 100% 4px;
+  animation: scanline 8s linear infinite;
 }
-
 
 /* =========================================
-   CRT SCREEN
-   VHS TRACKING NOISE
+   CRT SCREEN VHS TRACKING NOISE
 ========================================= */
-
 #crt-screen::after {
-
-  content:
-    "";
-
-  position:
-    absolute;
-
-  top:
-    -20vh;
-
-  left:
-    0;
-
-  width:
-    100%;
-
-  height:
-    120px;
-
-  pointer-events:
-    none;
-
-  z-index:
-    10000;
-
+  content: "";
+  position: absolute;
+  top: -20vh;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+  z-index: 10000;
   background:
-
-    linear-gradient(
+   linear-gradient(
       to bottom,
-
       transparent 0%,
-
-      rgba(
-        255,
-        255,
-        255,
-        0.08
-      ) 15%,
-
-      rgba(
-        0,
-        0,
-        0,
-        0.3
-      ) 50%,
-
-      rgba(
-        97,
-        200,
-        181,
-        0.15
-      ) 80%,
-
+   rgba( 255, 255, 255, 0.08) 15%,
+   rgba( 0, 0, 0, 0.3) 50%,
+   rgba( 97, 200, 181, 0.15) 80%,
       transparent 100%
     );
-
   backdrop-filter:
-
-    blur(2px)
-    contrast(150%)
-    saturate(180%);
-
-  animation:
-
-    vhsTracking
-    12s
-    linear
-    infinite;
-
+   blur(2px)
+   contrast(150%)
+   saturate(180%);
+  animation: vhsTracking 12s linear infinite;
 }
-
 
 /* =========================================
    TERMINAL
 ========================================= */
-
 .terminal {
 
   position:
