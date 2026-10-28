@@ -53,21 +53,9 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background:
-   radial-gradient(
-      circle at center,
-      #f4ead5 0%,
-      #e7dcc5 60%,
-      #d5c9b0 100%
-    );
-  /* CRT画面の黒いフレーム */
+  background: radial-gradient(circle at center, #f4ead5 0%, #e7dcc5 60%, #d5c9b0 100%);
   border: 12px solid #000;
-  box-shadow:
-   inset 0 0 0 2px #111,
-   inset 0 0 40px rgba(0, 0, 0, 0.8),
-   0 0 0 4px #111,
-   0 0 40px rgba(0, 0, 0, 0.9);
-  /* VHS画面揺れ */
+  box-shadow: inset 0 0 0 2px #111, inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 0 4px #111, 0 0 40px rgba(0, 0, 0, 0.9);
   animation: vhsGlitch 6s infinite;
 }
 
@@ -82,11 +70,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  background:
-   linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.25) 50%
-    );
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
   background-size: 100% 4px;
   animation: scanline 8s linear infinite;
 }
@@ -103,19 +87,8 @@ body {
   height: 120px;
   pointer-events: none;
   z-index: 10000;
-  background:
-   linear-gradient(
-      to bottom,
-      transparent 0%,
-   rgba( 255, 255, 255, 0.08) 15%,
-   rgba( 0, 0, 0, 0.3) 50%,
-   rgba( 97, 200, 181, 0.15) 80%,
-      transparent 100%
-    );
-  backdrop-filter:
-   blur(2px)
-   contrast(150%)
-   saturate(180%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.08) 15%, rgba(0, 0, 0, 0.3) 50%, rgba(97, 200, 181, 0.15) 80%, transparent 100%);
+  backdrop-filter: blur(2px) contrast(150%) saturate(180%);
   animation: vhsTracking 12s linear infinite;
 }
 
@@ -123,1191 +96,405 @@ body {
    TERMINAL
 ========================================= */
 .terminal {
-
-  position:
-    relative;
-
-  z-index:
-    10;
-
-  width:
-    calc(100% - 40px);
-
-  max-width:
-    420px;
-
-  max-height:
-    calc(100% - 40px);
-
-  padding:
-    20px;
-
-  border-radius:
-    28px;
-
-  background:
-    var(--cream);
-
-  border:
-    5px solid
-    var(--chocolate);
-
-  box-shadow:
-
-    0 8px 0
-      var(--chocolate),
-
-    0 16px 30px
-      rgba(
-        91,
-        48,
-        35,
-        0.25
-      );
-
-  overflow-y:
-    auto;
-
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
-
-.terminal-header {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  gap:
-    10px;
-
-  margin-bottom:
-    18px;
-
-  padding:
-    4px 5px;
-
-}
-
-
-/* =========================================
-   LOGO
-========================================= */
-
-.logo {
-
-  font-family:
-    "Fascinate Inline",
-    cursive;
-
-  font-size:
-    42px;
-
-  line-height:
-    1;
-
-  color:
-    var(--mint);
-
-  -webkit-text-stroke:
-    1.5px
-    var(--chocolate);
-
-  text-shadow:
-    4px 4px 0
-    var(--pink);
-
-}
-
-
-/* =========================================
-   ACCESS TERMINAL
-========================================= */
-
-.terminal-title {
-
-  font-size:
-    18px;
-
-  font-weight:
-    bold;
-
-  letter-spacing:
-    1px;
-
-  color:
-    var(--pink);
-
-  text-align:
-    right;
-
-}
-
-
-/* =========================================
-   DISPLAY
-========================================= */
-
-.display {
-
-  position:
-    relative;
-
-  padding:
-    25px 15px;
-
-  border-radius:
-    20px;
-
-  background:
-    var(--screen);
-
-  border:
-    6px solid
-    var(--pink);
-
-  box-shadow:
-
-    inset 0 0 0 3px
-      var(--chocolate),
-
-    inset 0 0 30px
-      rgba(
-        0,
-        0,
-        0,
-        0.6
-      ),
-
-    0 4px 0
-      var(--chocolate);
-
-  text-align:
-    center;
-
-  margin-bottom:
-    22px;
-
-}
-
-
-/* =========================================
-   DISPLAY LABEL
-========================================= */
-
-.display-label {
-
-  font-size:
-    22px;
-
-  letter-spacing:
-    2px;
-
-  color:
-    var(--screen-text);
-
-  margin-bottom:
-    20px;
-
-}
-
-
-/* =========================================
-   CODE
-========================================= */
-
-.code-display {
-
-  display:
-    flex;
-
-  justify-content:
-    center;
-
-  gap:
-    12px;
-
-  min-height:
-    42px;
-
-  font-size:
-    36px;
-
-  line-height:
-    1;
-
-}
-
-
-.code-display span {
-
-  display:
-    block;
-
-  width:
-    28px;
-
-  color:
-    var(--screen-text);
-
-  text-shadow:
-    0 0 5px
-    var(--screen-text);
-
-}
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-.status {
-
-  height:
-    20px;
-
-  margin-top:
-    20px;
-
-  font-size:
-    22px;
-
-  letter-spacing:
-    2px;
-
-  color:
-    #9a8175;
-
-}
-
-
-.status.error {
-
-  color:
-    #ff6b6b;
-
-}
-
-
-.status.success {
-
-  color:
-    var(--mint-light);
-
-}
-
-
-/* =========================================
-   KEYPAD
-========================================= */
-
-.keypad {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap:
-    9px;
-
-}
-
-
-/* =========================================
-   BUTTON
-========================================= */
-
-.key {
-
-  height:
-    58px;
-
-  border:
-    3px solid
-    var(--chocolate);
-
-  border-radius:
-    14px;
-
-  background:
-    var(--mint-light);
-
-  color:
-    var(--chocolate);
-
-  font-family:
-    "Fascinate Inline",
-    cursive;
-
-  font-size:
-    40px;
-
-  cursor:
-    pointer;
-
-  box-shadow:
-    0 4px 0
-    var(--chocolate);
-
-  transition:
-
-    transform
-    0.08s,
-
-    box-shadow
-    0.08s,
-
-    background
-    0.08s;
-
-}
-
-
-.key:hover {
-
-  background:
-    #b5eadf;
-
-}
-
-
-.key:active {
-
-  transform:
-    translateY(4px);
-
-  box-shadow:
-    0 0 0
-    var(--chocolate);
-
-}
-
-
-/* =========================================
-   CLEAR
-========================================= */
-
-.key-clear {
-
-  background:
-    var(--pink-light);
-
-  color:
-    var(--chocolate);
-
-  font-size:
-    32px;
-
-}
-
-
-.key-clear:hover {
-
-  background:
-    #f5a5c3;
-
-}
-
-
-/* =========================================
-   ENTER
-========================================= */
-
-.key-enter {
-
-  background:
-    var(--pink);
-
-  color:
-    var(--cream);
-
-  font-family:
-    "Fascinate Inline",
-    cursive;
-
-  font-size:
-    16px;
-
-  letter-spacing:
-    1px;
-
-}
-
-
-.key-enter:hover {
-
-  background:
-    #ef76a5;
-
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-.terminal-footer {
-
-  margin-top:
-    20px;
-
-  padding-top:
-    12px;
-
-  border-top:
-    2px dashed
-    var(--cream-dark);
-
-  text-align:
-    center;
-
-  font-size:
-    18px;
-
-  font-weight:
-    bold;
-
-  letter-spacing:
-    2px;
-
-  color:
-    var(--pink);
-
-}
-
-
-/* =========================================
-   ERROR ANIMATION
-========================================= */
-
-@keyframes errorFlash {
-
-  0% {
-    transform:
-      translateX(0);
-  }
-
-  25% {
-    transform:
-      translateX(-5px);
-  }
-
-  50% {
-    transform:
-      translateX(5px);
-  }
-
-  75% {
-    transform:
-      translateX(-3px);
-  }
-
-  100% {
-    transform:
-      translateX(0);
-  }
-
-}
-
-
-.terminal.error {
-
-  animation:
-    errorFlash
-    0.2s;
-
-}
-
-
-/* =========================================
-   SCANLINE
-========================================= */
-
-@keyframes scanline {
-
-  0% {
-
-    background-position:
-      0 0;
-
-  }
-
-  100% {
-
-    background-position:
-      0 100%;
-
-  }
-
-}
-
-
-/* =========================================
-   VHS GLITCH
-========================================= */
-
-@keyframes vhsGlitch {
-
-  0%,
-  85%,
-  100% {
-
-    transform:
-      translate(0, 0)
-      skew(0deg);
-
-    filter:
-      none;
-
-  }
-
-  86% {
-
-    transform:
-      translate(-3px, 1px)
-      skew(-0.5deg);
-
-    filter:
-      hue-rotate(-10deg);
-
-  }
-
-  87% {
-
-    transform:
-      translate(4px, -1px)
-      skew(1deg);
-
-  }
-
-  88% {
-
-    transform:
-      translate(-1px, 2px)
-      skew(-0.2deg);
-
-    filter:
-      brightness(1.1);
-
-  }
-
-  89% {
-
-    transform:
-      translate(0, 0)
-      skew(0deg);
-
-    filter:
-      none;
-
-  }
-
-}
-
-
-/* =========================================
-   VHS TRACKING
-========================================= */
-
-@keyframes vhsTracking {
-
-  0% {
-
-    top:
-      -20vh;
-
-    transform:
-      scaleY(1)
-      skewX(0deg);
-
-  }
-
-  30% {
-
-    transform:
-      scaleY(1.3)
-      skewX(2deg);
-
-  }
-
-  32% {
-
-    transform:
-      scaleY(0.8)
-      skewX(-3deg);
-
-  }
-
-  35% {
-
-    transform:
-      scaleY(1.1)
-      skewX(1deg);
-
-  }
-
-  100% {
-
-    top:
-      120vh;
-
-    transform:
-      scaleY(1)
-      skewX(0deg);
-
-  }
-
-}
-
-
-/* =========================================
-   CRT OPENING SCENE
-========================================= */
-
-#opening-scene {
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  background-color:
-    #000000 !important;
-
-  display:
-    flex;
-
-  justify-content:
-    center;
-
-  align-items:
-    center;
-
-  z-index:
-    99999;
-
-}
-
-
-/* =========================================
-   OPENING TEXT
-========================================= */
-
-#opening-text {
-
-  font-family:
-    "Courier New",
-    monospace;
-
-  font-size:
-    22px;
-
-  font-weight:
-    bold;
-
-  color:
-    var(--screen-text);
-
-  letter-spacing:
-    3px;
-
-  text-shadow:
-
-    2px 2px 0
-      rgba(
-        0,
-        0,
-        0,
-        0.8
-      ),
-
-    0 0 4px
-      var(--screen-text);
-
-  white-space:
-    pre-wrap;
-
-  text-align:
-    center;
-
-  position:
-    relative;
-
-  z-index:
-    2;
-
-}
-
-
-#opening-text::after {
-
-  content:
-    "■";
-
-  margin-left:
-    6px;
-
-  color:
-    var(--screen-text);
-
-  animation:
-    cursorBlink
-    0.4s
-    steps(2, start)
-    infinite;
-
-}
-
-
-@keyframes cursorBlink {
-
-  to {
-
-    visibility:
-      hidden;
-
-  }
-
-}
-
-
-/* =========================================
-   CRT OPENING SQUARE
-========================================= */
-
-#opening-scene::before {
-
-  content:
-    "";
-
-  position:
-    absolute;
-
-  top:
-    50%;
-
-  left:
-    50%;
-
-  width:
-    0;
-
-  height:
-    0;
-
-  transform:
-    translate(-50%, -50%);
-
-  background:
-    var(--screen-text);
-
-  box-shadow:
-
-    0 0 20px
-      var(--screen-text),
-
-    inset 0 0 15px
-      #fff;
-
-  border-radius:
-    10px;
-
-  opacity:
-    0;
-
-  z-index:
-    1;
-
-}
-
-
-/* =========================================
-   CRT TURN ON
-========================================= */
-
-#opening-scene.crt-turn-on #opening-text {
-
-  display:
-    none !important;
-
-}
-
-
-#opening-scene.crt-turn-on::before {
-
-  animation:
-    squareExpand
-    1.2s
-    steps(8)
-    forwards;
-
-}
-
-
-#opening-scene.crt-turn-on {
-
-  animation:
-    sceneFadeOut
-    1.2s
-    steps(8)
-    forwards;
-
-}
-
-
-/* =========================================
-   CRT SQUARE EXPAND
-========================================= */
-
-@keyframes squareExpand {
-
-  0%,
-  20% {
-
-    width:
-      0;
-
-    height:
-      0;
-
-    opacity:
-      0;
-
-  }
-
-  25% {
-
-    width:
-      80px;
-
-    height:
-      4px;
-
-    opacity:
-      1;
-
-    background:
-      #ffffff;
-
-  }
-
-  40% {
-
-    width:
-      25vw;
-
-    height:
-      18vh;
-
-    opacity:
-      1;
-
-    background:
-      var(--screen-text);
-
-  }
-
-  60% {
-
-    width:
-      60vw;
-
-    height:
-      45vh;
-
-  }
-
-  80% {
-
-    width:
-      90vw;
-
-    height:
-      80vh;
-
-  }
-
-  90% {
-
-    width:
-      150vw;
-
-    height:
-      150vh;
-
-    border-radius:
-      0;
-
-    opacity:
-      1;
-
-  }
-
-  100% {
-
-    width:
-      150vw;
-
-    height:
-      150vh;
-
-    opacity:
-      0;
-
-  }
-
-}
-
-
-/* =========================================
-   CRT SCENE FADE OUT
-========================================= */
-
-@keyframes sceneFadeOut {
-
-  0%,
-  85% {
-
-    background-color:
-      #000000 !important;
-
-    opacity:
-      1;
-
-  }
-
-  90% {
-
-    background-color:
-      transparent !important;
-
-    opacity:
-      1;
-
-  }
-
-  100% {
-
-    background-color:
-      transparent !important;
-
-    opacity:
-      0;
-
-    visibility:
-      hidden;
-
-    pointer-events:
-      none;
-
-  }
-
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 480px) {
-
-
-  #crt-screen {
-
-    border-width:
-      8px;
-
-  }
-
-
-  .terminal {
-
-    width:
-      calc(100% - 24px);
-
-    max-height:
-      calc(100% - 24px);
-
-    padding:
-      14px;
-
-    border-radius:
-      23px;
-
-  }
-
-
-  .terminal-header {
-
-    margin-bottom:
-      14px;
-
-    gap:
-      6px;
-
-  }
-
-
-  .logo {
-
-    font-size:
-      clamp(
-        24px,
-        8vw,
-        32px
-      );
-
-  }
-
-
-  .terminal-title {
-
-    font-size:
-      clamp(
-        12px,
-        4vw,
-        16px
-      );
-
-  }
-
-
-  .display {
-
-    padding:
-      20px 8px;
-
-    border-radius:
-      17px;
-
-    margin-bottom:
-      18px;
-
-  }
-
-
-  .display-label {
-
-    font-size:
-      clamp(
-        16px,
-        5vw,
-        22px
-      );
-
-  }
-
-
-  .code-display {
-
-    gap:
-      8px;
-
-    font-size:
-      32px;
-
-  }
-
-
-  .code-display span {
-
-    width:
-      24px;
-
-  }
-
-
-  .status {
-
-    font-size:
-      18px;
-
-  }
-
-
-  .keypad {
-
-    gap:
-      7px;
-
-  }
-
-
-  .key {
-
-    height:
-      52px;
-
-    font-size:
-      34px;
-
-  }
-
-
-  .key-clear {
-
-    font-size:
-      28px;
-
-  }
-
-
-  .key-enter {
-
-    font-size:
-      14px;
-
-  }
-
-
-  .terminal-footer {
-
-    margin-top:
-      16px;
-
-    padding-top:
-      10px;
-
-    font-size:
-      14px;
-
-  }
-
-}
-
-
-/* =========================================
-   ABOUT / SELECTED WORKS
-========================================= */
-
-.terminal {
+  position: relative;
+  z-index: 10;
   width: calc(100% - 40px);
   max-width: 520px;
   max-height: calc(100% - 40px);
+  padding: 20px;
+  border-radius: 28px;
+  background: var(--cream);
+  border: 5px solid var(--chocolate);
+  box-shadow: 0 8px 0 var(--chocolate), 0 16px 30px rgba(91, 48, 35, 0.25);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--mint) var(--cream);
 }
 
-/* ABOUT section */
+/* =========================================
+   HEADER
+========================================= */
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 4px 5px;
+}
 
+/* =========================================
+   LOGO
+========================================= */
+.logo {
+  font-family: "Fascinate Inline", cursive;
+  font-size: 42px;
+  line-height: 1;
+  color: var(--mint);
+  -webkit-text-stroke: 1.5px var(--chocolate);
+  text-shadow: 4px 4px 0 var(--pink);
+}
+
+/* =========================================
+   ACCESS TERMINAL
+========================================= */
+.terminal-title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--pink);
+  text-align: right;
+}
+
+/* =========================================
+   DISPLAY
+========================================= */
+.display {
+  position: relative;
+  padding: 25px 15px;
+  border-radius: 20px;
+  background: var(--screen);
+  border: 6px solid var(--pink);
+  box-shadow: inset 0 0 0 3px var(--chocolate), inset 0 0 30px rgba(0, 0, 0, 0.6), 0 4px 0 var(--chocolate);
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* =========================================
+   DISPLAY LABEL
+========================================= */
+.display-label {
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--screen-text);
+  margin-bottom: 20px;
+}
+
+/* =========================================
+   CODE
+========================================= */
+.code-display {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  min-height: 42px;
+  font-size: 36px;
+  line-height: 1;
+}
+
+.code-display span {
+  display: block;
+  width: 28px;
+  color: var(--screen-text);
+  text-shadow: 0 0 5px var(--screen-text);
+}
+
+/* =========================================
+   STATUS
+========================================= */
+.status {
+  height: 20px;
+  margin-top: 20px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #9a8175;
+}
+
+.status.error {
+  color: #ff6b6b;
+}
+
+.status.success {
+  color: var(--mint-light);
+}
+
+/* =========================================
+   KEYPAD
+========================================= */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+.key {
+  height: 58px;
+  border: 3px solid var(--chocolate);
+  border-radius: 14px;
+  background: var(--mint-light);
+  color: var(--chocolate);
+  font-family: "Fascinate Inline", cursive;
+  font-size: 40px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--chocolate);
+  transition: transform 0.08s, box-shadow 0.08s, background 0.08s;
+}
+
+.key:hover {
+  background: #b5eadf;
+}
+
+.key:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--chocolate);
+}
+
+/* =========================================
+   CLEAR
+========================================= */
+.key-clear {
+  background: var(--pink-light);
+  color: var(--chocolate);
+  font-size: 32px;
+}
+
+.key-clear:hover {
+  background: #f5a5c3;
+}
+
+/* =========================================
+   ENTER
+========================================= */
+.key-enter {
+  background: var(--pink);
+  color: var(--cream);
+  font-family: "Fascinate Inline", cursive;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.key-enter:hover {
+  background: #ef76a5;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+.terminal-footer {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--cream-dark);
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--pink);
+}
+
+/* =========================================
+   ERROR ANIMATION
+========================================= */
+@keyframes errorFlash {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+.terminal.error {
+  animation: errorFlash 0.2s;
+}
+
+/* =========================================
+   SCANLINE
+========================================= */
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* =========================================
+   VHS GLITCH
+========================================= */
+@keyframes vhsGlitch {
+  0%, 85%, 100% {
+    transform: translate(0, 0) skew(0deg);
+    filter: none;
+  }
+  86% {
+    transform: translate(-3px, 1px) skew(-0.5deg);
+    filter: hue-rotate(-10deg);
+  }
+  87% {
+    transform: translate(4px, -1px) skew(1deg);
+  }
+  88% {
+    transform: translate(-1px, 2px) skew(-0.2deg);
+    filter: brightness(1.1);
+  }
+  89% {
+    transform: translate(0, 0) skew(0deg);
+    filter: none;
+  }
+}
+
+/* =========================================
+   VHS TRACKING
+========================================= */
+@keyframes vhsTracking {
+  0% {
+    top: -20vh;
+    transform: scaleY(1) skewX(0deg);
+  }
+  30% {
+    transform: scaleY(1.3) skewX(2deg);
+  }
+  32% {
+    transform: scaleY(0.8) skewX(-3deg);
+  }
+  35% {
+    transform: scaleY(1.1) skewX(1deg);
+  }
+  100% {
+    top: 120vh;
+    transform: scaleY(1) skewX(0deg);
+  }
+}
+
+/* =========================================
+   CRT OPENING SCENE
+========================================= */
+#opening-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* =========================================
+   OPENING TEXT
+========================================= */
+#opening-text {
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--screen-text);
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8), 0 0 4px var(--screen-text);
+  white-space: pre-wrap;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+#opening-text::after {
+  content: "■";
+  margin-left: 6px;
+  color: var(--screen-text);
+  animation: cursorBlink 0.4s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+  to { visibility: hidden; }
+}
+
+/* =========================================
+   CRT OPENING SQUARE
+========================================= */
+#opening-scene::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  background: var(--screen-text);
+  box-shadow: 0 0 20px var(--screen-text), inset 0 0 15px #fff;
+  border-radius: 10px;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* =========================================
+   CRT TURN ON
+========================================= */
+#opening-scene.crt-turn-on #opening-text {
+  display: none !important;
+}
+
+#opening-scene.crt-turn-on::before {
+  animation: squareExpand 1.2s steps(8) forwards;
+}
+
+#opening-scene.crt-turn-on {
+  animation: sceneFadeOut 1.2s steps(8) forwards;
+}
+
+/* =========================================
+   CRT SQUARE EXPAND
+========================================= */
+@keyframes squareExpand {
+  0%, 20% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  25% {
+    width: 80px;
+    height: 4px;
+    opacity: 1;
+    background: #ffffff;
+  }
+  40% {
+    width: 25vw;
+    height: 18vh;
+    opacity: 1;
+    background: var(--screen-text);
+  }
+  60% {
+    width: 60vw;
+    height: 45vh;
+  }
+  80% {
+    width: 90vw;
+    height: 80vh;
+  }
+  90% {
+    width: 150vw;
+    height: 150vh;
+    border-radius: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 150vw;
+    height: 150vh;
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   CRT SCENE FADE OUT
+========================================= */
+@keyframes sceneFadeOut {
+  0%, 85% {
+    background-color: #000000 !important;
+    opacity: 1;
+  }
+  90% {
+    background-color: transparent !important;
+    opacity: 1;
+  }
+  100% {
+    background-color: transparent !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* =========================================
+   ABOUT / SELECTED WORKS
+========================================= */
 .about-section {
   padding: 8px 5px 24px;
   color: var(--chocolate);
@@ -1382,225 +569,15 @@ body {
   color: #b83f70;
 }
 
-/* Divider between ABOUT and terminal */
-
 .about-divider {
   margin: 0 0 22px;
   border: 0;
   border-top: 2px dashed var(--cream-dark);
 }
 
-/* Terminal heading */
-
-.terminal-header {
-  margin-bottom: 18px;
-}
-
-.terminal-title {
-  text-align: right;
-}
-
-/* Small screens */
-
-@media (max-width: 480px) {
-  .terminal {
-    width: calc(100% - 24px);
-    max-height: calc(100% - 24px);
-    padding: 14px;
-  }
-
-  .about-section {
-    padding: 6px 3px 20px;
-  }
-
-  .about-title {
-    font-size: clamp(27px, 8vw, 36px);
-  }
-
-  .about-intro {
-    font-size: 13px;
-  }
-
-  .about-categories {
-    font-size: 16px;
-  }
-
-  .about-description {
-    font-size: 12px;
-  }
-}
-
-/* =========================================
-   VERY SMALL MOBILE
-========================================= */
-
-@media (max-width: 380px) {
-
-
-  #crt-screen {
-
-    border-width:
-      6px;
-
-  }
-
-
-  .terminal {
-
-    width:
-      calc(100% - 16px);
-
-    max-height:
-      calc(100% - 16px);
-
-    padding:
-      11px;
-
-    border-width:
-      4px;
-
-    border-radius:
-      20px;
-
-  }
-
-
-  .terminal-header {
-
-    margin-bottom:
-      10px;
-
-  }
-
-
-  .logo {
-
-    font-size:
-      25px;
-
-  }
-
-
-  .terminal-title {
-
-    font-size:
-      11px;
-
-  }
-
-
-  .display {
-
-    padding:
-      16px 6px;
-
-    margin-bottom:
-      14px;
-
-  }
-
-
-  .display-label {
-
-    margin-bottom:
-      12px;
-
-    font-size:
-      15px;
-
-  }
-
-
-  .code-display {
-
-    min-height:
-      36px;
-
-    gap:
-      6px;
-
-    font-size:
-      28px;
-
-  }
-
-
-  .code-display span {
-
-    width:
-      20px;
-
-  }
-
-
-  .status {
-
-    margin-top:
-      14px;
-
-    font-size:
-      15px;
-
-  }
-
-
-  .keypad {
-
-    gap:
-      5px;
-
-  }
-
-
-  .key {
-
-    height:
-      46px;
-
-    border-width:
-      2px;
-
-    border-radius:
-      11px;
-
-    font-size:
-      29px;
-
-  }
-
-
-  .key-clear {
-
-    font-size:
-      24px;
-
-  }
-
-
-  .key-enter {
-
-    font-size:
-      12px;
-
-  }
-
-
-  .terminal-footer {
-
-    margin-top:
-      12px;
-
-    font-size:
-      12px;
-
-  }
-
-}
-
 /* =========================================
    SITE LINKS
 ========================================= */
-
 .site-links {
   display: flex;
   flex-wrap: wrap;
@@ -1628,9 +605,142 @@ body {
   color: #b83f70;
 }
 
-.about-divider {
-  margin: 0 0 22px;
-  border: 0;
-  border-top: 2px dashed var(--cream-dark);
+/* =========================================
+   MOBILE
+========================================= */
+@media (max-width: 480px) {
+  #crt-screen {
+    border-width: 8px;
+  }
+  .terminal {
+    width: calc(100% - 24px);
+    max-height: calc(100% - 24px);
+    padding: 14px;
+    border-radius: 23px;
+  }
+  .terminal-header {
+    margin-bottom: 14px;
+    gap: 6px;
+  }
+  .logo {
+    font-size: clamp(24px, 8vw, 32px);
+  }
+  .terminal-title {
+    font-size: clamp(12px, 4vw, 16px);
+  }
+  .display {
+    padding: 20px 8px;
+    border-radius: 17px;
+    margin-bottom: 18px;
+  }
+  .display-label {
+    font-size: clamp(16px, 5vw, 22px);
+  }
+  .code-display {
+    gap: 8px;
+    font-size: 32px;
+  }
+  .code-display span {
+    width: 24px;
+  }
+  .status {
+    font-size: 18px;
+  }
+  .keypad {
+    gap: 7px;
+  }
+  .key {
+    height: 52px;
+    font-size: 34px;
+  }
+  .key-clear {
+    font-size: 28px;
+  }
+  .key-enter {
+    font-size: 14px;
+  }
+  .terminal-footer {
+    margin-top: 16px;
+    padding-top: 10px;
+    font-size: 14px;
+  }
+  .about-section {
+    padding: 6px 3px 20px;
+  }
+  .about-title {
+    font-size: clamp(27px, 8vw, 36px);
+  }
+  .about-intro {
+    font-size: 13px;
+  }
+  .about-categories {
+    font-size: 16px;
+  }
+  .about-description {
+    font-size: 12px;
+  }
 }
 
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+@media (max-width: 380px) {
+  #crt-screen {
+    border-width: 6px;
+  }
+  .terminal {
+    width: calc(100% - 16px);
+    max-height: calc(100% - 16px);
+    padding: 11px;
+    border-width: 4px;
+    border-radius: 20px;
+  }
+  .terminal-header {
+    margin-bottom: 10px;
+  }
+  .logo {
+    font-size: 25px;
+  }
+  .terminal-title {
+    font-size: 11px;
+  }
+  .display {
+    padding: 16px 6px;
+    margin-bottom: 14px;
+  }
+  .display-label {
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+  .code-display {
+    min-height: 36px;
+    gap: 6px;
+    font-size: 28px;
+  }
+  .code-display span {
+    width: 20px;
+  }
+  .status {
+    margin-top: 14px;
+    font-size: 15px;
+  }
+  .keypad {
+    gap: 5px;
+  }
+  .key {
+    height: 46px;
+    border-width: 2px;
+    border-radius: 11px;
+    font-size: 29px;
+  }
+  .key-clear {
+    font-size: 24px;
+  }
+  .key-enter {
+    font-size: 12px;
+  }
+  .terminal-footer {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+}
