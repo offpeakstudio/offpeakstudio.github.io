@@ -514,35 +514,35 @@ body {
 .about-label {
   margin: 0 0 12px;
   color: var(--pink);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
   letter-spacing: 2px;
 }
 
 .about-intro {
   margin: 0 0 20px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   user-select: text;
 }
 
 .about-categories {
   margin: 0 0 8px;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
   letter-spacing: 0.5px;
 }
 
 .about-description {
   margin: 0 0 24px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.8;
   user-select: text;
 }
 
 .works-label {
   margin: 0 0 10px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
   color: var(--pink);
@@ -557,7 +557,7 @@ body {
 
 .selected-works a {
   color: var(--chocolate);
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
   border-bottom: 1px dashed var(--cream-dark);
   padding-bottom: 3px;
@@ -589,7 +589,7 @@ body {
 
 .site-links a {
   color: var(--chocolate);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   letter-spacing: 0.5px;
